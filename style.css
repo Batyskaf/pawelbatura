@@ -1,0 +1,248 @@
+:root {
+  --bg:#0a0a0a;
+  --text:#eaeaea;
+  --muted:#888;
+  --border:#333;
+  --accent:#ffffff;
+}
+
+[data-theme="light"]{
+  --bg:#ffffff;
+  --text:#111;
+  --muted:#666;
+  --border:#ddd;
+  --accent:#000;
+}
+
+body{
+  margin:0;
+  font-family:system-ui, Helvetica, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* NAV */
+
+.nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:15px 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,0.8);
+  backdrop-filter:blur(10px);
+  z-index:1000;
+}
+
+/* LINKS GLOBAL */
+
+a{
+  color:var(--text);
+  text-decoration:none;
+  border-bottom:1px solid transparent;
+  transition:0.25s;
+}
+
+a:hover{
+  border-color:var(--accent);
+}
+
+/* SPECJALNIE SAATCHI */
+
+.buy{
+  display:inline-block;
+  margin-top:5px;
+  font-size:0.75rem;
+  color:var(--muted);
+  border-bottom:1px solid var(--border);
+}
+
+.buy:hover{
+  color:var(--text);
+  border-color:var(--accent);
+}
+
+/* MENU */
+
+.nav-links{
+  display:flex;
+  gap:30px;
+}
+
+.menu-toggle{
+  display:none;
+  font-size:22px;
+  cursor:pointer;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+  .menu-toggle{
+    display:block;
+  }
+
+  .nav-links{
+    position:absolute;
+    top:60px;
+    left:20px;
+
+    width:220px;
+    max-width:calc(100vw - 40px);
+
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:10px;
+
+    flex-direction:column;
+    padding:15px;
+    gap:10px;
+
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(-10px);
+    transition:0.25s;
+  }
+
+  .menu-open .nav-links{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+  }
+}
+
+/* HERO */
+
+.hero{
+  text-align:center;
+  padding:140px 20px 60px;
+}
+
+/* ABOUT */
+
+.about{
+  max-width:600px;
+  margin:auto;
+  text-align:center;
+}
+
+/* GALLERY */
+
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:20px;
+  padding:20px 5%;
+}
+
+.art{grid-column:span 2;}
+.art.horizontal{grid-column:span 4;}
+
+.art img{
+  width:100%;
+  display:block;
+  cursor:pointer;
+}
+
+/* CAPTION */
+
+.caption h3{
+  font-size:0.9rem;
+  margin:6px 0;
+}
+
+.caption p{
+  font-size:0.75rem;
+  color:var(--muted);
+}
+
+/* LIGHTBOX — POPRAWIONY */
+
+#lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  padding:40px; /* kluczowe */
+  z-index:2000;
+}
+
+#lightbox img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain; /* KLUCZ */
+  border-radius:4px;
+}
+
+/* CLOSE */
+
+#close{
+  position:absolute;
+  top:20px;
+  right:30px;
+  font-size:28px;
+  cursor:pointer;
+  color:#fff;
+}
+
+/* SCROLL BUTTON — NOWY */
+
+#toTop{
+  position:fixed;
+  bottom:30px;
+  right:30px;
+
+  width:48px;
+  height:48px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  border-radius:50%;
+  background:var(--bg);
+  border:1px solid var(--border);
+
+  font-size:20px;
+  color:var(--text);
+
+  cursor:pointer;
+
+  box-shadow:0 4px 12px rgba(0,0,0,0.4);
+
+  opacity:0;
+  pointer-events:none;
+  transition:0.3s;
+}
+
+#toTop.visible{
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* MOBILE GRID */
+
+@media(max-width:768px){
+  .gallery{grid-template-columns:1fr;}
+  .art,.art.horizontal{grid-column:span 1;}
+}
+
+/* CONTACT */
+.contact{
+  text-align:center;
+  padding:40px 20px;
+}
+
+/* FUTER */
+.futer{
+  text-align:center;
+  padding:20px;
+  color:var(--muted);
+  font-size:0.75rem;
+}
+
