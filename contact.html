@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pl" data-theme="dark">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kontakt — Paweł Batura</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+--bg:#fff;
+--text:#111;
+--muted:#666;
+--line:rgba(0,0,0,.15)
+}
+
+html[data-theme="dark"]{
+--bg:#0e0e0e;
+--text:#eaeaea;
+--muted:#888;
+--line:rgba(255,255,255,.2)
+}
+
+body{
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+background:var(--bg);
+color:var(--text);
+line-height:1.7;
+padding-top:60px;
+}
+
+/* NAV */
+.nav{
+position:fixed;
+top:0;
+width:100%;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:var(--bg);
+border-bottom:1px solid var(--line);
+z-index:1000;
+}
+
+.menu-toggle{
+display:none;
+cursor:pointer;
+font-size:22px;
+}
+
+.nav-links{
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:28px;
+}
+
+.nav-links a{
+text-decoration:none;
+color:var(--muted);
+font-size:14px;
+font-weight:400;
+letter-spacing:0.2px;
+}
+
+.nav-links a:hover{color:var(--text)}
+
+.controls{
+display:flex;
+gap:16px;
+align-items:center;
+}
+
+.theme-toggle,
+.lang-toggle{
+cursor:pointer;
+font-size:14px;
+}
+
+/* CONTACT */
+.contact{
+max-width:700px;
+margin:120px auto 60px;
+padding:0 20px;
+display:flex;
+flex-direction:column;
+gap:30px;
+}
+
+.contact-block{
+border:1px solid var(--line);
+padding:20px;
+}
+
+.contact-title{
+font-size:14px;
+color:var(--muted);
+margin-bottom:8px;
+}
+
+.contact-value{
+font-size:18px;
+}
+
+.contact-value a{
+color:var(--text);
+text-decoration:none;
+}
+
+.copy-btn{
+margin-top:10px;
+font-size:12px;
+color:var(--muted);
+cursor:pointer;
+}
+
+.copy-btn:hover{color:var(--text)}
+
+/* FOOTER */
+footer{
+margin-top:70px;
+padding:30px 20px;
+text-align:center;
+border-top:1px solid var(--line)
+}
+
+/* MOBILE */
+@media(max-width:768px){
+.menu-toggle{display:block}
+
+.nav-links{
+top:60px;
+flex-direction:column;
+background:var(--bg);
+border:1px solid var(--line);
+padding:14px 20px;
+display:none;
+text-align:center;
+min-width:180px;
+}
+
+.nav-links.active{display:flex}
+}
+</style>
+</head>
+
+<body>
+
+<nav class="nav">
+<div class="menu-toggle">☰</div>
+
+<div class="nav-links">
+<a href="index.html" data-pl="O artyście" data-en="About">O artyście</a>
+<a href="gallery.html" data-pl="Galeria" data-en="Gallery">Galeria</a>
+<a href="contact.html" data-pl="Kontakt" data-en="Contact">Kontakt</a>
+</div>
+
+<div class="controls">
+<div class="theme-toggle">◐</div>
+<div class="lang-toggle">EN</div>
+</div>
+</nav>
+
+<section class="contact">
+
+<div class="contact-block">
+<div class="contact-title"
+data-pl="Email"
+data-en="Email">
+Email
+</div>
+
+<div class="contact-value">
+<a href="mailto:pawelbatura@gmail.com" id="email">
+pawelbatura@gmail.com
+</a>
+</div>
+
+<div class="copy-btn"
+data-pl="Kopiuj adres"
+data-en="Copy email"
+onclick="copyEmail()">
+Kopiuj adres
+</div>
+</div>
+
+<div class="contact-block">
+<div class="contact-title">Saatchi Art</div>
+
+<div class="contact-value">
+<a href="https://www.saatchiart.com/pawelbatura" target="_blank">
+saatchiart.com/pawelbatura
+</a>
+</div>
+</div>
+
+</section>
+
+<footer>
+<p>© 2026 Paweł Batura</p>
+</footer>
+
+<script>
+// MENU
+const toggle=document.querySelector('.menu-toggle');
+const nav=document.querySelector('.nav-links');
+toggle.onclick=()=>nav.classList.toggle('active');
+
+// THEME
+document.querySelector('.theme-toggle').onclick=()=>{
+const html=document.documentElement;
+html.setAttribute('data-theme',
+html.getAttribute('data-theme')==='dark'?'light':'dark');
+};
+
+// COPY EMAIL
+function copyEmail(){
+  const email=document.getElementById('email').innerText;
+  navigator.clipboard.writeText(email);
+}
+
+// LANGUAGE
+const langBtn=document.querySelector('.lang-toggle');
+let lang=localStorage.getItem('lang')||'pl';
+
+function applyLang(){
+document.querySelectorAll('[data-pl]').forEach(el=>{
+  el.innerText=el.dataset[lang];
+});
+langBtn.innerText=lang==='pl'?'EN':'PL';
+}
+
+applyLang();
+
+langBtn.onclick=()=>{
+lang=lang==='pl'?'en':'pl';
+localStorage.setItem('lang',lang);
+applyLang();
+};
+</script>
+
+</body>
+</html>

@@ -1,123 +1,259 @@
 <!DOCTYPE html>
 <html lang="pl" data-theme="dark">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paweł Batura</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paweł Batura</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+--bg:#fff;
+--text:#111;
+--muted:#666;
+--line:rgba(0,0,0,.15)
+}
+
+html[data-theme="dark"]{
+--bg:#0e0e0e;
+--text:#eaeaea;
+--muted:#888;
+--line:rgba(255,255,255,.2)
+}
+
+body{
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+background:var(--bg);
+color:var(--text);
+line-height:1.7;
+padding-top:60px;
+}
+
+/* NAV */
+.nav{
+position:fixed;
+top:0;
+width:100%;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:var(--bg);
+border-bottom:1px solid var(--line);
+z-index:1000;
+}
+
+.menu-toggle{
+display:none;
+cursor:pointer;
+font-size:22px;
+}
+
+.nav-links{
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:28px;
+}
+
+.nav-links a{
+text-decoration:none;
+color:var(--muted);
+font-size:14px;
+font-weight:400;
+letter-spacing:0.2px;
+}
+
+.nav-links a:hover{color:var(--text)}
+
+.controls{
+display:flex;
+gap:16px;
+align-items:center;
+}
+
+.theme-toggle,
+.lang-toggle{
+cursor:pointer;
+font-size:14px;
+}
+
+/* HERO */
+.hero{
+max-width:900px;
+margin:80px auto 40px;
+padding:0 20px;
+}
+
+.hero h1{
+font-size:42px;
+font-weight:400;
+margin-bottom:10px;
+}
+
+.hero p{
+color:var(--muted);
+}
+
+/* ABOUT */
+.about{
+max-width:700px;
+margin:40px auto;
+padding:0 20px;
+}
+
+.about p{
+font-size:15px;
+}
+
+/* EXHIBITIONS */
+.exhibitions{
+max-width:700px;
+margin:60px auto;
+padding:0 20px;
+}
+
+.exhibitions h2{
+font-size:16px;
+font-weight:400;
+margin-bottom:16px;
+color:var(--muted);
+}
+
+.exhibitions ul{
+list-style:none;
+}
+
+.exhibitions li{
+margin-bottom:10px;
+color:var(--muted);
+}
+
+/* FOOTER */
+footer{
+margin-top:80px;
+padding:30px 20px;
+text-align:center;
+border-top:1px solid var(--line)
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+.menu-toggle{display:block}
+
+.nav-links{
+top:60px;
+flex-direction:column;
+background:var(--bg);
+border:1px solid var(--line);
+padding:14px 20px;
+display:none;
+text-align:center;
+}
+
+.nav-links.active{display:flex}
+}
+</style>
 </head>
 
 <body>
 
 <nav class="nav">
-  <div class="menu-toggle">☰</div>
+<div class="menu-toggle">☰</div>
 
-  <div class="nav-links">
-    <a href="#top">O artyście</a>
-    <a href="#gallery">Galeria</a>
-    <a href="#contact">Kontakt</a>
-  </div>
+<div class="nav-links">
+<a href="index.html" data-pl="O artyście" data-en="About">O artyście</a>
+<a href="gallery.html" data-pl="Galeria" data-en="Gallery">Galeria</a>
+<a href="contact.html" data-pl="Kontakt" data-en="Contact">Kontakt</a>
+</div>
 
-  <div class="theme-toggle">◐</div>
+<div class="controls">
+<div class="theme-toggle">◐</div>
+<div class="lang-toggle">EN</div>
+</div>
 </nav>
 
-<header id="top" class="hero">
-  <h1>Paweł Batura</h1>
-  <p>malarstwo • ekspresja • abstrakcja</p>
+<header class="hero">
+<h1>Paweł Batura</h1>
+
+<p 
+data-pl="malarstwo • ekspresja • abstrakcja"
+data-en="painting • expression • abstraction">
+malarstwo • ekspresja • abstrakcja
+</p>
 </header>
 
-<section id="about" class="about">
-  <p>I work in oil painting, moving between figuration and abstraction, with a particular affinity for organic abstraction. I am interested in fluid, ambiguous forms that evoke organic structures, hovering at the edge of recognizability.
-I am also drawn to Dada and Surrealism, especially in formal terms — in the way the image is constructed, elements are juxtaposed, and composition is approached freely. I do not adhere to a fixed style. I treat the canvas as a working space where both compositional decisions and the process of painting itself — its rhythm, gesture, and materiality — are important.
-My paintings often emerge without a predetermined plan and develop during the process, shaped by the relationships between color, form, and the material of paint.
-  </p>
+<section class="about">
+<p
+data-pl="Pracuję w technice malarstwa olejnego, poruszając się pomiędzy figuracją a abstrakcją, ze szczególnym zainteresowaniem dla abstrakcji organicznej. Interesują mnie płynne, niejednoznaczne formy, które przywołują struktury organiczne, balansując na granicy rozpoznawalności. Bliskie są mi również dadaizm i surrealizm — zwłaszcza w sensie formalnym: w sposobie budowania obrazu, zestawiania elementów i swobodnego podejścia do kompozycji. Nie trzymam się jednego stylu. Traktuję płótno jako przestrzeń pracy, w której równie ważne są decyzje kompozycyjne, jak i sam proces malarski — jego rytm, gest i materialność. Obrazy powstają bez z góry ustalonego planu i rozwijają się w trakcie pracy, poprzez relacje koloru, formy i materii farby."
+data-en="I work in oil painting, moving between figuration and abstraction, with a particular affinity for organic abstraction. I am interested in fluid, ambiguous forms that evoke organic structures, hovering at the edge of recognizability. I am also drawn to Dada and Surrealism, especially in formal terms — in the way the image is constructed, elements are juxtaposed, and composition is approached freely. I do not adhere to a fixed style. I treat the canvas as a working space where both compositional decisions and the process of painting itself — its rhythm, gesture, and materiality — are important. My paintings often emerge without a predetermined plan and develop during the process, shaped by the relationships between color, form, and the material of paint."
+>
+Pracuję w technice malarstwa olejnego...
+</p>
 </section>
 
-<section id="gallery" class="gallery">
+<section class="exhibitions">
+<h2 data-pl="Wybrane wystawy" data-en="Selected exhibitions">
+Wybrane wystawy
+</h2>
 
-  <!-- WSZYSTKIE TWOJE PRACE -->
-
-  <div class="art horizontal">
-    <img src="img/thumbs/emergence.jpg" data-full="img/full/emergence.jpg">
-    <div class="caption">
-      <h3>Emergence of Structures at Phase Boundaries</h3>
-      <p>2026 • olej na płótnie • 120 × 90 cm</p>
-      <a href="https://www.saatchiart.com/en-pl/art/Painting-Emergence-of-Structures-at-Phase-Boundaries/860524/13805751" target="_blank" class="buy">Zobacz na Saatchi Art</a>
-    </div>
-  </div>
-
-  <div class="art horizontal">
-    <img src="img/thumbs/gradients.jpg" data-full="img/full/gradients.jpg">
-    <div class="caption">
-      <h3>Gradients Map of Turbulence in a Disordered Field</h3>
-      <p>2026 • olej na płótnie • 100 × 70 cm</p>
-      <a href="https://www.saatchiart.com/en-pl/art/Painting-Gradients-map-of-turbulence-in-a-disordered-field/860524/13731343" target="_blank" class="buy">Zobacz na Saatchi Art</a>
-    </div>
-  </div>
-
-  <div class="art">
-    <img src="img/thumbs/anisotropy4.jpg" data-full="img/full/anisotropy4.jpg">
-    <div class="caption">
-      <h3>Anisotropy IV — Between Diffusion and Sedimentation</h3>
-      <p>2026 • olej na płótnie • 70 × 100 cm</p>
-      <a href="https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-IV-Between-Diffusion-and-Sedimentation/860524/13739301" target="_blank" class="buy">Zobacz na Saatchi Art</a>
-    </div>
-  </div>
-
-  <div class="art horizontal">
-    <img src="img/thumbs/anisotropy3.jpg" data-full="img/full/anisotropy3.jpg">
-    <div class="caption">
-      <h3>Anisotropy III — Boundary Structures</h3>
-      <p>2026 • olej na płótnie • 100 × 70 cm</p>
-      <a href="https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-III-Boundary-Structures/860524/13610387" target="_blank" class="buy">Zobacz na Saatchi Art</a>
-    </div>
-  </div>
-
-  <div class="art">
-    <img src="img/thumbs/anisotropy2.jpg" data-full="img/full/anisotropy2.jpg">
-    <div class="caption">
-      <h3>Anisotropy II — The Relativity of Boundary Conditions</h3>
-      <p>2026 • olej na płótnie • 40 × 60 cm</p>
-      <a href="https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-II-The-Relativity-of-Boundary-Conditions/860524/13501935" target="_blank" class="buy">Zobacz na Saatchi Art</a>
-    </div>
-  </div>
-
-  <div class="art">
-    <img src="img/thumbs/anisotropy1.jpg" data-full="img/full/anisotropy1.jpg">
-    <div class="caption">
-      <h3>Anisotropy I — Suppose Time Existed Painting</h3>
-      <p>2025 • olej na płótnie • 70 × 100 cm</p>
-      <a href="https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-I-Suppose-Time-Existed/860524/13192205" target="_blank" class="buy">Zobacz na Saatchi Art</a>
-    </div>
-  </div>
-
-  <div class="art horizontal">
-    <img src="img/thumbs/fractures.jpg" data-full="img/full/fractures.jpg">
-    <div class="caption">
-      <h3>Emergence of Structures at Phase Boundaries</h3>
-      <p>2026 • olej na płótnie • 100 × 70 cm</p>
-      <a href="https://www.saatchiart.com/en-pl/art/Painting-Fractures/860524/13098237" target="_blank" class="buy">Zobacz na Saatchi Art</a>
-    </div>
-  </div>
-
-</section>
-
-<section id="contact" class="contact">  
-  <p><a href="mailto:pawelbatura@gmail.com">pawelbatura@gmail.com</a></p>
+<ul>
+<li>2016 — Teatr Rampa — „Albedo Enceladus”</li>
+<li>2018 — Galeria Chłodna 20 — „Albedo”</li>
+<li>2020 — wystawa zbiorowa — Warszawa</li>
+</ul>
 </section>
 
 <footer>
-  <p class="futer">© 2026 Paweł Batura</p>
+<p>© 2026 Paweł Batura</p>
 </footer>
 
-<div id="lightbox">
-  <span id="close">&times;</span>
-  <img id="lightbox-img">
-</div>
+<script>
+// MENU
+const toggle=document.querySelector('.menu-toggle');
+const nav=document.querySelector('.nav-links');
 
-<button id="toTop">↑</button>
+toggle.addEventListener('click',()=>{
+  nav.classList.toggle('active');
+});
 
-<script src="script.js"></script>
+// THEME
+const themeBtn=document.querySelector('.theme-toggle');
+
+themeBtn.addEventListener('click',()=>{
+  const html=document.documentElement;
+  const current=html.getAttribute('data-theme');
+  html.setAttribute('data-theme', current==='dark' ? 'light' : 'dark');
+});
+
+// LANGUAGE (🔥 FINAL VERSION)
+const langBtn = document.querySelector('.lang-toggle');
+
+// domyślnie PL lub zapisany
+let lang = localStorage.getItem('lang') || 'pl';
+
+function applyLanguage(){
+  document.querySelectorAll('[data-pl]').forEach(el=>{
+    el.innerText = el.dataset[lang];
+  });
+
+  langBtn.innerText = lang === 'pl' ? 'EN' : 'PL';
+}
+
+// inicjalizacja
+applyLanguage();
+
+langBtn.addEventListener('click',()=>{
+  lang = lang === 'pl' ? 'en' : 'pl';
+
+  localStorage.setItem('lang', lang);
+
+  applyLanguage();
+});
+</script>
+
 </body>
 </html>
