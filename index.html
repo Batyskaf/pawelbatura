@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paweł Batura</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+--bg:#fff;
+--text:#111;
+--muted:#666;
+--line:rgba(0,0,0,.15)
+}
+
+html[data-theme="dark"]{
+--bg:#0e0e0e;
+--text:#eaeaea;
+--muted:#888;
+--line:rgba(255,255,255,.2)
+}
+
+body{
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+background:var(--bg);
+color:var(--text);
+line-height:1.7;
+padding-top:60px;
+}
+
+/* NAV */
+.nav{
+position:fixed;
+top:0;
+width:100%;
+padding:12px 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:var(--bg);
+border-bottom:1px solid var(--line);
+z-index:1000;
+}
+
+.menu-toggle{
+display:none;
+cursor:pointer;
+font-size:22px;
+}
+
+.nav-links{
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:28px;
+}
+
+.nav-links a{
+text-decoration:none;
+color:var(--muted);
+font-size:14px;
+font-weight:400;
+letter-spacing:0.2px;
+}
+
+.nav-links a:hover{color:var(--text)}
+
+.controls{
+display:flex;
+gap:16px;
+align-items:center;
+}
+
+.theme-toggle,
+.lang-toggle{
+cursor:pointer;
+font-size:14px;
+}
+
+/* HERO */
+.hero{
+max-width:900px;
+margin:80px auto 40px;
+padding:0 20px;
+}
+
+.hero h1{
+font-size:42px;
+font-weight:400;
+margin-bottom:10px;
+}
+
+.hero p{
+color:var(--muted);
+}
+
+/* 🔥 ORGANIC SLIDER */
+.mini-slider{
+  border: #a6a6a6 solid 2px;
+position:absolute;
+top:150px;
+right:22%;
+width:200px;
+height:250px;
+overflow:hidden;
+pointer-events:none;
+z-index:0;
+
+/* 🔥 prawdziwy fade ze wszystkich stron */
+/*-webkit-mask-image:
+linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,1) 25%),
+linear-gradient(to left, rgba(0,0,0,0), rgba(0,0,0,1) 25%),
+linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1) 25%),
+linear-gradient(to top, rgba(0,0,0,0), rgba(0,0,0,1) 25%);
+
+-webkit-mask-composite: intersect;
+
+mask-image:
+linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,1) 25%),
+linear-gradient(to left, rgba(0,0,0,0), rgba(0,0,0,1) 25%),
+linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1) 25%),
+linear-gradient(to top, rgba(0,0,0,0), rgba(0,0,0,1) 25%);
+
+mask-composite: intersect;*/
+}
+
+.mini-slider img{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:0;
+filter:blur(8px);
+transform:scale(1.08);
+
+transition:
+opacity 3s ease,
+filter 3s ease,
+transform 8s ease;
+
+mix-blend-mode:lighten;
+}
+
+.mini-slider img.active{
+opacity:.85;
+filter:blur(0px);
+transform:scale(1);
+}
+
+/* ABOUT */
+.about{
+max-width:700px;
+margin:40px auto;
+padding:0 20px;
+}
+
+.about p{
+font-size:15px;
+}
+
+/* EXHIBITIONS */
+.exhibitions{
+max-width:700px;
+margin:60px auto;
+padding:0 20px;
+}
+
+.exhibitions h2{
+font-size:16px;
+font-weight:400;
+margin-bottom:16px;
+color:var(--muted);
+}
+
+.exhibitions ul{
+list-style:none;
+}
+
+.exhibitions li{
+margin-bottom:10px;
+color:var(--muted);
+}
+
+/* FOOTER */
+footer{
+margin-top:80px;
+padding:30px 20px;
+text-align:center;
+border-top:1px solid var(--line)
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+.menu-toggle{display:block}
+
+.nav-links{
+top:60px;
+flex-direction:column;
+background:var(--bg);
+border:1px solid var(--line);
+padding:14px 20px;
+display:none;
+text-align:center;
+}
+
+.nav-links.active{display:flex}
+
+.mini-slider{
+display:none;
+}
+}
+</style>
+</head>
+
+<body>
+
+<nav class="nav">
+<div class="menu-toggle">☰</div>
+
+<div class="nav-links">
+<a href="index.html" data-pl="O artyście" data-en="About">O artyście</a>
+<a href="gallery.html" data-pl="Galeria" data-en="Gallery">Galeria</a>
+<a href="contact.html" data-pl="Kontakt" data-en="Contact">Kontakt</a>
+</div>
+
+<div class="controls">
+<div class="theme-toggle">◐</div>
+<div class="lang-toggle">EN</div>
+</div>
+</nav>
+
+<header class="hero">
+<h1>Paweł Batura</h1>
+
+<p 
+data-pl="malarstwo • ekspresja • abstrakcja"
+data-en="painting • expression • abstraction">
+malarstwo • ekspresja • abstrakcja
+</p>
+</header>
+
+<!-- SLIDER -->
+<div class="mini-slider"></div>
+
+<section class="about">
+<p
+data-pl="Pracuję w technice malarstwa olejnego, poruszając się pomiędzy figuracją a abstrakcją..."
+data-en="I work in oil painting, moving between figuration and abstraction..."
+>
+Pracuję w technice malarstwa olejnego...
+</p>
+</section>
+
+<section class="exhibitions">
+<h2 data-pl="Wybrane wystawy" data-en="Selected exhibitions">
+Wybrane wystawy
+</h2>
+
+<ul>
+<li>2016 — Teatr Rampa — „Albedo Enceladus”</li>
+<li>2018 — Galeria Chłodna 20 — „Albedo”</li>
+<li>2020 — wystawa zbiorowa — Warszawa</li>
+</ul>
+</section>
+
+<footer>
+<p>© 2026 Paweł Batura</p>
+</footer>
+
+<script>
+// MENU
+const toggle=document.querySelector('.menu-toggle');
+const nav=document.querySelector('.nav-links');
+
+toggle.addEventListener('click',()=>{
+  nav.classList.toggle('active');
+});
+
+// THEME
+const themeBtn=document.querySelector('.theme-toggle');
+
+themeBtn.addEventListener('click',()=>{
+  const html=document.documentElement;
+  const current=html.getAttribute('data-theme');
+  html.setAttribute('data-theme', current==='dark' ? 'light' : 'dark');
+});
+
+// LANGUAGE
+const langBtn = document.querySelector('.lang-toggle');
+let lang = localStorage.getItem('lang') || 'pl';
+
+function applyLanguage(){
+  document.querySelectorAll('[data-pl]').forEach(el=>{
+    el.innerText = el.dataset[lang];
+  });
+
+  langBtn.innerText = lang === 'pl' ? 'EN' : 'PL';
+}
+
+applyLanguage();
+
+langBtn.addEventListener('click',()=>{
+  lang = lang === 'pl' ? 'en' : 'pl';
+  localStorage.setItem('lang', lang);
+  applyLanguage();
+});
+
+// SLIDER
+const slider = document.querySelector('.mini-slider');
+
+const imgA = document.createElement('img');
+const imgB = document.createElement('img');
+
+slider.appendChild(imgA);
+slider.appendChild(imgB);
+
+let current = imgA;
+let next = imgB;
+
+const images = [
+  'img/thumbs/anisotropy1.jpg',
+  'img/thumbs/anisotropy2.jpg',
+  'img/thumbs/anisotropy3.jpg',
+  'img/thumbs/anisotropy4.jpg',
+  'img/thumbs/emergence.jpg',
+  'img/thumbs/fractures.jpg',
+  'img/thumbs/gradients.jpg'
+];
+
+let index = 0;
+
+function showNext(){
+  next.src = images[index];
+
+  next.classList.add('active');
+  current.classList.remove('active');
+
+  [current, next] = [next, current];
+
+  index = (index + 1) % images.length;
+}
+
+showNext();
+setInterval(showNext, 4500);
+</script>
+
+</body>
+</html>
