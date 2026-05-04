@@ -33,6 +33,9 @@
       <input type="hidden" name="_subject" value="Nowa wiadomość ze strony">
       <input type="hidden" name="_template" value="table">
 
+      <!-- anty-spam -->
+      <input type="text" name="_gotcha" style="display:none">
+
       <div class="contact-title" data-pl="Imię" data-en="Name">Imię</div>
       <input type="text" name="name" required>
 
@@ -79,16 +82,27 @@
 
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
+
+      success.style.display = "none";
+
       const data = new FormData(form);
 
-      await fetch(form.action, {
-        method: "POST",
-        body: data,
-        headers: { 'Accept': 'application/json' }
-      });
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
 
-      form.reset();
-      success.style.display = "block";
+        if (response.ok) {
+          form.reset();
+          success.style.display = "block";
+        } else {
+          alert("Błąd wysyłania. Spróbuj ponownie.");
+        }
+      } catch (error) {
+        alert("Brak połączenia z serwerem.");
+      }
     });
 
     const langBtn = document.querySelector('.lang-toggle');
