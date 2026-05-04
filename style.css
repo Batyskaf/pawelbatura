@@ -1,0 +1,397 @@
+/* =======================
+   RESET
+======================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+/* =======================
+   VARIABLES
+======================= */
+:root {
+  --bg: #ffffff;
+  --text: #111111;
+  --muted: #666666;
+  --line: rgba(0, 0, 0, 0.15);
+}
+
+html[data-theme="dark"] {
+  --bg: #0e0e0e;
+  --text: #eaeaea;
+  --muted: #888888;
+  --line: rgba(255, 255, 255, 0.2);
+}
+
+/* =======================
+   BASE
+======================= */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding-top: 60px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =======================
+   NAV
+======================= */
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  min-height: 60px;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  z-index: 1000;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.nav-links {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 28px;
+}
+
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--text);
+}
+
+.controls {
+  display: flex;
+  gap: 16px;
+}
+
+.theme-toggle,
+.lang-toggle {
+  cursor: pointer;
+  user-select: none;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.theme-toggle:hover,
+.lang-toggle:hover {
+  color: var(--text);
+}
+
+/* =======================
+   ABOUT
+======================= */
+.about {
+  max-width: 900px;
+  margin: 120px auto 60px;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.about h1 {
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.about p {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* =======================
+   TEXT + MINI SLIDER
+======================= */
+.about-top {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.about-text {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+/* =======================
+   MINI SLIDER
+======================= */
+.mini-slider {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.mini-slider img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 0.8s ease, transform 1.2s ease;
+}
+
+.mini-slider img.active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 2;
+}
+
+/* =======================
+   EXHIBITIONS
+======================= */
+.exhibitions ul {
+  list-style: none;
+}
+
+.exhibitions li {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+/* =======================
+   GALLERY
+======================= */
+.gallery {
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.art {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.media {
+  width: 90%;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.media img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  cursor: zoom-in;
+  transition: transform 0.3s ease;
+}
+
+.media img:hover {
+  transform: scale(1.03);
+}
+
+.caption {
+  width: 90%;
+}
+
+.caption h3 {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.caption p {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.buy {
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.buy:hover {
+  color: var(--text);
+}
+
+/* =======================
+   LIGHTBOX
+======================= */
+#lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.96);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+#lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+#close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 28px;
+  cursor: pointer;
+  color: white;
+}
+
+/* =======================
+   CONTACT
+======================= */
+.contact {
+  max-width: 700px;
+  margin: 120px auto 60px;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.contact-block {
+  border: 1px solid var(--line);
+  padding: 20px;
+}
+
+.contact-title {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--text);
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 10px 20px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.success {
+  display: none;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.saatchi-link {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: 0.2s;
+}
+
+.saatchi-link:hover {
+  color: var(--text);
+  border-bottom: 1px solid var(--text);
+}
+
+/* =======================
+   FOOTER
+======================= */
+footer {
+  margin-top: 70px;
+  padding: 30px 20px;
+  text-align: center;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* =======================
+   MOBILE
+======================= */
+@media (max-width: 768px) {
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    top: 60px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    padding: 14px 20px;
+    text-align: center;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .about-top {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-slider {
+    height: 220px;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .media {
+    height: 220px;
+  }
+}
+

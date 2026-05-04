@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pl" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kontakt — Paweł Batura</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <nav class="nav">
+    <div class="menu-toggle">☰</div>
+
+ <div class="nav-links">
+  <a href="index" data-link data-pl="O artyście" data-en="About">O artyście</a>
+  <a href="gallery" data-link data-pl="Galeria" data-en="Gallery">Galeria</a>
+  <a href="contact" data-link data-pl="Kontakt" data-en="Contact">Kontakt</a>
+</div>
+
+    <div class="controls">
+      <div class="theme-toggle">◐</div>
+      <div class="lang-toggle">EN</div>
+    </div>
+  </nav>
+
+  <section class="contact">
+
+    <form action="https://formspree.io/f/xpqbjpg1" method="POST" class="contact-block" id="form">
+
+      <input type="hidden" name="_subject" value="Nowa wiadomość ze strony">
+      <input type="hidden" name="_template" value="table">
+
+      <div class="contact-title" data-pl="Imię" data-en="Name">Imię</div>
+      <input type="text" name="name" required>
+
+      <div class="contact-title" data-pl="Email" data-en="Email">Email</div>
+      <input type="email" name="email" required>
+
+      <div class="contact-title" data-pl="Wiadomość" data-en="Message">Wiadomość</div>
+      <textarea name="message" rows="5" required></textarea>
+
+      <button type="submit" data-pl="Wyślij" data-en="Send">Wyślij</button>
+
+      <div class="success" id="successMsg">
+        ✓ Wiadomość została wysłana
+      </div>
+
+    </form>
+
+    <div class="contact-block">
+      <div class="contact-title">Saatchi Art</div>
+      <div class="contact-value">
+        <a href="https://www.saatchiart.com/pawelbatura" target="_blank" class="saatchi-link">
+          saatchiart.com/pawelbatura
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    <p>© 2026 Paweł Batura</p>
+  </footer>
+
+  <script>
+    document.querySelector('.menu-toggle').onclick = () =>
+      document.querySelector('.nav-links').classList.toggle('active');
+
+    document.querySelector('.theme-toggle').onclick = () => {
+      const html = document.documentElement;
+      html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+    };
+
+    const form = document.getElementById("form");
+    const success = document.getElementById("successMsg");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const data = new FormData(form);
+
+      await fetch(form.action, {
+        method: "POST",
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      form.reset();
+      success.style.display = "block";
+    });
+
+    const langBtn = document.querySelector('.lang-toggle');
+    let lang = localStorage.getItem('lang') || 'pl';
+
+    function applyLang() {
+      document.querySelectorAll('[data-pl]').forEach(el => {
+        el.textContent = el.dataset[lang];
+      });
+      langBtn.textContent = lang === 'pl' ? 'EN' : 'PL';
+    }
+
+    applyLang();
+
+    langBtn.onclick = () => {
+      lang = lang === 'pl' ? 'en' : 'pl';
+      localStorage.setItem('lang', lang);
+      applyLang();
+    };
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const url = this.getAttribute('href');
+
+        fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            document.open();
+            document.write(html);
+            document.close();
+            history.pushState(null, '', url);
+          });
+      });
+    });
+
+    window.onpopstate = () => location.reload();
+  </script>
+
+</body>
+
+</html>
