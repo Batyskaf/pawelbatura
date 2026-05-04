@@ -58,6 +58,7 @@
       text-decoration: none;
       color: var(--muted);
       font-size: 14px;
+      cursor: pointer;
     }
 
     .nav-links a:hover { color: var(--text) }
@@ -116,7 +117,6 @@
       margin-top: 10px;
     }
 
-    /* SAATCHI — zostaje biały */
     .contact-value a {
       color: var(--text);
       text-decoration: none;
@@ -166,7 +166,6 @@
 
 <section class="contact">
 
-  <!-- FORMULARZ -->
   <form action="https://formspree.io/f/xpqbjpg1" method="POST" class="contact-block" id="form">
 
     <input type="hidden" name="_subject" value="Nowa wiadomość ze strony">
@@ -189,7 +188,6 @@
 
   </form>
 
-  <!-- SAATCHI -->
   <div class="contact-block">
     <div class="contact-title">Saatchi Art</div>
     <div class="contact-value">
@@ -206,14 +204,12 @@
 </footer>
 
 <script>
-  const toggle = document.querySelector('.menu-toggle');
-  const nav = document.querySelector('.nav-links');
-  toggle.onclick = () => nav.classList.toggle('active');
+  document.querySelector('.menu-toggle').onclick = () =>
+    document.querySelector('.nav-links').classList.toggle('active');
 
   document.querySelector('.theme-toggle').onclick = () => {
     const html = document.documentElement;
-    html.setAttribute('data-theme',
-      html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
   };
 
   const form = document.getElementById("form");
@@ -238,9 +234,9 @@
 
   function applyLang() {
     document.querySelectorAll('[data-pl]').forEach(el => {
-      el.innerText = el.dataset[lang];
+      el.textContent = el.dataset[lang];
     });
-    langBtn.innerText = lang === 'pl' ? 'EN' : 'PL';
+    langBtn.textContent = lang === 'pl' ? 'EN' : 'PL';
   }
 
   applyLang();
@@ -250,6 +246,24 @@
     localStorage.setItem('lang', lang);
     applyLang();
   };
+
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const url = this.getAttribute('href');
+
+      fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          document.open();
+          document.write(html);
+          document.close();
+          history.pushState(null, '', url);
+        });
+    });
+  });
+
+  window.onpopstate = () => location.reload();
 </script>
 
 </body>
