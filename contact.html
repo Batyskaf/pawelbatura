@@ -116,6 +116,12 @@
       margin-top: 10px;
     }
 
+    /* SAATCHI — zostaje biały */
+    .contact-value a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
     footer {
       margin-top: 70px;
       padding: 30px 20px;
@@ -161,7 +167,10 @@
 <section class="contact">
 
   <!-- FORMULARZ -->
-  <form action="https://formspree.io/f/xpqbpjgl" method="POST" class="contact-block" id="form">
+  <form action="https://formspree.io/f/xpqbjpg1" method="POST" class="contact-block" id="form">
+
+    <input type="hidden" name="_subject" value="Nowa wiadomość ze strony">
+    <input type="hidden" name="_template" value="table">
 
     <div class="contact-title" data-pl="Imię" data-en="Name">Imię</div>
     <input type="text" name="name" required>
@@ -180,7 +189,7 @@
 
   </form>
 
-  <!-- DODATKOWY BLOK -->
+  <!-- SAATCHI -->
   <div class="contact-block">
     <div class="contact-title">Saatchi Art</div>
     <div class="contact-value">
@@ -207,7 +216,6 @@
       html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
   };
 
-  // FORM SUCCESS (bez przeładowania)
   const form = document.getElementById("form");
   const success = document.getElementById("successMsg");
 
@@ -225,7 +233,6 @@
     success.style.display = "block";
   });
 
-  // LANGUAGE
   const langBtn = document.querySelector('.lang-toggle');
   let lang = localStorage.getItem('lang') || 'pl';
 
