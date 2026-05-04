@@ -7,11 +7,7 @@
   <title>Kontakt — Paweł Batura</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0 }
 
     :root {
       --bg: #fff;
@@ -35,7 +31,6 @@
       padding-top: 60px;
     }
 
-    /* NAV */
     .nav {
       position: fixed;
       top: 0;
@@ -49,11 +44,7 @@
       z-index: 1000;
     }
 
-    .menu-toggle {
-      display: none;
-      cursor: pointer;
-      font-size: 22px;
-    }
+    .menu-toggle { display: none; cursor: pointer; font-size: 22px; }
 
     .nav-links {
       position: absolute;
@@ -67,29 +58,15 @@
       text-decoration: none;
       color: var(--muted);
       font-size: 14px;
-      font-weight: 400;
-      letter-spacing: 0.2px;
     }
 
-    .nav-links a:hover {
-      color: var(--text)
-    }
+    .nav-links a:hover { color: var(--text) }
 
-    .controls {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-    }
+    .controls { display: flex; gap: 16px; align-items: center; }
 
-    .theme-toggle,
-    .lang-toggle {
-      cursor: pointer;
-      font-size: 14px;
-    }
+    .theme-toggle, .lang-toggle { cursor: pointer; font-size: 14px; }
 
-    /* CONTACT */
     .contact {
-      min-height: 600px;
       max-width: 700px;
       margin: 120px auto 60px;
       padding: 0 20px;
@@ -109,27 +86,36 @@
       margin-bottom: 8px;
     }
 
-    .contact-value {
-      font-size: 18px;
-    }
-
-    .contact-value a {
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      background: transparent;
+      border: 1px solid var(--line);
       color: var(--text);
-      text-decoration: none;
+      margin-bottom: 15px;
+      font-family: inherit;
     }
 
-    .copy-btn {
-      margin-top: 10px;
-      font-size: 12px;
-      color: var(--muted);
+    button {
+      padding: 10px 20px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
       cursor: pointer;
     }
 
-    .copy-btn:hover {
-      color: var(--text)
+    button:hover {
+      background: var(--text);
+      color: var(--bg);
     }
 
-    /* FOOTER */
+    .success {
+      display: none;
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
     footer {
       margin-top: 70px;
       padding: 30px 20px;
@@ -137,11 +123,8 @@
       border-top: 1px solid var(--line)
     }
 
-    /* MOBILE */
     @media(max-width:768px) {
-      .menu-toggle {
-        display: block
-      }
+      .menu-toggle { display: block }
 
       .nav-links {
         top: 60px;
@@ -151,106 +134,116 @@
         padding: 14px 20px;
         display: none;
         text-align: center;
-        min-width: 180px;
       }
 
-      .nav-links.active {
-        display: flex
-      }
+      .nav-links.active { display: flex }
     }
   </style>
 </head>
 
 <body>
 
-  <nav class="nav">
-    <div class="menu-toggle">☰</div>
+<nav class="nav">
+  <div class="menu-toggle">☰</div>
 
-    <div class="nav-links">
-      <a href="index.html" data-pl="O artyście" data-en="About">O artyście</a>
-      <a href="gallery.html" data-pl="Galeria" data-en="Gallery">Galeria</a>
-      <a href="contact.html" data-pl="Kontakt" data-en="Contact">Kontakt</a>
+  <div class="nav-links">
+    <a href="index.html" data-pl="O artyście" data-en="About">O artyście</a>
+    <a href="gallery.html" data-pl="Galeria" data-en="Gallery">Galeria</a>
+    <a href="contact.html" data-pl="Kontakt" data-en="Contact">Kontakt</a>
+  </div>
+
+  <div class="controls">
+    <div class="theme-toggle">◐</div>
+    <div class="lang-toggle">EN</div>
+  </div>
+</nav>
+
+<section class="contact">
+
+  <!-- FORMULARZ -->
+  <form action="https://formspree.io/f/FORM_ID" method="POST" class="contact-block" id="form">
+
+    <div class="contact-title" data-pl="Imię" data-en="Name">Imię</div>
+    <input type="text" name="name" required>
+
+    <div class="contact-title" data-pl="Email" data-en="Email">Email</div>
+    <input type="email" name="email" required>
+
+    <div class="contact-title" data-pl="Wiadomość" data-en="Message">Wiadomość</div>
+    <textarea name="message" rows="5" required></textarea>
+
+    <button type="submit" data-pl="Wyślij" data-en="Send">Wyślij</button>
+
+    <div class="success" id="successMsg">
+      ✓ Wiadomość została wysłana
     </div>
 
-    <div class="controls">
-      <div class="theme-toggle">◐</div>
-      <div class="lang-toggle">EN</div>
+  </form>
+
+  <!-- DODATKOWY BLOK -->
+  <div class="contact-block">
+    <div class="contact-title">Saatchi Art</div>
+    <div class="contact-value">
+      <a href="https://www.saatchiart.com/pawelbatura" target="_blank">
+        saatchiart.com/pawelbatura
+      </a>
     </div>
-  </nav>
+  </div>
 
-  <section class="contact">
+</section>
 
-    <div class="contact-block">
-      <div class="contact-title" data-pl="Email" data-en="Email">
-        Email
-      </div>
+<footer>
+  <p>© 2026 Paweł Batura</p>
+</footer>
 
-      <div class="contact-value">
-        <a href="mailto:pawelbatura@gmail.com" id="email">
-          pawelbatura@gmail.com
-        </a>
-      </div>
+<script>
+  const toggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.nav-links');
+  toggle.onclick = () => nav.classList.toggle('active');
 
-      <div class="copy-btn" data-pl="Kopiuj adres" data-en="Copy email" onclick="copyEmail()">
-        Kopiuj adres
-      </div>
-    </div>
+  document.querySelector('.theme-toggle').onclick = () => {
+    const html = document.documentElement;
+    html.setAttribute('data-theme',
+      html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  };
 
-    <div class="contact-block">
-      <div class="contact-title">Saatchi Art</div>
+  // FORM SUCCESS (bez przeładowania)
+  const form = document.getElementById("form");
+  const success = document.getElementById("successMsg");
 
-      <div class="contact-value">
-        <a href="https://www.saatchiart.com/pawelbatura" target="_blank">
-          saatchiart.com/pawelbatura
-        </a>
-      </div>
-    </div>
+  form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const data = new FormData(form);
 
-  </section>
+    await fetch(form.action, {
+      method: "POST",
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
 
-  <footer>
-    <p>© 2026 Paweł Batura</p>
-  </footer>
+    form.reset();
+    success.style.display = "block";
+  });
 
-  <script>
-    // MENU
-    const toggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('.nav-links');
-    toggle.onclick = () => nav.classList.toggle('active');
+  // LANGUAGE
+  const langBtn = document.querySelector('.lang-toggle');
+  let lang = localStorage.getItem('lang') || 'pl';
 
-    // THEME
-    document.querySelector('.theme-toggle').onclick = () => {
-      const html = document.documentElement;
-      html.setAttribute('data-theme',
-        html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-    };
+  function applyLang() {
+    document.querySelectorAll('[data-pl]').forEach(el => {
+      el.innerText = el.dataset[lang];
+    });
+    langBtn.innerText = lang === 'pl' ? 'EN' : 'PL';
+  }
 
-    // COPY EMAIL
-    function copyEmail() {
-      const email = document.getElementById('email').innerText;
-      navigator.clipboard.writeText(email);
-    }
+  applyLang();
 
-    // LANGUAGE
-    const langBtn = document.querySelector('.lang-toggle');
-    let lang = localStorage.getItem('lang') || 'pl';
-
-    function applyLang() {
-      document.querySelectorAll('[data-pl]').forEach(el => {
-        el.innerText = el.dataset[lang];
-      });
-      langBtn.innerText = lang === 'pl' ? 'EN' : 'PL';
-    }
-
+  langBtn.onclick = () => {
+    lang = lang === 'pl' ? 'en' : 'pl';
+    localStorage.setItem('lang', lang);
     applyLang();
-
-    langBtn.onclick = () => {
-      lang = lang === 'pl' ? 'en' : 'pl';
-      localStorage.setItem('lang', lang);
-      applyLang();
-    };
-  </script>
+  };
+</script>
 
 </body>
-
 </html>
