@@ -31,11 +31,9 @@
          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
          background: var(--bg);
          color: var(--text);
-         line-height: 1.7;
-         padding-top: 60px;
+         padding-top: 60px
       }
 
-      /* NAV */
       .nav {
          position: fixed;
          top: 0;
@@ -46,13 +44,13 @@
          align-items: center;
          background: var(--bg);
          border-bottom: 1px solid var(--line);
-         z-index: 1000;
+         z-index: 1000
       }
 
       .menu-toggle {
          display: none;
-         cursor: pointer;
          font-size: 22px;
+         cursor: pointer
       }
 
       .nav-links {
@@ -60,15 +58,12 @@
          left: 50%;
          transform: translateX(-50%);
          display: flex;
-         gap: 28px;
+         gap: 28px
       }
 
       .nav-links a {
-         text-decoration: none;
          color: var(--muted);
-         font-size: 14px;
-         font-weight: 400;
-         letter-spacing: 0.2px;
+         text-decoration: none
       }
 
       .nav-links a:hover {
@@ -77,95 +72,85 @@
 
       .controls {
          display: flex;
-         gap: 16px;
-         align-items: center;
+         gap: 16px
       }
 
       .theme-toggle,
       .lang-toggle {
          cursor: pointer;
-         font-size: 14px
+         user-select: none
       }
 
-      /* GALLERY */
       .gallery {
          max-width: 1100px;
          margin: 60px auto;
          padding: 0 20px;
          display: grid;
          grid-template-columns: 1fr 1fr;
-         gap: 40px;
+         gap: 40px
       }
 
       .art {
          display: flex;
          flex-direction: column;
-         gap: 12px;
          align-items: center;
+         gap: 12px
       }
 
-      .art .media {
+      .media {
          width: 90%;
          height: 280px;
          display: flex;
-         align-items: center;
-         justify-content: flex-start;
+         align-items: center
       }
 
-      .art img {
-         max-height: 100%;
+      .media img {
          max-width: 100%;
-         width: auto;
-         height: auto;
+         max-height: 100%;
          object-fit: contain;
-         cursor: pointer;
-         transition: 0.4s ease;
+         cursor: zoom-in;
+         transition: .3s
+      }
+
+      .media img:hover {
+         transform: scale(1.03)
       }
 
       .caption {
-         width: 90%;
-         text-align: left;
-      }
-
-      .caption h3 {
-         font-weight: 400;
-         font-size: 16px;
+         width: 90%
       }
 
       .caption p {
          color: var(--muted);
-         font-size: 13px;
+         font-size: 13px
       }
 
       .buy {
-         display: inline-block;
-         margin-top: 6px;
          font-size: 13px;
          color: var(--muted);
-         text-decoration: none;
+         text-decoration: none
       }
 
       .buy:hover {
          color: var(--text)
       }
 
-      /* LIGHTBOX */
       #lightbox {
          position: fixed;
          top: 0;
          left: 0;
          width: 100%;
          height: 100%;
-         background: rgba(0, 0, 0, 0.9);
+         background: rgba(0, 0, 0, .9);
          display: none;
          align-items: center;
          justify-content: center;
-         z-index: 2000;
+         z-index: 2000
       }
 
       #lightbox img {
          max-width: 90%;
-         max-height: 90%;
+         max-height: 90%
       }
 
       #close {
@@ -173,31 +158,30 @@
          top: 20px;
          right: 30px;
          font-size: 28px;
-         cursor: pointer;
+         cursor: pointer
       }
 
-      /* FOOTER */
       footer {
          margin-top: 70px;
-         padding: 30px 20px;
+         padding: 30px;
          text-align: center;
          border-top: 1px solid var(--line)
       }
 
-      /* MOBILE */
       @media(max-width:768px) {
          .menu-toggle {
             display: block
          }
 
          .nav-links {
-            top: 60px;
-            flex-direction: column;
-            background: var(--bg);
-            border: 1px solid var(--line);
-            padding: 14px 20px;
             display: none;
-            text-align: center;
+            flex-direction: column;
+            top: 60px;
+            background: var(--bg);
+            width: 100%;
+            left: 0;
+            transform: none;
+            padding: 20px
          }
 
          .nav-links.active {
@@ -205,7 +189,7 @@
          }
 
          .gallery {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr
          }
       }
    </style>
@@ -215,13 +199,11 @@
 
    <nav class="nav">
       <div class="menu-toggle">☰</div>
-
       <div class="nav-links">
          <a href="index.html" data-pl="O artyście" data-en="About">O artyście</a>
          <a href="gallery.html" data-pl="Galeria" data-en="Gallery">Galeria</a>
          <a href="contact.html" data-pl="Kontakt" data-en="Contact">Kontakt</a>
       </div>
-
       <div class="controls">
          <div class="theme-toggle">◐</div>
          <div class="lang-toggle">EN</div>
@@ -230,128 +212,211 @@
 
    <section class="gallery">
 
-      <!-- 1 -->
       <div class="art">
-         <div class="media">
-            <img src="img/thumbs/emergence.jpg" data-full="img/full/emergence.jpg">
+         <div class="media"><img src="img/thumbs/emergence.jpg" data-full="img/full/emergence.jpg" alt="Emergence">
          </div>
          <div class="caption">
             <h3>Emergence of Structures at Phase Boundaries</h3>
-            <p data-pl="2026 • olej na płótnie • 120 × 90 cm" data-en="2026 • oil on canvas • 120 × 90 cm">
-               2026 • olej na płótnie • 120 × 90 cm
-            </p>
-            <a class="buy"
-               href="https://www.saatchiart.com/en-pl/art/Painting-Emergence-of-Structures-at-Phase-Boundaries/860524/13805751"
-               target="_blank" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art">
-               Zobacz na Saatchi Art
-            </a>
+            <p data-pl="2026 • olej na płótnie • 120 × 90 cm" data-en="2026 • oil on canvas • 120 × 90 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
+               href="https://www.saatchiart.com/en-pl/art/Painting-Fractures/860524/13098237" target="_blank"></a>
          </div>
       </div>
 
-      <!-- 2 -->
       <div class="art">
-         <div class="media">
-            <img src="img/thumbs/gradients.jpg" data-full="img/full/gradients.jpg">
+         <div class="media"><img src="img/thumbs/gradients.jpg" data-full="img/full/gradients.jpg" alt="Gradients">
          </div>
          <div class="caption">
-            <h3>Gradients Map of Turbulence in a Disordered Field</h3>
-            <p data-pl="2026 • olej na płótnie • 100 × 70 cm" data-en="2026 • oil on canvas • 100 × 70 cm">
-               2026 • olej na płótnie • 100 × 70 cm
-            </p>
-            <a class="buy"
+            <h3>Gradients Map Of Turbulence In A Disordered Field</h3>
+            <p data-pl="2026 • olej na płótnie • 100 × 70 cm" data-en="2026 • oil on canvas • 100 × 70 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Gradients-map-of-turbulence-in-a-disordered-field/860524/13731343"
-               target="_blank" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art">
-               Zobacz na Saatchi Art
-            </a>
+               target="_blank"></a>
          </div>
       </div>
 
-      <!-- 3 -->
       <div class="art">
-         <div class="media">
-            <img src="img/thumbs/anisotropy4.jpg" data-full="img/full/anisotropy4.jpg">
-         </div>
+         <div class="media"><img src="img/thumbs/anisotropy4.jpg" data-full="img/full/anisotropy4.jpg"
+               alt="Anisotropy IV"></div>
          <div class="caption">
-            <h3>Anisotropy IV — Between Diffusion and Sedimentation</h3>
-            <p data-pl="2026 • olej na płótnie • 70 × 100 cm" data-en="2026 • oil on canvas • 70 × 100 cm">
-               2026 • olej na płótnie • 70 × 100 cm
-            </p>
-            <a class="buy"
+            <h3>Anisotropy IV: Between Diffusion And Sedimentation</h3>
+            <p data-pl="2026 • olej na płótnie • 70 × 100 cm" data-en="2026 • oil on canvas • 70 × 100 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-IV-Between-Diffusion-and-Sedimentation/860524/13739301"
-               target="_blank" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art">
-               Zobacz na Saatchi Art
-            </a>
+               target="_blank"></a>
          </div>
       </div>
 
-      <!-- 4 -->
       <div class="art">
-         <div class="media">
-            <img src="img/thumbs/anisotropy3.jpg" data-full="img/full/anisotropy3.jpg">
-         </div>
+         <div class="media"><img src="img/thumbs/anisotropy3.jpg" data-full="img/full/anisotropy3.jpg"
+               alt="Anisotropy III"></div>
          <div class="caption">
-            <h3>Anisotropy III — Boundary Structures</h3>
-            <p data-pl="2026 • olej na płótnie • 100 × 70 cm" data-en="2026 • oil on canvas • 100 × 70 cm">
-               2026 • olej na płótnie • 100 × 70 cm
-            </p>
-            <a class="buy"
+            <h3>Anisotropy III: Boundary Structures</h3>
+            <p data-pl="2026 • olej na płótnie • 100 × 70 cm" data-en="2026 • oil on canvas • 100 × 70 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-III-Boundary-Structures/860524/13610387"
-               target="_blank" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art">
-               Zobacz na Saatchi Art
-            </a>
+               target="_blank"></a>
          </div>
       </div>
 
-      <!-- 5 -->
       <div class="art">
-         <div class="media">
-            <img src="img/thumbs/anisotropy2.jpg" data-full="img/full/anisotropy2.jpg">
-         </div>
+         <div class="media"><img src="img/thumbs/anisotropy2.jpg" data-full="img/full/anisotropy2.jpg"
+               alt="Anisotropy II"></div>
          <div class="caption">
-            <h3>Anisotropy II — The Relativity of Boundary Conditions</h3>
-            <p data-pl="2026 • olej na płótnie • 40 × 60 cm" data-en="2026 • oil on canvas • 40 × 60 cm">
-               2026 • olej na płótnie • 40 × 60 cm
-            </p>
-            <a class="buy"
+            <h3>Anisotropy II: The Relativity Of Boundary Conditions</h3>
+            <p data-pl="2026 • olej na płótnie • 40 × 60 cm" data-en="2026 • oil on canvas • 40 × 60 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-II-The-Relativity-of-Boundary-Conditions/860524/13501935"
-               target="_blank" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art">
-               Zobacz na Saatchi Art
-            </a>
+               target="_blank"></a>
          </div>
       </div>
 
-      <!-- 6 -->
       <div class="art">
-         <div class="media">
-            <img src="img/thumbs/anisotropy1.jpg" data-full="img/full/anisotropy1.jpg">
-         </div>
+         <div class="media"><img src="img/thumbs/anisotropy1.jpg" data-full="img/full/anisotropy1.jpg"
+               alt="Anisotropy I"></div>
          <div class="caption">
-            <h3>Anisotropy I — Suppose Time Existed Painting</h3>
-            <p data-pl="2025 • olej na płótnie • 70 × 100 cm" data-en="2025 • oil on canvas • 70 × 100 cm">
-               2025 • olej na płótnie • 70 × 100 cm
-            </p>
-            <a class="buy"
+            <h3>Anisotropy I: Suppose Time Existed</h3>
+            <p data-pl="2026 • olej na płótnie • 70 × 100 cm" data-en="2026 • oil on canvas • 70 × 100 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-I-Suppose-Time-Existed/860524/13192205"
-               target="_blank" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art">
-               Zobacz na Saatchi Art
-            </a>
+               target="_blank"></a>
          </div>
       </div>
 
-      <!-- 7 -->
       <div class="art">
-         <div class="media">
-            <img src="img/thumbs/fractures.jpg" data-full="img/full/fractures.jpg">
+         <div class="media"><img src="img/thumbs/fractures.jpg" data-full="img/full/fractures.jpg" alt="Fractures">
          </div>
          <div class="caption">
-            <h3>Emergence of Structures at Phase Boundaries</h3>
-            <p data-pl="2026 • olej na płótnie • 100 × 70 cm" data-en="2026 • oil on canvas • 100 × 70 cm">
-               2026 • olej na płótnie • 100 × 70 cm
-            </p>
-            <a class="buy" href="https://www.saatchiart.com/en-pl/art/Painting-Fractures/860524/13098237"
-               target="_blank" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art">
-               Zobacz na Saatchi Art
-            </a>
+            <h3>Fractures</h3>
+            <p data-pl="2026 • olej na płótnie • 100 × 70 cm" data-en="2026 • oil on canvas • 100 × 70 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
+               href="https://www.saatchiart.com/en-pl/art/Painting-Fractures/860524/13098237" target="_blank"></a>
+         </div>
+      </div>
+
+      <div class="art">
+         <div class="media"><img src="img/thumbs/apophenia.jpg" data-full="img/full/apophenia.jpg" alt="Apophenia">
+         </div>
+         <div class="caption">
+            <h3>Apophenia Of Qualia I</h3>
+            <p data-pl="2025 • olej na płótnie • 100 × 70 cm" data-en="2025 • oil on canvas • 100 × 70 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
+               href="https://www.saatchiart.com/en-pl/art/Painting-Apophenia-of-Qualia-I/860524/12588047"
+               target="_blank"></a>
+         </div>
+      </div>
+
+      <div class="art">
+         <div class="media"><img src="img/thumbs/bifurcation.jpg" data-full="img/full/bifurcation.jpg"
+               alt="Bifurcation"></div>
+         <div class="caption">
+            <h3>Epistemic Bifurcation</h3>
+            <p data-pl="2025 • olej na płótnie • 140 × 100 cm" data-en="2025 • oil on canvas • 140 × 100 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
+               href="https://www.saatchiart.com/en-pl/art/Painting-Epistemic-Bifurcation/860524/13018221"
+               target="_blank"></a>
+         </div>
+      </div>
+
+      <div class="art">
+         <div class="media"><img src="img/thumbs/dissociation.jpg" data-full="img/full/dissociation.jpg"
+               alt="Dissociation"></div>
+         <div class="caption">
+            <h3>Dissociation Of Uniformity</h3>
+            <p data-pl="2024 • olej na płótnie • 80 × 60 cm" data-en="2024 • oil on canvas • 80 × 60 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
+               href="https://www.saatchiart.com/en-pl/art/Painting-Dissociation-of-uniformity/860524/12050857"
+               target="_blank"></a>
+         </div>
+      </div>
+
+      <div class="art">
+         <div class="media"><img src="img/thumbs/dissonance.jpg" data-full="img/full/dissonance.jpg" alt="Dissonance">
+         </div>
+         <div class="caption">
+            <h3>Dissonance Perspective</h3>
+            <p data-pl="2024 • olej na płótnie • 70 × 50 cm" data-en="2024 • oil on canvas • 70 × 50 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
+               href="https://www.saatchiart.com/en-pl/art/Painting-Dissonance-Perspective/860524/12050815"
+               target="_blank"></a>
+         </div>
+      </div>
+
+      <div class="art">
+         <div class="media"><img src="img/thumbs/entropy.jpg" data-full="img/full/entropy.jpg" alt="Entropy"></div>
+         <div class="caption">
+            <h3>Entropy Of Tissue</h3>
+            <p data-pl="2024 • olej na płótnie • 60 × 70 cm" data-en="2024 • oil on canvas • 60 × 70 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
+               href="https://www.saatchiart.com/en-pl/art/Painting-Entropy-of-Tissue/860524/12161431"
+               target="_blank"></a>
+         </div>
+      </div>
+
+      <div class="art">
+         <div class="media"><img src="img/thumbs/exaltation.jpg" data-full="img/full/exaltation.jpg" alt="The Observer">
+         </div>
+         <div class="caption">
+            <h3>The Observer In The Temple Of Their Own Schemas</h3>
+            <p data-pl="2024 • olej na płótnie • 60 × 70 cm" data-en="2024 • oil on canvas • 60 × 70 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
+               href="https://www.saatchiart.com/en-pl/art/Painting-The-Observer-in-the-Temple-of-Their-Own-Schemas/860524/12050877"
+               target="_blank"></a>
+         </div>
+      </div>
+
+      <div class="art">
+         <div class="media"><img src="img/thumbs/null.jpg" data-full="img/full/null.jpg" alt="Null"></div>
+         <div class="caption">
+            <h3>Null</h3>
+            <p data-pl="2025 • olej na płótnie • 70 × 100 cm" data-en="2025 • oil on canvas • 70 × 100 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
+               href="https://www.saatchiart.com/en-pl/art/Painting-Null-Viewpoint/860524/12985237" target="_blank"></a>
+         </div>
+      </div>
+
+      <div class="art">
+         <div class="media"><img src="img/thumbs/pygmalion.jpg" data-full="img/full/pygmalion.jpg" alt="Pygmalion">
+         </div>
+         <div class="caption">
+            <h3>Pygmalion</h3>
+            <p data-pl="2021 • olej na płótnie • 130 × 100 cm" data-en="2021 • oil on canvas • 130 × 100 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
+               href="https://www.saatchiart.com/en-pl/art/Painting-Pygmalion-Sold/860524/8499574" target="_blank"></a>
+         </div>
+      </div>
+
+      <div class="art">
+         <div class="media"><img src="img/thumbs/structure.jpg" data-full="img/full/structure.jpg" alt="Structure">
+         </div>
+         <div class="caption">
+            <h3>Structure And Transition</h3>
+            <p data-pl="2025 • olej na płótnie • 80 × 60 cm" data-en="2025 • oil on canvas • 80 × 60 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
+               href="https://www.saatchiart.com/en-pl/art/Painting-Structure-and-Transition/860524/12985313"
+               target="_blank"></a>
+         </div>
+      </div>
+
+      <div class="art">
+         <div class="media"><img src="img/thumbs/transition.jpg" data-full="img/full/transition.jpg" alt="Transition">
+         </div>
+         <div class="caption">
+            <h3>Phases Of Transition</h3>
+            <p data-pl="2025 • olej na płótnie • 160 × 81 cm" data-en="2025 • oil on canvas • 160 × 81 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
+               href="https://www.saatchiart.com/en-pl/art/Painting-Phases-of-Transition/860524/13021709"
+               target="_blank"></a>
+         </div>
+      </div>
+
+      <div class="art">
+         <div class="media"><img src="img/thumbs/waves.jpg" data-full="img/full/waves.jpg" alt="Interference"></div>
+         <div class="caption">
+            <h3>Interference</h3>
+            <p data-pl="2024 • olej na płótnie • 90 × 60 cm" data-en="2024 • oil on canvas • 90 × 60 cm"></p><a
+               class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
+               href="https://www.saatchiart.com/en-pl/art/Painting-Interference/860524/12050919" target="_blank"></a>
          </div>
       </div>
 
@@ -367,38 +432,40 @@
    </div>
 
    <script>
-      // menu
-      const toggle = document.querySelector('.menu-toggle');
-      const nav = document.querySelector('.nav-links');
-      toggle.onclick = () => nav.classList.toggle('active');
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navLinks = document.querySelector('.nav-links');
+      menuToggle.onclick = () => navLinks.classList.toggle('active');
 
-      // theme
-      document.querySelector('.theme-toggle').onclick = () => {
-         const html = document.documentElement;
-         html.setAttribute('data-theme',
-            html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-      };
+      const html = document.documentElement;
+      const themeBtn = document.querySelector('.theme-toggle');
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) html.dataset.theme = savedTheme;
+      themeBtn.onclick = () => {
+         html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+         localStorage.setItem('theme', html.dataset.theme);
+      }
 
-      // lightbox
-      document.querySelectorAll('.art img').forEach(img => {
-         img.onclick = () => {
-            document.getElementById('lightbox').style.display = 'flex';
-            document.getElementById('lightbox-img').src = img.dataset.full;
-         };
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const closeBtn = document.getElementById('close');
+
+      document.querySelector('.gallery').addEventListener('click', e => {
+         if (e.target.tagName === 'IMG') {
+            lightbox.style.display = 'flex';
+            lightboxImg.src = e.target.dataset.full;
+         }
       });
-      document.getElementById('close').onclick = () => {
-         document.getElementById('lightbox').style.display = 'none';
-      };
 
-      // LANGUAGE
+      closeBtn.onclick = () => lightbox.style.display = 'none';
+
       const langBtn = document.querySelector('.lang-toggle');
       let lang = localStorage.getItem('lang') || 'pl';
 
       function applyLang() {
          document.querySelectorAll('[data-pl]').forEach(el => {
-            el.innerText = el.dataset[lang];
+            el.textContent = el.dataset[lang];
          });
-         langBtn.innerText = lang === 'pl' ? 'EN' : 'PL';
+         langBtn.textContent = lang === 'pl' ? 'EN' : 'PL';
       }
 
       applyLang();
@@ -407,7 +474,7 @@
          lang = lang === 'pl' ? 'en' : 'pl';
          localStorage.setItem('lang', lang);
          applyLang();
-      };
+      }
    </script>
 
 </body>
