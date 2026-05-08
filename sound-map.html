@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pl" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Interaktywna mapa dźwiękowa obrazu Emergence of Structures at Phase Boundaries Pawła Batury.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Paweł Batura">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Paweł Batura">
+  <meta property="og:title" content="Mapa dźwiękowa obrazu — Paweł Batura">
+  <meta property="og:description"
+    content="Eksperymentalna podstrona: obraz Emergence jako cicha mapa obszarów uruchamiających dźwięki.">
+  <meta property="og:url" content="https://pawelbatura.art/sound-map.html">
+  <meta property="og:image" content="https://pawelbatura.art/img/full/emergence.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Mapa dźwiękowa — Paweł Batura</title>
+
+  <link rel="canonical" href="https://pawelbatura.art/sound-map.html">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <nav class="nav" aria-label="Główna nawigacja">
+    <a href="index.html" class="brand" data-link>Paweł Batura</a>
+    <button class="menu-toggle" type="button" aria-label="Otwórz menu">☰</button>
+
+    <div class="nav-links">
+      <a href="index.html" data-link data-pl="O artyście" data-en="About">O artyście</a>
+      <a href="gallery.html" data-link data-pl="Galeria" data-en="Gallery">Galeria</a>
+      <a href="contact.html" data-link data-pl="Kontakt" data-en="Contact">Kontakt</a>
+    </div>
+
+    <div class="controls" aria-label="Ustawienia strony">
+      <button class="theme-toggle" type="button" aria-label="Zmień motyw">◐</button>
+      <button class="lang-toggle" type="button" aria-label="Change language">EN</button>
+    </div>
+  </nav>
+
+  <main class="sound-page">
+    <header class="sound-intro">
+      <p class="eyebrow" data-pl="Eksperyment" data-en="Experiment">Eksperyment</p>
+      <h1 data-pl="Mapa dźwiękowa obrazu" data-en="Sound map of a painting">Mapa dźwiękowa obrazu</h1>
+      <p data-pl="Zatrzymaj kursor nad charakterystycznymi obszarami obrazu. Po sekundzie bez ruchu wybrany fragment uruchomi przypisany dźwięk."
+        data-en="Hold the cursor still over characteristic areas of the painting. After one second, the selected fragment triggers its assigned sound.">
+        Zatrzymaj kursor nad charakterystycznymi obszarami obrazu. Po sekundzie bez ruchu wybrany fragment uruchomi przypisany dźwięk.
+      </p>
+    </header>
+
+    <section class="sound-work">
+      <div class="sound-toolbar">
+        <button type="button" class="button primary" id="soundUnlock"
+          data-pl="Włącz dźwięk" data-en="Enable sound">Włącz dźwięk</button>
+        <p id="soundStatus" data-pl="Dźwięk wymaga jednego kliknięcia w przeglądarce."
+          data-en="Sound requires one browser click.">Dźwięk wymaga jednego kliknięcia w przeglądarce.</p>
+      </div>
+
+      <div class="sound-canvas-wrap" id="soundCanvasWrap">
+        <canvas id="soundCanvas" width="2000" height="1500" aria-label="Interaktywna mapa obrazu Emergence"></canvas>
+        <svg class="sound-hotspots" viewBox="0 0 2000 1500" aria-hidden="true">
+          <path data-sound="audio/01.mp3" data-label-pl="pierwsze zagęszczenie" data-label-en="first density"
+            d="M401 171 C475 125 564 170 596 250 C626 326 574 421 493 446 C407 473 319 427 310 346 C300 265 333 208 401 171 Z"/>
+          <path data-sound="audio/05.mp3" data-label-pl="rozdzielenie ścieżek" data-label-en="separation of paths"
+            d="M481 388 C558 346 625 378 699 467 C771 555 805 601 853 635 C824 672 747 667 691 624 C618 568 567 505 468 512 C389 518 349 459 481 388 Z"/>
+          <path data-sound="audio/08.mp3" data-label-pl="struktura w rozpadzie" data-label-en="structure in decay"
+            d="M740 630 C810 540 905 522 1005 574 C1077 612 1080 742 999 807 C897 890 746 839 691 744 C677 704 691 668 740 630 Z"/>
+          <path data-sound="audio/04.mp3" data-label-pl="lokalna organizacja" data-label-en="local organization"
+            d="M1031 342 C1166 282 1339 283 1484 340 C1497 435 1412 524 1263 545 C1138 562 1028 501 980 439 C947 396 971 366 1031 342 Z"/>
+          <path data-sound="audio/07.mp3" data-label-pl="forma poza układem" data-label-en="form outside the system"
+            d="M1451 126 C1534 84 1633 108 1666 178 C1701 252 1647 333 1553 325 C1447 315 1409 252 1424 191 C1429 166 1437 143 1451 126 Z"/>
+          <path data-sound="audio/03.mp3" data-label-pl="stan płynny" data-label-en="fluid state"
+            d="M1671 198 C1796 119 1917 41 1990 22 L2000 560 C1917 534 1815 489 1728 412 C1660 351 1624 249 1671 198 Z"/>
+          <path data-sound="audio/09.mp3" data-label-pl="lokalne powtórzenia" data-label-en="local repetitions"
+            d="M711 948 C894 837 1083 855 1252 963 C1349 1026 1300 1155 1120 1199 C924 1246 710 1182 617 1071 C584 1032 620 988 711 948 Z"/>
+          <path data-sound="audio/06.mp3" data-label-pl="punkt obserwacji" data-label-en="point of observation"
+            d="M1290 611 C1322 586 1361 595 1376 629 C1392 666 1365 702 1325 701 C1286 700 1257 673 1263 640 C1266 627 1275 617 1290 611 Z M1468 669 C1495 650 1528 658 1541 686 C1556 717 1534 750 1500 751 C1466 752 1439 729 1442 700 C1444 687 1452 677 1468 669 Z"/>
+          <path data-sound="audio/02.mp3" data-label-pl="rozmycie granic" data-label-en="blurred boundaries"
+            d="M1573 528 C1706 499 1872 493 2000 515 L2000 664 C1860 664 1690 639 1557 601 C1505 587 1513 543 1573 528 Z"/>
+          <path data-sound="audio/10.mp3" data-label-pl="kumulacja materiału" data-label-en="material accumulation"
+            d="M274 1180 C438 1062 706 1118 942 1310 C911 1382 732 1400 541 1389 C360 1379 206 1348 173 1270 C157 1234 192 1210 274 1180 Z"/>
+        </svg>
+        <div class="sound-cursor" id="soundCursor" aria-hidden="true"></div>
+      </div>
+
+      <p class="sound-caption" id="soundCaption"
+        data-pl="Mapa pozostaje niewidoczna: dźwięk ujawnia wybrane plamy dopiero po zatrzymaniu kursora."
+        data-en="The map remains invisible: sound reveals selected stains only after the cursor rests.">
+        Mapa pozostaje niewidoczna: dźwięk ujawnia wybrane plamy dopiero po zatrzymaniu kursora.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Paweł Batura</p>
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="sound-map.js"></script>
+
+</body>
+
+</html>

@@ -194,7 +194,8 @@ textarea {
 }
 
 .gallery-intro h1,
-.contact-intro h1 {
+.contact-intro h1,
+.sound-intro h1 {
   max-width: 760px;
   font-size: clamp(32px, 4.2vw, 54px);
   line-height: 1.08;
@@ -285,6 +286,7 @@ textarea {
 .credentials li,
 .gallery-intro p,
 .contact-intro p,
+.sound-intro p:not(.eyebrow),
 .contact-links p {
   color: var(--muted);
 }
@@ -307,6 +309,19 @@ textarea {
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.inline-link {
+  width: fit-content;
+  color: var(--accent);
+  font-size: 14px;
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.inline-link:hover {
+  color: var(--text);
+  border-color: var(--text);
 }
 
 .credentials {
@@ -529,6 +544,132 @@ button[type="submit"]:hover {
 }
 
 /* =======================
+   SOUND MAP
+======================= */
+.sound-page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 76px 24px 20px;
+}
+
+.sound-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.sound-intro p:not(.eyebrow),
+.sound-caption,
+.sound-toolbar p {
+  max-width: 760px;
+  color: var(--muted);
+}
+
+.sound-work {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sound-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.sound-toolbar p {
+  font-size: 14px;
+}
+
+.sound-canvas-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  cursor: none;
+}
+
+#soundCanvas,
+.sound-hotspots {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#soundCanvas {
+  display: block;
+}
+
+.sound-hotspots path {
+  fill: rgba(255, 255, 255, 0);
+  pointer-events: all;
+  stroke: transparent;
+  stroke-width: 5;
+  transition: fill 0.25s ease, stroke 0.25s ease, filter 0.25s ease;
+}
+
+.sound-hotspots path.is-waiting {
+  fill: rgba(208, 160, 109, 0.13);
+  stroke: rgba(208, 160, 109, 0.58);
+  filter: drop-shadow(0 0 10px rgba(208, 160, 109, 0.42));
+}
+
+.sound-hotspots path.is-playing {
+  animation: sound-area-pulse 0.75s ease-out;
+}
+
+.sound-cursor {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--text) 55%, transparent);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sound-canvas-wrap:hover .sound-cursor {
+  opacity: 1;
+}
+
+.sound-cursor.loading {
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  border-top-color: var(--accent);
+  animation: sound-spin 0.75s linear infinite;
+}
+
+.sound-caption {
+  min-height: 24px;
+  font-size: 14px;
+}
+
+@keyframes sound-spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes sound-area-pulse {
+  0% {
+    fill: rgba(208, 160, 109, 0.24);
+    stroke: rgba(237, 237, 237, 0.74);
+    filter: drop-shadow(0 0 16px rgba(208, 160, 109, 0.62));
+  }
+
+  100% {
+    fill: rgba(208, 160, 109, 0);
+    stroke: rgba(208, 160, 109, 0);
+    filter: drop-shadow(0 0 0 rgba(208, 160, 109, 0));
+  }
+}
+
+/* =======================
    FOOTER
 ======================= */
 footer {
@@ -599,7 +740,8 @@ footer {
   }
 
   .gallery-intro h1,
-  .contact-intro h1 {
+  .contact-intro h1,
+  .sound-intro h1 {
     font-size: 34px;
   }
 
@@ -609,7 +751,8 @@ footer {
 
   .about,
   .gallery-page,
-  .contact-page {
+  .contact-page,
+  .sound-page {
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -663,7 +806,8 @@ footer {
   }
 
   .gallery-intro h1,
-  .contact-intro h1 {
+  .contact-intro h1,
+  .sound-intro h1 {
     font-size: 31px;
   }
 
