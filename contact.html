@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kontakt z Pawłem Baturą oraz link do profilu Saatchi Art.">
   <title>Kontakt — Paweł Batura</title>
 
   <link rel="stylesheet" href="style.css">
@@ -11,136 +12,89 @@
 
 <body>
 
-  <nav class="nav">
-    <div class="menu-toggle">☰</div>
+  <nav class="nav" aria-label="Główna nawigacja">
+    <a href="index.html" class="brand" data-link>Paweł Batura</a>
+    <button class="menu-toggle" type="button" aria-label="Otwórz menu">☰</button>
 
- <div class="nav-links">
-  <a href="index" data-link data-pl="O artyście" data-en="About">O artyście</a>
-  <a href="gallery" data-link data-pl="Galeria" data-en="Gallery">Galeria</a>
-  <a href="contact" data-link data-pl="Kontakt" data-en="Contact">Kontakt</a>
-</div>
+    <div class="nav-links">
+      <a href="index.html" data-link data-pl="O artyście" data-en="About">O artyście</a>
+      <a href="gallery.html" data-link data-pl="Galeria" data-en="Gallery">Galeria</a>
+      <a href="contact.html" data-link data-pl="Kontakt" data-en="Contact">Kontakt</a>
+    </div>
 
-    <div class="controls">
-      <div class="theme-toggle">◐</div>
-      <div class="lang-toggle">EN</div>
+    <div class="controls" aria-label="Ustawienia strony">
+      <button class="theme-toggle" type="button" aria-label="Zmień motyw">◐</button>
+      <button class="lang-toggle" type="button" aria-label="Change language">EN</button>
     </div>
   </nav>
 
-  <section class="contact">
+  <main class="contact-page">
+    <section class="contact-intro">
+      <p class="eyebrow" data-pl="Kontakt" data-en="Contact">Kontakt</p>
+      <h1 data-pl="Zapytania o prace, wystawy i zakup obrazów" data-en="Artwork, exhibition, and acquisition inquiries">
+        Zapytania o prace, wystawy i zakup obrazów
+      </h1>
+      <p data-pl="W sprawie dostępności konkretnych obrazów najwygodniej skorzystać z Saatchi Art. W pozostałych sprawach możesz napisać przez formularz."
+        data-en="For availability of specific paintings, Saatchi Art is the most direct route. For other inquiries, you can write through the form.">
+        W sprawie dostępności konkretnych obrazów najwygodniej skorzystać z Saatchi Art. W pozostałych sprawach możesz napisać przez formularz.
+      </p>
+    </section>
 
-    <form action="https://formspree.io/f/xpqbpjgl" method="POST" class="contact-block" id="form">
+    <section class="contact-grid">
+      <form action="https://formspree.io/f/xpqbpjgl" method="POST" class="contact-block" id="form">
+        <input type="hidden" name="_subject" value="Nowa wiadomość ze strony pawelbatura.art">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off">
 
-      <input type="hidden" name="_subject" value="Nowa wiadomość ze strony">
-      <input type="hidden" name="_template" value="table">
+        <label>
+          <span class="contact-title" data-pl="Imię" data-en="Name">Imię</span>
+          <input type="text" name="name" autocomplete="name" required>
+        </label>
 
-      <!-- anty-spam -->
-      <input type="text" name="_gotcha" style="display:none">
+        <label>
+          <span class="contact-title" data-pl="Email" data-en="Email">Email</span>
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
 
-      <div class="contact-title" data-pl="Imię" data-en="Name">Imię</div>
-      <input type="text" name="name" required>
+        <label>
+          <span class="contact-title" data-pl="Wiadomość" data-en="Message">Wiadomość</span>
+          <textarea name="message" rows="6" required></textarea>
+        </label>
 
-      <div class="contact-title" data-pl="Email" data-en="Email">Email</div>
-      <input type="email" name="email" required>
+        <button type="submit" data-pl="Wyślij wiadomość" data-en="Send message">Wyślij wiadomość</button>
 
-      <div class="contact-title" data-pl="Wiadomość" data-en="Message">Wiadomość</div>
-      <textarea name="message" rows="5" required></textarea>
+        <div class="success" id="successMsg" role="status" data-pl="Wiadomość została wysłana." data-en="Your message has been sent.">
+          Wiadomość została wysłana.
+        </div>
+        <div class="error" id="errorMsg" role="alert" data-pl="Nie udało się wysłać wiadomości. Spróbuj ponownie."
+          data-en="The message could not be sent. Please try again.">
+          Nie udało się wysłać wiadomości. Spróbuj ponownie.
+        </div>
+      </form>
 
-      <button type="submit" data-pl="Wyślij" data-en="Send">Wyślij</button>
-
-      <div class="success" id="successMsg">
-        ✓ Wiadomość została wysłana
-      </div>
-
-    </form>
-
-    <div class="contact-block">
-      <div class="contact-title">Saatchi Art</div>
-      <div class="contact-value">
-        <a href="https://www.saatchiart.com/pawelbatura" target="_blank" class="saatchi-link">
-          saatchiart.com/pawelbatura
-        </a>
-      </div>
-    </div>
-
-  </section>
+      <aside class="contact-block contact-links">
+        <div>
+          <div class="contact-title">Saatchi Art</div>
+          <a href="https://www.saatchiart.com/pawelbatura" target="_blank" rel="noopener" class="saatchi-link">
+            saatchiart.com/pawelbatura
+          </a>
+        </div>
+        <div>
+          <div class="contact-title" data-pl="Profil" data-en="Profile">Profil</div>
+          <p data-pl="Warszawa, Polska • malarstwo olejne • prace dostępne międzynarodowo"
+            data-en="Warsaw, Poland • oil painting • works available internationally">
+            Warszawa, Polska • malarstwo olejne • prace dostępne międzynarodowo
+          </p>
+        </div>
+      </aside>
+    </section>
+  </main>
 
   <footer>
     <p>© 2026 Paweł Batura</p>
   </footer>
 
-  <script>
-    document.querySelector('.menu-toggle').onclick = () =>
-      document.querySelector('.nav-links').classList.toggle('active');
-
-    document.querySelector('.theme-toggle').onclick = () => {
-      const html = document.documentElement;
-      html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
-    };
-
-    const form = document.getElementById("form");
-    const success = document.getElementById("successMsg");
-
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault();
-
-      success.style.display = "none";
-
-      const data = new FormData(form);
-
-      try {
-        const response = await fetch(form.action, {
-          method: "POST",
-          body: data,
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (response.ok) {
-          form.reset();
-          success.style.display = "block";
-        } else {
-          alert("Błąd wysyłania. Spróbuj ponownie.");
-        }
-      } catch (error) {
-        alert("Brak połączenia z serwerem.");
-      }
-    });
-
-    const langBtn = document.querySelector('.lang-toggle');
-    let lang = localStorage.getItem('lang') || 'pl';
-
-    function applyLang() {
-      document.querySelectorAll('[data-pl]').forEach(el => {
-        el.textContent = el.dataset[lang];
-      });
-      langBtn.textContent = lang === 'pl' ? 'EN' : 'PL';
-    }
-
-    applyLang();
-
-    langBtn.onclick = () => {
-      lang = lang === 'pl' ? 'en' : 'pl';
-      localStorage.setItem('lang', lang);
-      applyLang();
-    };
-
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', function (e) {
-        e.preventDefault();
-        const url = this.getAttribute('href');
-
-        fetch(url)
-          .then(res => res.text())
-          .then(html => {
-            document.open();
-            document.write(html);
-            document.close();
-            history.pushState(null, '', url);
-          });
-      });
-    });
-
-    window.onpopstate = () => location.reload();
-  </script>
+  <script src="app.js"></script>
 
 </body>
 

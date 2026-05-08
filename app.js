@@ -1,35 +1,35 @@
 // =======================
-// FAKE ROUTING + LANG SAFE
+// NAVIGATION
 // =======================
-
 document.querySelectorAll('[data-link]').forEach(link => {
   link.addEventListener('click', function (e) {
+    const href = this.getAttribute('href');
+
+    if (!href || href.startsWith('http')) return;
+
     e.preventDefault();
 
-    let page = this.getAttribute('href').replace('.html', '');
-
-    // zapamiętaj język (dla pewności)
-    const lang = localStorage.getItem('lang');
-
-    // URL bez .html
-    history.pushState({}, '', page);
-
-    // przejście
-    window.location.href =
-      (page === 'index' || page === '' ? 'index' : page) + '.html';
+    const page = href.replace('.html', '').replace('./', '') || 'index';
+    history.pushState({}, '', page === 'index' ? 'index' : page);
+    window.location.href = `${page}.html`;
   });
 });
 
-// BACK / FORWARD
 window.addEventListener('popstate', () => {
-  let path = window.location.pathname.replace('/', '');
-
-  if (path === '' || path === 'index') {
-    window.location.href = 'index.html';
-  } else {
-    window.location.href = path + '.html';
-  }
+  const path = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
+  window.location.href = `${path}.html`;
 });
+
+function markActiveNav() {
+  const current = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
+
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    const target = link.getAttribute('href').replace('.html', '');
+    link.classList.toggle('active', target === current);
+  });
+}
+
+markActiveNav();
 
 // =======================
 // MENU (MOBILE)
@@ -40,7 +40,6 @@ const navLinks = document.querySelector('.nav-links');
 menuToggle?.addEventListener('click', () => {
   navLinks?.classList.toggle('active');
 });
-
 
 // =======================
 // THEME (DARK / LIGHT)
@@ -54,13 +53,11 @@ if (savedTheme) {
 }
 
 themeBtn?.addEventListener('click', () => {
-  const newTheme =
-    html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
 
   html.setAttribute('data-theme', newTheme);
   localStorage.setItem('theme', newTheme);
 });
-
 
 // =======================
 // LANGUAGE (PL / EN)
@@ -89,7 +86,6 @@ langBtn?.addEventListener('click', () => {
   applyLang();
 });
 
-
 // =======================
 // LIGHTBOX (GALLERY)
 // =======================
@@ -101,11 +97,12 @@ let currentIndex = 0;
 const images = Array.from(document.querySelectorAll('.art img'));
 
 function openLightbox(index) {
-  if (!lightbox || !lightboxImg) return;
+  if (!lightbox || !lightboxImg || images.length === 0) return;
 
   currentIndex = index;
   lightbox.style.display = 'flex';
   lightboxImg.src = images[currentIndex].dataset.full;
+  lightboxImg.alt = images[currentIndex].alt || '';
 }
 
 function closeLightbox() {
@@ -113,39 +110,31 @@ function closeLightbox() {
   lightbox.style.display = 'none';
 }
 
-function nextImage() {
-  currentIndex = (currentIndex + 1) % images.length;
+function showImage(index) {
+  if (!lightboxImg || images.length === 0) return;
+
+  currentIndex = (index + images.length) % images.length;
   lightboxImg.src = images[currentIndex].dataset.full;
+  lightboxImg.alt = images[currentIndex].alt || '';
 }
 
-function prevImage() {
-  currentIndex =
-    (currentIndex - 1 + images.length) % images.length;
-  lightboxImg.src = images[currentIndex].dataset.full;
-}
-
-// klik na obraz
 images.forEach((img, index) => {
   img.addEventListener('click', () => openLightbox(index));
 });
 
-// zamknięcie X
 closeBtn?.addEventListener('click', closeLightbox);
 
-// klik w tło
 lightbox?.addEventListener('click', (e) => {
   if (e.target === lightbox) closeLightbox();
 });
 
-// klawiatura
 document.addEventListener('keydown', (e) => {
   if (!lightbox || lightbox.style.display !== 'flex') return;
 
   if (e.key === 'Escape') closeLightbox();
-  if (e.key === 'ArrowRight') nextImage();
-  if (e.key === 'ArrowLeft') prevImage();
+  if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+  if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
 });
-
 
 // =======================
 // SWIPE (MOBILE)
@@ -159,19 +148,22 @@ lightboxImg?.addEventListener('touchstart', (e) => {
 lightboxImg?.addEventListener('touchend', (e) => {
   const endX = e.changedTouches[0].clientX;
 
-  if (endX - startX > 50) prevImage();
-  if (startX - endX > 50) nextImage();
+  if (endX - startX > 50) showImage(currentIndex - 1);
+  if (startX - endX > 50) showImage(currentIndex + 1);
 });
-
 
 // =======================
 // FORM (CONTACT)
 // =======================
 const form = document.getElementById('form');
 const success = document.getElementById('successMsg');
+const errorMsg = document.getElementById('errorMsg');
 
 form?.addEventListener('submit', async (e) => {
   e.preventDefault();
+
+  success.style.display = 'none';
+  errorMsg.style.display = 'none';
 
   const data = new FormData(form);
 
@@ -184,10 +176,12 @@ form?.addEventListener('submit', async (e) => {
 
     if (res.ok) {
       form.reset();
-      if (success) success.style.display = 'block';
+      success.style.display = 'block';
+    } else {
+      errorMsg.style.display = 'block';
     }
   } catch (err) {
-    console.error('Form error:', err);
+    errorMsg.style.display = 'block';
   }
 });
 
@@ -198,25 +192,14 @@ const sliderImages = document.querySelectorAll('.mini-slider img');
 let currentSlide = 0;
 
 function changeSlide() {
+  if (sliderImages.length === 0) return;
+
   sliderImages[currentSlide].classList.remove('active');
-
   currentSlide = (currentSlide + 1) % sliderImages.length;
-
   sliderImages[currentSlide].classList.add('active');
 }
 
-// start
 if (sliderImages.length > 0) {
   sliderImages[0].classList.add('active');
-
   setInterval(changeSlide, 3500);
 }
-
-// klik → lightbox
-sliderImages.forEach((img, index) => {
-  img.addEventListener('click', () => {
-    if (typeof openLightbox === 'function') {
-      openLightbox(index);
-    }
-  });
-});

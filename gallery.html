@@ -4,6 +4,8 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description"
+      content="Wybrane obrazy Pawła Batury: malarstwo olejne, abstrakcja organiczna, surrealizm i prace dostępne na Saatchi Art.">
    <title>Galeria — Paweł Batura</title>
 
    <link rel="stylesheet" href="style.css">
@@ -11,22 +13,33 @@
 
 <body>
 
-   <nav class="nav">
-      <div class="menu-toggle">☰</div>
+   <nav class="nav" aria-label="Główna nawigacja">
+      <a href="index.html" class="brand" data-link>Paweł Batura</a>
+      <button class="menu-toggle" type="button" aria-label="Otwórz menu">☰</button>
       
       <div class="nav-links">
-         <a href="index" data-link data-pl="O artyście" data-en="About">O artyście</a>
-         <a href="gallery" data-link data-pl="Galeria" data-en="Gallery">Galeria</a>
-         <a href="contact" data-link data-pl="Kontakt" data-en="Contact">Kontakt</a>
+         <a href="index.html" data-link data-pl="O artyście" data-en="About">O artyście</a>
+         <a href="gallery.html" data-link data-pl="Galeria" data-en="Gallery">Galeria</a>
+         <a href="contact.html" data-link data-pl="Kontakt" data-en="Contact">Kontakt</a>
       </div>
       
-      <div class="controls">
-         <div class="theme-toggle">◐</div>
-         <div class="lang-toggle">EN</div>
+      <div class="controls" aria-label="Ustawienia strony">
+         <button class="theme-toggle" type="button" aria-label="Zmień motyw">◐</button>
+         <button class="lang-toggle" type="button" aria-label="Change language">EN</button>
       </div>
    </nav>
 
-   <section class="gallery">
+   <main class="gallery-page">
+      <header class="gallery-intro">
+         <p class="eyebrow" data-pl="Wybrane prace" data-en="Selected works">Wybrane prace</p>
+         <h1 data-pl="Obrazy olejne z lat 2021-2026" data-en="Oil paintings from 2021-2026">Obrazy olejne z lat 2021-2026</h1>
+         <p data-pl="Portfolio akcentuje ten sam kierunek, który widać w profilu Saatchi Art: organiczne struktury, swobodną kompozycję i obrazy budowane między rozpoznawalnością a abstrakcją."
+            data-en="This portfolio follows the same direction visible on the Saatchi Art profile: organic structures, free composition, and paintings built between recognizability and abstraction.">
+            Portfolio akcentuje ten sam kierunek, który widać w profilu Saatchi Art: organiczne struktury, swobodną kompozycję i obrazy budowane między rozpoznawalnością a abstrakcją.
+         </p>
+      </header>
+
+      <section class="gallery" aria-label="Galeria obrazów">
 
       <div class="art">
          <div class="media"><img src="img/thumbs/emergence.jpg" data-full="img/full/emergence.jpg" alt="Emergence">
@@ -35,7 +48,7 @@
             <h3>Emergence of Structures at Phase Boundaries</h3>
             <p data-pl="2026 • olej na płótnie • 120 × 90 cm" data-en="2026 • oil on canvas • 120 × 90 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
-               href="https://www.saatchiart.com/en-pl/art/Painting-Fractures/860524/13098237" target="_blank"></a>
+               href="https://www.saatchiart.com/en-pl/art/Painting-Fractures/860524/13098237" target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -47,7 +60,7 @@
             <p data-pl="2026 • olej na płótnie • 100 × 70 cm" data-en="2026 • oil on canvas • 100 × 70 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Gradients-map-of-turbulence-in-a-disordered-field/860524/13731343"
-               target="_blank"></a>
+               target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -59,7 +72,7 @@
             <p data-pl="2026 • olej na płótnie • 70 × 100 cm" data-en="2026 • oil on canvas • 70 × 100 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-IV-Between-Diffusion-and-Sedimentation/860524/13739301"
-               target="_blank"></a>
+               target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -71,7 +84,7 @@
             <p data-pl="2026 • olej na płótnie • 100 × 70 cm" data-en="2026 • oil on canvas • 100 × 70 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-III-Boundary-Structures/860524/13610387"
-               target="_blank"></a>
+               target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -83,7 +96,7 @@
             <p data-pl="2026 • olej na płótnie • 40 × 60 cm" data-en="2026 • oil on canvas • 40 × 60 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-II-The-Relativity-of-Boundary-Conditions/860524/13501935"
-               target="_blank"></a>
+               target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -95,7 +108,7 @@
             <p data-pl="2026 • olej na płótnie • 70 × 100 cm" data-en="2026 • oil on canvas • 70 × 100 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-I-Suppose-Time-Existed/860524/13192205"
-               target="_blank"></a>
+               target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -106,7 +119,7 @@
             <h3>Fractures</h3>
             <p data-pl="2026 • olej na płótnie • 100 × 70 cm" data-en="2026 • oil on canvas • 100 × 70 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
-               href="https://www.saatchiart.com/en-pl/art/Painting-Fractures/860524/13098237" target="_blank"></a>
+               href="https://www.saatchiart.com/en-pl/art/Painting-Fractures/860524/13098237" target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -118,7 +131,7 @@
             <p data-pl="2025 • olej na płótnie • 100 × 70 cm" data-en="2025 • oil on canvas • 100 × 70 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Apophenia-of-Qualia-I/860524/12588047"
-               target="_blank"></a>
+               target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -130,7 +143,7 @@
             <p data-pl="2025 • olej na płótnie • 140 × 100 cm" data-en="2025 • oil on canvas • 140 × 100 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Epistemic-Bifurcation/860524/13018221"
-               target="_blank"></a>
+               target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -142,7 +155,7 @@
             <p data-pl="2024 • olej na płótnie • 80 × 60 cm" data-en="2024 • oil on canvas • 80 × 60 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Dissociation-of-uniformity/860524/12050857"
-               target="_blank"></a>
+               target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -154,7 +167,7 @@
             <p data-pl="2024 • olej na płótnie • 70 × 50 cm" data-en="2024 • oil on canvas • 70 × 50 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Dissonance-Perspective/860524/12050815"
-               target="_blank"></a>
+               target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -165,7 +178,7 @@
             <p data-pl="2024 • olej na płótnie • 60 × 70 cm" data-en="2024 • oil on canvas • 60 × 70 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Entropy-of-Tissue/860524/12161431"
-               target="_blank"></a>
+               target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -177,7 +190,7 @@
             <p data-pl="2024 • olej na płótnie • 60 × 70 cm" data-en="2024 • oil on canvas • 60 × 70 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-The-Observer-in-the-Temple-of-Their-Own-Schemas/860524/12050877"
-               target="_blank"></a>
+               target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -187,7 +200,7 @@
             <h3>Null</h3>
             <p data-pl="2025 • olej na płótnie • 70 × 100 cm" data-en="2025 • oil on canvas • 70 × 100 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
-               href="https://www.saatchiart.com/en-pl/art/Painting-Null-Viewpoint/860524/12985237" target="_blank"></a>
+               href="https://www.saatchiart.com/en-pl/art/Painting-Null-Viewpoint/860524/12985237" target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -198,7 +211,7 @@
             <h3>Pygmalion</h3>
             <p data-pl="2021 • olej na płótnie • 130 × 100 cm" data-en="2021 • oil on canvas • 130 × 100 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
-               href="https://www.saatchiart.com/en-pl/art/Painting-Pygmalion-Sold/860524/8499574" target="_blank"></a>
+               href="https://www.saatchiart.com/en-pl/art/Painting-Pygmalion-Sold/860524/8499574" target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -210,7 +223,7 @@
             <p data-pl="2025 • olej na płótnie • 80 × 60 cm" data-en="2025 • oil on canvas • 80 × 60 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Structure-and-Transition/860524/12985313"
-               target="_blank"></a>
+               target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -222,7 +235,7 @@
             <p data-pl="2025 • olej na płótnie • 160 × 81 cm" data-en="2025 • oil on canvas • 160 × 81 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
                href="https://www.saatchiart.com/en-pl/art/Painting-Phases-of-Transition/860524/13021709"
-               target="_blank"></a>
+               target="_blank" rel="noopener"></a>
          </div>
       </div>
 
@@ -232,11 +245,12 @@
             <h3>Interference</h3>
             <p data-pl="2024 • olej na płótnie • 90 × 60 cm" data-en="2024 • oil on canvas • 90 × 60 cm"></p><a
                class="buy" data-pl="Zobacz na Saatchi Art" data-en="View on Saatchi Art"
-               href="https://www.saatchiart.com/en-pl/art/Painting-Interference/860524/12050919" target="_blank"></a>
+               href="https://www.saatchiart.com/en-pl/art/Painting-Interference/860524/12050919" target="_blank" rel="noopener"></a>
          </div>
       </div>
 
-   </section>
+      </section>
+   </main>
 
    <footer>
       <p>© 2026 Paweł Batura</p>
