@@ -191,15 +191,25 @@ form?.addEventListener('submit', async (e) => {
 const sliderImages = document.querySelectorAll('.mini-slider img');
 let currentSlide = 0;
 
+function loadSliderImage(index) {
+  const image = sliderImages[index];
+  if (!image || !image.dataset.src || image.src) return;
+  image.src = image.dataset.src;
+}
+
 function changeSlide() {
   if (sliderImages.length === 0) return;
 
   sliderImages[currentSlide].classList.remove('active');
   currentSlide = (currentSlide + 1) % sliderImages.length;
+  loadSliderImage(currentSlide);
   sliderImages[currentSlide].classList.add('active');
+  loadSliderImage((currentSlide + 1) % sliderImages.length);
 }
 
 if (sliderImages.length > 0) {
+  loadSliderImage(0);
   sliderImages[0].classList.add('active');
+  window.setTimeout(() => loadSliderImage(1), 1200);
   setInterval(changeSlide, 3500);
 }

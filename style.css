@@ -1,4 +1,4 @@
-/* =======================
+﻿/* =======================
    RESET
 ======================= */
 * {
@@ -218,6 +218,9 @@ textarea {
 
 .hero-visual {
   min-width: 0;
+  width: 100%;
+  max-width: 420px;
+  justify-self: end;
 }
 
 .mini-slider {
@@ -322,6 +325,24 @@ textarea {
 .inline-link:hover {
   color: var(--text);
   border-color: var(--text);
+}
+
+.seo-profile {
+  max-width: 760px;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+
+.seo-profile h2 {
+  font-size: 23px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-top: 6px;
+}
+
+.seo-profile p:not(.eyebrow) {
+  margin-top: 12px;
+  color: var(--muted);
 }
 
 .credentials {
@@ -733,6 +754,10 @@ footer {
     min-height: auto;
     padding: 48px 20px 44px;
     gap: 34px;
+  }
+
+  .hero-visual {
+    justify-self: center;
   }
 
   .hero-copy h1 {
