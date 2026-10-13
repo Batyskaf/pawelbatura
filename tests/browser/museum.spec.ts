@@ -163,3 +163,43 @@ test('All wall surfaces vanish before crystallization, including end walls and c
   for (const room of ['cabinet', 'observatory', 'archive']) for (const end of [-1, 1]) expect(result.ids).toContain(`${room}-wall-end-${end}`);
   expect(result.ids.filter(id => id.includes('wall-corner'))).toHaveLength(4);
 });
+
+test('Proximity applies to every world surface and vault ribs clear the artwork zone', async ({ page }) => {
+  const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
+  page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
+  await page.goto('/'); await page.waitForFunction(() => !!window.museum);
+  const result = await page.evaluate(async () => {
+    const T = await import('/node_modules/three/build/three.module.js' as string); const m = window.museum;
+    const surfaces: boolean[] = []; const ribBottoms: number[] = [];
+    m.scene.traverse(object => {
+      if ((object as any).isMesh || (object as any).isLine) {
+        const materials = Array.isArray((object as any).material) ? (object as any).material : [(object as any).material];
+        surfaces.push(...materials.map((material: any) => material.customProgramCacheKey().startsWith('proximity-world-')));
+      }
+      if (object.userData.exhibitionRib) ribBottoms.push(new T.Box3().setFromObject(object).min.y);
+    });
+    return { surfaces, ribBottoms, range: m.proximity.range };
+  });
+  expect(result.surfaces.length).toBeGreaterThan(50); expect(result.surfaces.every(Boolean)).toBe(true);
+  expect(result.range).toBe(10); expect(result.ribBottoms).toHaveLength(9);
+  result.ribBottoms.forEach(bottom => expect(bottom).toBeGreaterThan(3.4));
+  const pixels = await page.evaluate(async () => {
+    const T = await import('/node_modules/three/build/three.module.js' as string);
+    const { ProximityWorld } = await import('/src/effects/proximityWorld.ts' as string);
+    const scene = new T.Scene(); scene.background = new T.Color('#000000');
+    const sample = window.museum.exhibits.exhibits[0].image;
+    const plane = new (sample.constructor as any)(new (sample.geometry.constructor as any)(2, 2), new (sample.material.constructor as any)({ color: '#ff0000' }));
+    plane.position.z = -12; scene.add(plane);
+    const camera = new T.PerspectiveCamera(70, 1, .1, 50), gate = new ProximityWorld(scene);
+    gate.update(camera, { effects: true, reducedMotion: false });
+    const target = new T.WebGLRenderTarget(32, 32), renderer = window.museum.renderer;
+    const read = () => { renderer.setRenderTarget(target); renderer.render(scene, camera); const bytes = new Uint8Array(4); renderer.readRenderTargetPixels(target, 16, 16, 1, 1, bytes); return Array.from(bytes); };
+    const far = read(); plane.position.z = -3; const near = read();
+    renderer.setRenderTarget(null); target.dispose(); plane.geometry.dispose(); (plane.material as any).dispose();
+    return { far, near };
+  });
+  expect(pixels.far.slice(0, 3)).toEqual([0, 0, 0]); expect(pixels.near[0]).toBeGreaterThan(200);
+  await page.getByRole('button', { name: 'Wejdź do galerii', exact: true }).click();
+  await page.waitForTimeout(1000); expect(errors).toEqual([]);
+  await page.screenshot({ path: 'test-results/proximity-world.png' });
+});

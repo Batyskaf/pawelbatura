@@ -9,13 +9,14 @@ import { Exhibits } from './art/exhibits';
 import { Interaction } from './art/interaction';
 import { Materialization } from './effects/materialization';
 import { FieldEmergence } from './effects/fieldEmergence';
+import { ProximityWorld } from './effects/proximityWorld';
 import { SoundSystem } from './audio/sound';
 import type { UI } from './ui/ui';
 import type { Settings } from './types';
 export class Museum {
   scene = new T.Scene(); camera = new T.PerspectiveCamera(movement.fov, innerWidth / innerHeight, .08, 75);
   renderer: T.WebGLRenderer; architecture: Architecture; controller: Controller; exhibits: Exhibits; interaction: Interaction;
-  effects: Materialization; fields: FieldEmergence; sound: SoundSystem; state: 'welcome' | 'exploring' | 'paused' = 'welcome';
+  effects: Materialization; fields: FieldEmergence; proximity: ProximityWorld; sound: SoundSystem; state: 'welcome' | 'exploring' | 'paused' = 'welcome';
   metrics = { fps: 60, calls: 0, triangles: 0, geometries: 0, textures: 0, estimatedTextureMB: 0, effects: 0, particles: 0, resolutionScale: 1, renderMs: 0 };
   private abort = new AbortController(); private lastTime = 0; private elapsed = 0; private slowTime = 0; private measureTime = 0;
   private composer: EffectComposer; private blendScene = new T.Scene(); private blendCamera = new T.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -34,6 +35,7 @@ export class Museum {
     this.architecture = new Architecture(this.scene, demo); this.exhibits = new Exhibits(this.scene, demo);
     this.effects = new Materialization(this.scene, this.architecture.effectTargets.filter(target => !target.id.startsWith('observatory-wall')));
     this.fields = new FieldEmergence(this.scene, this.architecture.effectTargets.filter(target => target.id.startsWith('observatory-wall')), this.exhibits.exhibits.filter(exhibit => exhibit.work.room === 'observatory'));
+    this.proximity = new ProximityWorld(this.scene);
     this.controller = new Controller(this.camera, canvas, this.architecture.colliders, settings);
     this.interaction = new Interaction(this.exhibits.exhibits, document.querySelector('#art-label')!, document.querySelector('#leader')!);
     this.sound = new SoundSystem(settings);
@@ -109,6 +111,7 @@ export class Museum {
     const effectiveSettings = this.autoScale < .8 ? { ...this.settings, quality: 'low' as const } : this.settings;
     this.effects.update(dt, this.elapsed, this.camera, effectiveSettings, position => { if (this.state === 'exploring') this.sound.materialize(position); });
     this.fields.update(dt, this.elapsed, this.camera, this.settings, position => { if (this.state === 'exploring') this.sound.materialize(position); });
+    this.proximity.update(this.camera, this.settings);
     this.scene.updateMatrixWorld(true);
     this.interaction.update(this.camera, dt, this.state === 'exploring');
     this.renderer.info.autoReset = false; this.renderer.info.reset();

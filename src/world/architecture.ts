@@ -111,7 +111,9 @@ export class Architecture {
     for (const z of [-5, 0, 5]) {
       this.block(g, [0, h - .45, z], [room.width, .25, .25], brass, .35);
       const rib = new T.Mesh(new T.TorusGeometry(w - .55, .09, 8, 48, Math.PI), this.material(brass, .4));
-      rib.position.set(0, h - w * .5, z); rib.scale.y = .5; g.add(rib);
+      // Keep the entire vault rib above the artwork viewing zone, even in wide halls.
+      rib.position.set(0, 3.6, z); rib.scale.y = (h - .6 - 3.6) / (w - .55);
+      rib.userData.exhibitionRib = true; g.add(rib);
     }
     this.captureTarget(g, ribsStart, `${room.id}-ceiling-ribs`, 'structure');
     if (room.id === 'cabinet') this.orrery(g, 0, -1, brass);
