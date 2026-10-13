@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { moveWithCollisions, floorAt, intersects } from '../src/world/collision';
 import { activationState, progressStep } from '../src/effects/materialization';
 import artworks from '../src/data/artworks.json';
+import { placeLabel } from '../src/art/labels';
 test('All original artworks, metadata and exact external links survive', async () => {
   const source = await readFile('gallery.html', 'utf8');
   const blocks = [...source.matchAll(/<div class="art">([\s\S]*?)(?=<div class="art">|<\/section>)/g)];
@@ -13,6 +14,8 @@ test('All original artworks, metadata and exact external links survive', async (
   for (const [i, match] of blocks.entries()) {
     const work = artworks[i];
     assert.equal(match[1].match(/<h3>([\s\S]*?)<\/h3>/)![1], work.title);
+    assert.equal(match[1].match(/<p data-pl="([^"]+)"/)![1], work.metadata.pl);
+    assert.equal(match[1].match(/<p[^>]*data-en="([^"]+)"/)![1], work.metadata.en);
     assert.equal(match[1].match(/href="(https:[^"]+)"/)![1], work.externalUrl);
     assert.equal(createHash('sha256').update(await readFile(work.image)).digest('hex'), work.sha256);
     assert.ok(Math.abs(work.displayWidth / work.displayHeight - work.pixelWidth / work.pixelHeight) < .0001);
@@ -56,4 +59,12 @@ test('Materialization duration is independent of refresh rate', () => {
   const advance = (fps: number) => { let p = 0; for (let i = 0; i < fps * 2; i++) p = progressStep(p, 1, 1 / fps, 4); return p; };
   assert.ok(Math.abs(advance(30) - .5) < .00001); assert.ok(Math.abs(advance(144) - .5) < .00001);
   assert.equal(progressStep(.99, 1, 1, 2), 1); assert.equal(progressStep(.01, 0, 1, 2), 0);
+});
+test('Labels sit outside artwork bounds whenever screen space allows', () => {
+  const central = { left: 500, right: 850, top: 220, bottom: 570 };
+  const right = placeLabel(central, 1440, 900); assert.ok(right.x > central.right); assert.equal(right.edge, 'right');
+  const farRight = { left: 1000, right: 1400, top: 180, bottom: 680 };
+  const left = placeLabel(farRight, 1440, 900); assert.ok(left.x + left.width < farRight.left); assert.equal(left.edge, 'left');
+  const wide = { left: 20, right: 1420, top: 180, bottom: 450 };
+  const below = placeLabel(wide, 1440, 900); assert.ok(below.y > wide.bottom); assert.equal(below.edge, 'bottom');
 });

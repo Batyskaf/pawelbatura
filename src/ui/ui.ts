@@ -33,8 +33,10 @@ export class UI {
     else status.textContent = this.text('18 oryginalnych prac · 3 przestrzenie · bez instalacji', '18 original works · 3 spaces · no installation');
   }
   close() {
-    this.panel.close(); this.restoreFocus?.focus();
+    this.panel.close();
     if (document.body.dataset.mode !== 'failed') this.setMode('paused');
+    const target = this.restoreFocus?.isConnected && this.restoreFocus.offsetParent && this.restoreFocus.getAttribute('aria-hidden') !== 'true' ? this.restoreFocus : document.querySelector<HTMLElement>('#pause [data-enter]');
+    target?.focus();
   }
   open(kind: string) {
     this.onPause(); this.restoreFocus = document.activeElement as HTMLElement;

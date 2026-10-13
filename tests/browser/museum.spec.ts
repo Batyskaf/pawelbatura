@@ -86,3 +86,26 @@ test('Static portfolio works without JavaScript', async ({ browser }) => {
   await expect(page.locator('.art .caption p').first()).toContainText('2026');
   await context.close();
 });
+test('WebGL failure leaves catalogue available', async ({ page }) => {
+  await page.addInitScript(() => {
+    const original = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function(this: HTMLCanvasElement, kind: any, ...args: any[]) { if (String(kind).startsWith('webgl')) return null; return original.call(this, kind, ...args as [any]); } as any;
+  });
+  await page.goto('/'); await expect(page.locator('body')).toHaveAttribute('data-mode', 'failed');
+  await page.getByRole('button', { name: 'Oglądaj bez 3D →', exact: true }).click();
+  await expect(page.locator('.work-card')).toHaveCount(18);
+});
+test('All reconstruction effects respect particle budgets and keep collision geometry stable', async ({ page }) => {
+  await page.goto('/'); await page.waitForFunction(() => !!window.museum);
+  const report = await page.evaluate(() => {
+    const m = window.museum; const collision = JSON.stringify(m.architecture.colliders);
+    for (const fx of m.effects.transforms) { fx.config.activation = 1000; fx.progress = .5; }
+    return { before: collision, max: m.effects.transforms.reduce((sum, fx) => sum + fx.config.maxParticles, 0) };
+  });
+  await page.waitForTimeout(350);
+  const after = await page.evaluate(() => ({ collision: JSON.stringify(window.museum.architecture.colliders), particles: window.museum.effects.particles, calls: window.museum.metrics.calls, triangles: window.museum.metrics.triangles, renderMs: window.museum.metrics.renderMs, fps: window.museum.metrics.fps }));
+  expect(after.collision).toBe(report.before); expect(after.particles).toBeLessThanOrEqual(report.max);
+  expect(after.calls).toBeLessThan(350); expect(after.triangles).toBeLessThan(300000);
+  console.log('Scene budget:', JSON.stringify({ particles: after.particles, calls: after.calls, triangles: after.triangles, renderMs: after.renderMs, fps: after.fps }));
+  await page.screenshot({ path: 'test-results/welcome.png' });
+});

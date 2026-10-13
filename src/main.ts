@@ -10,6 +10,8 @@ try {
   if (saved.quality === 'low' || saved.quality === 'high') settings.quality = saved.quality;
 } catch { /* defaults work without local storage */ }
 const ui = new UI(settings);
+// A back/forward cached page has already disposed its GPU/audio resources.
+window.addEventListener('pageshow', event => { if (event.persisted) location.reload(); });
 const coarse = matchMedia('(pointer: coarse)').matches;
 if (coarse) {
   document.querySelector('#load-status')!.textContent = ui.text('Na ekranie dotykowym polecamy katalog wszystkich prac.', 'On a touch screen, explore the full artwork catalogue.');
