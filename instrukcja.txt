@@ -1,0 +1,748 @@
+# INSTRUKCJA DLA CODEXA
+
+## Przebudowa istniejącej strony internetowej w interaktywne, retrofuturystyczne muzeum sztuki 3D
+
+### 1. CEL PROJEKTU
+
+Twoim zadaniem jest przebudowanie istniejącej strony internetowej, dostępnej w udostępnionym repozytorium GitHub, w pełnowymiarowe, interaktywne muzeum sztuki 3D działające bezpośrednio w przeglądarce.
+
+Nie twórz jedynie demonstracji technologicznej ani statycznej wizualizacji. Docelowo użytkownik powinien otrzymać działającą, estetycznie dopracowaną aplikację internetową.
+
+Strona powinna łączyć trzy koncepcje:
+
+1. **Gabinet osobliwości (Wunderkammer)** — przestrzeń inspirowana dawnymi kolekcjami niezwykłych przedmiotów, malarstwa, rzeźby, instrumentów naukowych i osobliwych artefaktów.
+2. **Retrofuturyzm** — połączenie historycznej architektury, ozdobnych detali, mechanicznych urządzeń i futurystycznych technologii.
+3. **Dynamiczna architektura cyfrowa** — ściany, pomosty i elementy wystroju mogą materializować się, rozpadać na sześcienne cząsteczki oraz rekonstruować w czasie rzeczywistym.
+
+Estetyka powinna być inspirowana surrealizmem, dawnymi gabinetami osobliwości oraz wizualizacjami wnętrza cyfrowych rzeczywistości znanymi z gier science fiction.
+
+Nie kopiuj jednak konkretnych lokacji, projektów graficznych ani chronionych zasobów z istniejących gier.
+
+Projekt powinien mieć własną, spójną tożsamość wizualną.
+
+---
+
+### 2. ANALIZA ISTNIEJĄCEGO REPOZYTORIUM
+
+**Przed rozpoczęciem implementacji dokładnie przeanalizuj aktualną stronę.**
+
+Ustal:
+
+* Jakie technologie wykorzystuje obecna aplikacja?
+* Jaka jest struktura katalogów?
+* Jak zarządzane są obrazy i inne materiały?
+* Czy istnieje system zarządzania treścią?
+* Jakie podstrony i funkcjonalności są już zaimplementowane?
+* Jakie odnośniki prowadzą do zewnętrznych serwisów?
+* Jak obecnie prezentowane są prace artystyczne?
+* Jak realizowane jest wdrażanie strony?
+* Jakie są istniejące testy, zależności oraz skrypty budowania?
+
+Sporządź inwentaryzację istniejących prac, metadanych i adresów URL.
+
+**Nie wolno utracić żadnego istniejącego dzieła ani jego odnośnika podczas przebudowy.**
+
+Zachowaj także pozostałe istotne funkcjonalności aktualnej witryny.
+
+Nie zastępuj istniejących materiałów losowo dobranymi obrazami demonstracyjnymi.
+
+W szczególności zachowaj istniejące odnośniki do Saatchi Art lub innych serwisów, do których obecnie prowadzą linki ze strony.
+
+Nie zgaduj ani nie generuj zastępczych adresów URL.
+
+Jeżeli określone dane nie są dostępne, udokumentuj brak i przygotuj odpowiednie miejsce w strukturze aplikacji.
+
+Przed zmianami utwórz osobną gałąź Git i zadbaj o możliwość przywrócenia poprzedniej wersji.
+
+Nie nadpisuj produkcyjnej wersji strony bez sprawdzenia rezultatu.
+
+---
+
+### 3. ARCHITEKTURA TECHNOLOGICZNA
+
+Preferowany zestaw technologiczny:
+
+* Three.js — renderowanie grafiki 3D.
+* React Three Fiber — integracja sceny 3D z Reactem.
+* React Three Drei — pomocnicze komponenty.
+* TypeScript — logika aplikacji.
+* GLSL lub odpowiednie rozwiązania shaderowe — efekty materializacji.
+* Web Audio API — udźwiękowienie.
+* GLB/glTF — modele przestrzenne.
+* KTX2 — skompresowane tekstury, jeżeli jest to uzasadnione.
+* CSS i HTML — interfejs użytkownika oraz opisy prac.
+
+Nie wprowadzaj jednak Reacta wyłącznie z przyzwyczajenia.
+
+Jeżeli istniejąca strona ma architekturę, którą można rozsądnie rozszerzyć przy użyciu samego Three.js, oceń takie rozwiązanie.
+
+Wybierz technologię, która pozwoli zachować dotychczasową zawartość i ograniczyć niepotrzebne komplikacje.
+
+Architektura powinna rozdzielać następujące systemy:
+
+* zarządzanie scenami;
+* architekturę i modele 3D;
+* kamerę pierwszoosobową;
+* ruch i kolizje;
+* efekty wizualne;
+* zarządzanie dziełami;
+* interaktywne etykiety;
+* interfejs użytkownika;
+* system dźwiękowy;
+* ładowanie i optymalizację zasobów.
+
+Każdy system powinien być możliwy do niezależnej modyfikacji.
+
+---
+
+### 4. ARCHITEKTURA WIRTUALNEGO MUZEUM
+
+Zaprojektuj przestrzeń przypominającą fantastyczne muzeum.
+
+Nie powinna to być seria identycznych, prostokątnych pomieszczeń.
+
+Przygotuj różnorodne elementy architektoniczne:
+
+* wysoką salę wejściową;
+* korytarze wystawowe;
+* galerie malarstwa;
+* wnęki z eksponatami;
+* podwyższenia;
+* schody i pomosty;
+* kolumnady;
+* łuki i sklepienia;
+* mechaniczne konstrukcje;
+* przestrzenne instalacje artystyczne.
+
+Architektura powinna stopniowo zmieniać charakter.
+
+Przykładowo w jednej sali dominują kamienne ściany, ozdobne ramy i ciemne drewno. W następnej pojawiają się mosiężne konstrukcje, szklane gabloty i mechanizmy przypominające dawne aparaty naukowe.
+
+Jeszcze dalej część wnętrza może wyglądać na wygenerowaną cyfrowo.
+
+Ściany i podłogi mogą przechodzić od realistycznych powierzchni do struktur złożonych z sześcianów, punktów i świetlnych siatek.
+
+**Ważne: nie buduj całej galerii wyłącznie z klocków.**
+
+Efekty cyfrowe mają kontrastować z bardziej realistyczną architekturą.
+
+Podstawowe pomieszczenia powinny być atrakcyjne wizualnie także wtedy, gdy wszystkie efekty specjalne są wyłączone.
+
+Nie potrzebujemy jeszcze dziesiątek sal. Najpierw przygotuj jedną kompletną salę demonstracyjną oraz połączony z nią korytarz. Po zweryfikowaniu ich jakości rozbuduj przestrzeń.
+
+---
+
+### 5. KAMERA I PORUSZANIE SIĘ
+
+Galeria ma być zwiedzana **z perspektywy pierwszej osoby (FPP)**.
+
+Nie potrzebujemy widocznego modelu postaci gracza.
+
+Sterowanie:
+
+* W — ruch do przodu.
+* S — ruch do tyłu.
+* A — ruch w lewo.
+* D — ruch w prawo.
+* Mysz — rozglądanie.
+* Shift — szybszy marsz.
+* E lub kliknięcie — interakcja.
+* Esc — zwolnienie kursora lub zamknięcie aktywnego panelu.
+
+Wykorzystaj Pointer Lock API lub odpowiadający mu system sterowania.
+
+Po wejściu na stronę użytkownik powinien zobaczyć ekran powitalny i przycisk „Wejdź do galerii”.
+
+Kliknięcie rozpoczyna zwiedzanie.
+
+Ustaw wstępnie:
+
+* wysokość kamery około 1,65–1,75 metra;
+* pole widzenia około 70–75 stopni;
+* normalną prędkość ruchu około 2,2–2,6 m/s;
+* szybszy marsz około 3,5–4 m/s.
+
+Wszystkie wartości mają być konfigurowalne.
+
+Ruch powinien być płynny i niezależny od liczby klatek na sekundę.
+
+Zastosuj kolizje ze ścianami, meblami, podestami i innymi przeszkodami.
+
+Unikaj przenikania kamery przez geometrię.
+
+Nie implementuj skomplikowanej symulacji fizycznej, jeżeli prostszy kontroler ruchu wystarczy.
+
+---
+
+### 6. MATERIALIZACJA I DEMATERIALIZACJA ARCHITEKTURY
+
+**To jeden z najważniejszych elementów całego projektu.**
+
+Chcę uzyskać efekt świata, który sprawia wrażenie generowanego na bieżąco.
+
+Wybrane elementy architektury powinny:
+
+1. Pojawiać się jako rozproszone cząsteczki.
+2. Układać się w przestrzenne struktury złożone z sześcianów.
+3. Stopniowo tworzyć rozpoznawalny obiekt.
+4. Przechodzić w realistyczną powierzchnię.
+5. W określonych warunkach przechodzić odwrotną transformację.
+
+Przykład:
+
+Gracz wchodzi do korytarza. W oddali widzi fragmenty ściany przypominające unoszące się w powietrzu woksele.
+
+W miarę zbliżania się gracza sześciany układają się w większe fragmenty.
+
+Następnie między nimi pojawia się tekstura, aż w końcu powstaje pełna ściana z ozdobnymi detalami.
+
+Gdy gracz odchodzi, część architektury może stopniowo rozpadać się ponownie.
+
+Nie wszystkie obiekty mają zachowywać się identycznie.
+
+Przygotuj co najmniej trzy rodzaje efektów:
+
+**A. Voxel Assembly**
+
+Obiekt materializuje się z wielu drobnych sześcianów.
+
+**B. Digital Dissolve**
+
+Powierzchnia rozpada się na piksele lub fragmenty przypominające cyfrowy pył.
+
+**C. Structural Reconstruction**
+
+Kolejne części konstrukcji pojawiają się w określonej kolejności, sprawiając wrażenie odbudowy architektury.
+
+Efekty powinny mieć płynne przejścia.
+
+Nie ograniczaj ich do zwykłego zmieniania przezroczystości.
+
+W miarę możliwości zastosuj shadery oraz instancjonowanie, aby uniknąć tworzenia tysięcy osobnych obiektów.
+
+Parametry każdego efektu:
+
+* zasięg aktywacji;
+* czas materializacji;
+* kierunek transformacji;
+* wielkość cząsteczek;
+* gęstość cząsteczek;
+* intensywność świecenia;
+* stopień losowości;
+* maksymalna liczba aktywnych cząsteczek.
+
+Wprowadź histerezę aktywacji, aby powierzchnie nie przełączały się nerwowo, gdy gracz stoi blisko progu odległości.
+
+**Bardzo ważne: kolizje muszą pozostawać niezależne od efektów wizualnych.**
+
+Jeżeli ściana wizualnie się rozpada, nie może to przypadkowo umożliwić przechodzenia przez nią.
+
+W miejscach, w których wizualnie znika podłoga lub pomost, zachowaj czytelną informację o powierzchni, po której można chodzić.
+
+Nie projektuj efektów powodujących dezorientację lub przypadkowe wypadanie poza poziom.
+
+---
+
+### 7. EKSPOZYCJA DZIEŁ SZTUKI
+
+Wszystkie istniejące prace artystyczne mają zostać przeniesione do nowego systemu.
+
+Obrazy powinny być prezentowane jako rzeczywiste eksponaty w przestrzeni muzeum.
+
+Każde dzieło powinno mieć niezależną konfigurację:
+
+* identyfikator;
+* tytuł;
+* autora, jeżeli dane istnieją;
+* opis, jeżeli jest dostępny;
+* ścieżkę do obrazu;
+* proporcje;
+* wymiary ekspozycyjne;
+* położenie;
+* orientację;
+* opcjonalny model ramy;
+* adres zewnętrzny;
+* kategorię;
+* opcjonalne efekty specjalne.
+
+Nie rozciągaj obrazów w sposób zmieniający ich proporcje.
+
+Nie przycinaj dzieł bez uzasadnienia.
+
+Ramy mogą mieć różne style, na przykład klasyczne drewniane, złocone, mechaniczne lub minimalistyczne metalowe.
+
+Wszystkie obrazy muszą zachowywać czytelność.
+
+Nie stosuj na samych dziełach agresywnego oświetlenia ani efektów postprocessingu zniekształcających ich kolory.
+
+Efekty specjalne powinny podkreślać otoczenie, a nie utrudniać oglądanie prac.
+
+---
+
+### 8. INTERAKTYWNE ETYKIETY I LINKI
+
+**Wymaganie szczególnie ważne.**
+
+Każdy obraz ma posiadać etykietę informacyjną.
+
+Etykieta nie powinna jednak stale zasłaniać dzieła.
+
+Zastosuj system etykiet przestrzennych połączonych z obrazami cienką linią, przypominający wizualizację grafu lub interfejs futurystycznego muzeum.
+
+Schemat zachowania:
+
+1. Gracz rozgląda się po galerii.
+2. Kiedy spojrzy na obraz i znajdzie się w odpowiedniej odległości, system rozpoznaje zainteresowanie dziełem.
+3. W pobliżu obrazu pojawia się niewielki punkt.
+4. Od punktu rozwija się cienka linia.
+5. Na jej końcu pojawia się czytelny podpis zawierający tytuł pracy.
+6. Podpis pozostaje skierowany w stronę obserwatora.
+7. Po zmianie kierunku patrzenia podpis płynnie znika.
+
+Etykiety powinny zachowywać się jak elementy interfejsu powiązane z obiektami 3D.
+
+Można zastosować billboardy lub nakładkę HTML z pozycją wyznaczaną na podstawie współrzędnych obiektu.
+
+**Podpis nie może zasłaniać środka obrazu.**
+
+Preferuj umieszczanie napisów z boku dzieła.
+
+System powinien dynamicznie wybierać miejsce podpisu, uwzględniając położenie obrazu na ekranie.
+
+Linia łącząca powinna zaczynać się przy krawędzi obrazu lub w wyznaczonym punkcie informacyjnym, a nie przecinać jego powierzchnię.
+
+Jeżeli kilka dzieł znajduje się blisko siebie, etykiety nie powinny na siebie nachodzić.
+
+Ogranicz liczbę jednocześnie eksponowanych podpisów.
+
+Etykiety powinny być czytelne niezależnie od odległości kamery.
+
+Zastosuj delikatne animacje i odpowiedni kontrast.
+
+#### Klikalne odnośniki
+
+Zachowaj wszystkie istniejące linki do Saatchi Art oraz innych serwisów.
+
+Po wybraniu dzieła użytkownik powinien móc otworzyć jego oryginalną stronę.
+
+Można to zrealizować poprzez kliknięcie podpisu, przycisk „Zobacz dzieło” albo panel szczegółów.
+
+Ważne:
+
+* Link musi prowadzić do właściwej pracy.
+* Nie wolno zamieniać adresów na ogólną stronę serwisu.
+* Linki powinny otwierać się w nowej karcie.
+* Zastosuj odpowiednie zabezpieczenia przy otwieraniu zewnętrznych stron.
+* Kliknięcie etykiety nie może powodować przypadkowego ruchu kamery.
+
+Podczas korzystania z panelu informacyjnego zwolnij blokadę kursora. Po zamknięciu panelu umożliwiaj powrót do zwiedzania.
+
+---
+
+### 9. SYSTEM DŹWIĘKÓW KROKÓW
+
+Zaimplementuj system dźwięków kroków zsynchronizowany z ruchem gracza.
+
+Nie stosuj pojedynczego dźwięku odtwarzanego w ciągłej pętli.
+
+Kroki powinny wynikać z rzeczywistego przemieszczania się postaci po podłożu.
+
+#### Rodzaje powierzchni
+
+System powinien rozpoznawać co najmniej następujące materiały:
+
+**Stone** — kamień, marmur i posadzki muzealne.
+
+**Wood** — drewniane podłogi i pomosty.
+
+**Metal** — metalowe konstrukcje i platformy.
+
+**Digital** — futurystyczne powierzchnie materializujące się z cyfrowych elementów.
+
+Dla każdego materiału przygotuj osobny zestaw brzmień.
+
+Przykładowo:
+
+Kamienna posadzka powinna generować subtelne, twarde odgłosy kroków z lekkim pogłosem.
+
+Drewno powinno brzmieć bardziej głucho, z możliwością delikatnego skrzypienia.
+
+Metal powinien mieć krótkie, rezonujące brzmienie.
+
+Powierzchnie cyfrowe mogą generować charakterystyczne syntetyczne impulsy dźwiękowe.
+
+#### Synchronizacja
+
+Częstotliwość kroków powinna zależeć od:
+
+* prędkości ruchu;
+* przebytej odległości;
+* stanu kontaktu z podłożem;
+* rodzaju powierzchni.
+
+Podczas szybszego marszu kroki powinny następować częściej.
+
+Wprowadź niewielkie losowe różnice głośności i wysokości dźwięku, aby uniknąć mechanicznego powtarzania identycznego nagrania.
+
+Nie odtwarzaj dźwięków:
+
+* kiedy gracz stoi;
+* kiedy naciska przycisk ruchu, ale jest zablokowany przez przeszkodę;
+* podczas korzystania z menu;
+* kiedy nie ma kontaktu z podłożem.
+
+Jeżeli zastosujesz prosty model kamery bez skakania, wystarczy poprawne wykrywanie ruchu poziomego i kontaktu z podłogą.
+
+#### Realizacja techniczna
+
+Wykorzystaj Web Audio API.
+
+Przygotuj moduł odpowiedzialny za:
+
+* ładowanie próbek;
+* wybór dźwięku;
+* synchronizację kroków;
+* głośność;
+* zmianę materiału podłoża;
+* wyciszanie;
+* usuwanie niepotrzebnych zasobów.
+
+Przeglądarki często wymagają interakcji użytkownika przed rozpoczęciem odtwarzania dźwięku.
+
+Uruchamiaj lub wznawiaj kontekst audio po kliknięciu przycisku wejścia do galerii.
+
+Nie wykorzystuj bez pozwolenia chronionych nagrań z gier.
+
+Jeżeli repozytorium nie zawiera odpowiednich próbek, zastosuj własne, legalnie pozyskane nagrania albo prosty system syntezy dźwięku.
+
+W ustawieniach udostępnij osobną regulację głośności kroków.
+
+---
+
+### 10. DŹWIĘK PRZESTRZENNY I ATMOSFERA
+
+Oprócz kroków zaimplementuj subtelne dźwięki otoczenia.
+
+Przykłady:
+
+* odległy rezonans mechanizmów;
+* delikatny szum urządzeń;
+* sporadyczne trzaski elektryczne;
+* subtelne odgłosy materializujących się powierzchni;
+* przestrzenny pogłos w dużych salach.
+
+Nie przesadzaj z natężeniem.
+
+Muzeum ma pozostać przestrzenią, w której można spokojnie oglądać sztukę.
+
+Dźwięki powinny wzmacniać atmosferę, a nie rozpraszać użytkownika.
+
+W miarę możliwości wykorzystaj dźwięk pozycyjny dla obiektów znajdujących się w przestrzeni 3D.
+
+Przygotuj oddzielną regulację:
+
+* głośności głównej;
+* kroków;
+* dźwięków otoczenia;
+* efektów specjalnych.
+
+Użytkownik powinien móc całkowicie wyciszyć aplikację.
+
+---
+
+### 11. OŚWIETLENIE I ATMOSFERA
+
+Estetyka powinna łączyć klasyczne muzeum z przestrzenią science fiction.
+
+Zastosuj:
+
+* ciepłe oświetlenie dzieł;
+* chłodniejsze światło architektury cyfrowej;
+* punktowe źródła światła;
+* subtelne światło emisyjne;
+* delikatny bloom;
+* lokalną mgłę lub jej wydajną imitację;
+* kontrolowane kontrasty;
+* cienie tam, gdzie są istotne dla odbioru przestrzeni.
+
+Nie stosuj jednak kosztownych efektów tylko dlatego, że są dostępne.
+
+W szczególności unikaj nadmiernego wykorzystania dynamicznych świateł rzucających cienie.
+
+Dla architektury statycznej rozważ wypieczone oświetlenie lub inne tańsze rozwiązania.
+
+Każdy obraz powinien pozostać prawidłowo oświetlony i mieć możliwie wiernie odwzorowane kolory.
+
+Przygotuj co najmniej dwa profile jakości graficznej.
+
+---
+
+### 12. OPTYMALIZACJA
+
+Galeria musi działać w zwykłej przeglądarce internetowej.
+
+Nie zakładaj, że użytkownicy będą dysponowali wydajnymi kartami graficznymi.
+
+Wprowadź:
+
+* frustum culling;
+* ograniczanie renderowania niewidocznych pomieszczeń;
+* ładowanie zasobów w miarę potrzeb;
+* instancjonowanie powtarzających się elementów;
+* współdzielenie geometrii i materiałów;
+* kompresję odpowiednich modeli;
+* kompresję tekstur;
+* ograniczanie liczby draw calli;
+* adaptacyjne zarządzanie efektami specjalnymi.
+
+Dla pierwszej wersji przyjmij orientacyjny budżet kilkuset tysięcy trójkątów widocznych jednocześnie na typowym komputerze.
+
+Nie traktuj tej liczby jako sztywnego limitu.
+
+Mierz również czas renderowania, liczbę draw calli, pamięć GPU oraz liczbę aktywnych efektów.
+
+Jako cel optymalizacyjny przyjmij płynne 60 FPS na rozsądnym komputerze ze średniej półki przy odpowiednio dobranych ustawieniach.
+
+Na słabszych urządzeniach automatycznie redukuj:
+
+* rozdzielczość renderowania;
+* liczbę cząsteczek;
+* jakość cieni;
+* intensywność postprocessingu;
+* zasięg detali.
+
+Nie ograniczaj jakości wszystkich użytkowników do najniższego wspólnego poziomu.
+
+Dodatkowo przygotuj uproszczoną możliwość oglądania prac dla urządzeń, na których pełna eksploracja 3D jest niedostępna lub niewygodna.
+
+---
+
+### 13. INTERFEJS UŻYTKOWNIKA
+
+Interfejs powinien być minimalistyczny i spójny z architekturą muzeum.
+
+Unikaj dużej liczby stale widocznych przycisków.
+
+Podstawowe elementy:
+
+**Ekran wejściowy**
+
+Nazwa galerii, krótki opis i przycisk rozpoczęcia zwiedzania.
+
+**Minimalny celownik**
+
+Subtelny punkt pozwalający określić kierunek patrzenia.
+
+**System etykiet**
+
+Dynamiczne podpisy dzieł połączone liniami z odpowiednimi obiektami.
+
+**Panel szczegółów pracy**
+
+Tytuł, opis oraz przycisk prowadzący do oryginalnej strony.
+
+**Menu ustawień**
+
+Grafika, dźwięk, czułość myszy i dostępność.
+
+**Pomoc**
+
+Krótka instrukcja sterowania.
+
+Nie pozwól, aby menu, etykiety i inne elementy interfejsu przejmowały wzajemnie sterowanie w nieprzewidywalny sposób.
+
+Zadbaj o prawidłowe działanie kursora, klawisza Esc i blokady myszy.
+
+Dodaj opcję ograniczenia ruchu kamery i wyłączenia intensywnych animacji dla użytkowników wrażliwych na ruch.
+
+---
+
+### 14. SYSTEM DANYCH I DALSZA ROZBUDOWA
+
+Galeria powinna być łatwa do aktualizowania.
+
+Nie zapisuj informacji o wszystkich dziełach bezpośrednio w kodzie odpowiedzialnym za renderowanie pomieszczeń.
+
+Przygotuj osobne źródło danych zawierające informacje o pracach.
+
+Dodanie nowego dzieła powinno wymagać uzupełnienia jego metadanych i przypisania go do określonej przestrzeni wystawowej.
+
+Architektura aplikacji powinna umożliwiać w przyszłości:
+
+* dodawanie kolejnych sal;
+* wymianę modeli 3D;
+* organizowanie wystaw tematycznych;
+* zmianę rozmieszczenia dzieł;
+* wprowadzanie kolejnych efektów wizualnych;
+* dodawanie nowych materiałów podłoża i dźwięków;
+* konfigurację sposobu prezentowania etykiet.
+
+Nie implementuj teraz niepotrzebnego, rozbudowanego panelu administracyjnego, jeżeli istniejąca strona go nie potrzebuje.
+
+---
+
+### 15. KOLEJNOŚĆ REALIZACJI
+
+Realizuj projekt etapami, ale traktuj wszystkie opisane wyżej elementy jako wymagania docelowe.
+
+#### Etap I — Audyt i zabezpieczenie
+
+Przeanalizuj repozytorium, zinwentaryzuj dzieła i linki, sprawdź aktualną konfigurację oraz przygotuj bezpieczny plan przebudowy.
+
+#### Etap II — Fundament aplikacji
+
+Uruchom scenę 3D, kamerę pierwszoosobową, sterowanie, kolizje i podstawowe oświetlenie.
+
+Przygotuj prawidłowo działający ekran wejściowy.
+
+#### Etap III — Sala demonstracyjna
+
+Stwórz jedną reprezentacyjną salę w estetyce retrofuturystycznego gabinetu osobliwości.
+
+Umieść w niej kilka rzeczywistych dzieł z obecnej strony.
+
+Dodaj ramy, oświetlenie i podstawową dekorację.
+
+#### Etap IV — System interakcji
+
+Zaimplementuj rozpoznawanie dzieł, etykiety, linie łączące, panele informacyjne oraz zachowane odnośniki zewnętrzne.
+
+Sprawdź, czy podpisy nie przysłaniają obrazów.
+
+#### Etap V — Materializacja
+
+Wprowadź trzy opisane systemy transformacji architektury.
+
+Sprawdź ich płynność, wygląd, wydajność oraz współpracę z kolizjami.
+
+#### Etap VI — Dźwięk
+
+Dodaj kroki zależne od powierzchni, dźwięki otoczenia i efekty materializacji.
+
+Zaimplementuj ustawienia głośności.
+
+#### Etap VII — Rozbudowa galerii
+
+Dodaj kolejne pomieszczenia, przenieś pozostałe dzieła i opracuj przejścia między salami.
+
+Zadbaj o różnorodność architektury.
+
+#### Etap VIII — Optymalizacja i testy
+
+Sprawdź aplikację w najważniejszych przeglądarkach.
+
+Przetestuj wydajność, poprawność linków, sterowanie, kolizje, interfejs i udźwiękowienie.
+
+Usuń błędy i przygotuj wersję gotową do wdrożenia.
+
+---
+
+### 16. KRYTERIA AKCEPTACJI
+
+Nie uznawaj zadania za ukończone wyłącznie dlatego, że scena 3D się uruchamia.
+
+Gotowa aplikacja musi spełniać poniższe warunki.
+
+**Eksploracja**
+
+Użytkownik może wejść do muzeum, rozglądać się, chodzić i zwiedzać bez problemów z kamerą lub kolizjami.
+
+**Architektura**
+
+Galeria wizualnie przypomina retrofuturystyczny gabinet osobliwości, a nie domyślną scenę z prostymi sześcianami.
+
+**Efekty**
+
+Wybrane elementy architektury rzeczywiście materializują się i rozpadają, a animacje są płynne i konfigurowalne.
+
+**Dzieła**
+
+Prace z oryginalnej strony są zachowane, wyświetlane bez zniekształceń i dostępne dla zwiedzających.
+
+**Etykiety**
+
+Po spojrzeniu na dzieło pojawia się czytelny podpis połączony z nim linią. Podpis nie zasłania obrazu.
+
+**Odnośniki**
+
+Wszystkie zachowane linki prowadzą do właściwych stron.
+
+**Dźwięk**
+
+Podczas poruszania się słychać kroki odpowiednie dla podłoża. Gdy postać stoi, kroki nie są odtwarzane.
+
+**Interfejs**
+
+Menu, kursor, celownik, etykiety i sterowanie współdziałają bez konfliktów.
+
+**Wydajność**
+
+Aplikacja nie generuje niekontrolowanych spadków płynności i prawidłowo zarządza zasobami.
+
+**Jakość kodu**
+
+Kod jest modularny, uporządkowany, możliwy do rozwijania i pozbawiony oczywistych błędów.
+
+---
+
+### 17. WERYFIKACJA I RAPORTOWANIE
+
+Nie kończ prac na samym wygenerowaniu kodu.
+
+Uruchom dostępne skrypty projektu, sprawdź kompilację, przeprowadź testy i popraw znalezione błędy.
+
+Jeżeli środowisko umożliwia uruchomienie przeglądarki, przetestuj aplikację również wizualnie.
+
+Sprawdź szczególnie:
+
+* działanie wszystkich istniejących linków;
+* zachowanie kursora podczas otwierania paneli;
+* poprawność sterowania po powrocie z menu;
+* zachowanie etykiet przy zmianie kąta patrzenia;
+* brak przenikania przez ściany;
+* zatrzymywanie dźwięku kroków;
+* działanie dźwięku po pierwszej interakcji;
+* wyświetlanie obrazów w ich oryginalnych proporcjach;
+* wydajność podczas uruchomienia wielu efektów materializacji.
+
+Nie deklaruj wykonania testu, jeżeli nie został rzeczywiście przeprowadzony.
+
+Dokumentuj ograniczenia środowiska.
+
+Pracuj w logicznych etapach i zachowuj czytelną historię zmian.
+
+Nie wykonuj wdrożenia produkcyjnego bez odpowiedniego upoważnienia.
+
+Po zakończeniu przygotuj raport zawierający:
+
+1. Wprowadzone zmiany.
+2. Zastosowane technologie.
+3. Strukturę najważniejszych modułów.
+4. Wyniki wykonanych testów.
+5. Znane ograniczenia.
+6. Instrukcję uruchomienia projektu.
+7. Instrukcję dodawania nowych prac i pomieszczeń.
+8. Informację o zachowaniu istniejących linków.
+9. Zalecenia dotyczące dalszej rozbudowy.
+
+### 18. NAJWAŻNIEJSZA ZASADA PROJEKTOWA
+
+**Nie sprowadzaj projektu do najprostszej możliwej demonstracji Three.js.**
+
+Celem jest autorska, interaktywna przestrzeń wystawiennicza, w której tradycyjna estetyka gabinetu osobliwości spotyka się z retrofuturystyczną architekturą i efektami świata rekonstruowanego cyfrowo.
+
+Jednocześnie nie twórz pozornie efektownego prototypu kosztem podstawowych funkcjonalności.
+
+Najważniejsza jest równowaga między:
+
+* jakością artystyczną;
+* czytelnością eksponowanych dzieł;
+* płynnością eksploracji;
+* wydajnością;
+* możliwością dalszego rozwijania strony.
+
+Traktuj oryginalną witrynę jako źródło rzeczywistych treści, a nie jako materiał do usunięcia.
+
+Nowa galeria ma stanowić jej rozwinięcie.
+
+**Przystąp do analizy repozytorium i realizacji projektu. Nie kończ zadania na samym opisie planu.**
