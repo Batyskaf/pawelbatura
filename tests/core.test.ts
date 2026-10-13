@@ -80,10 +80,11 @@ test('Footsteps use a restrained cadence at walking and faster speeds', () => {
   const stopped = new StepCadence(); for (let i = 0; i < 600; i++) assert.equal(stopped.update(0, 1 / 60, true), false);
   for (let i = 0; i < 600; i++) assert.equal(stopped.update(.1, 1 / 60, false), false);
 });
-test('Every frame clears the wall rail by eight centimetres without changing canvas size', () => {
+test('Artworks stay at eye level and every frame clears the lowered wall rail', () => {
   for (const work of artworks) {
-    const frameBottom = paintingCenterHeight(work.displayHeight) - work.displayHeight / 2 - .05;
-    assert.ok(Math.abs(frameBottom - 1.35) < .000001);
-    assert.ok(Math.abs(frameBottom - 1.27 - .08) < .000001);
+    const center = paintingCenterHeight(work.displayHeight);
+    const frameBottom = center - work.displayHeight / 2 - .04;
+    assert.equal(center, 1.7);
+    assert.ok(frameBottom - 1.02 >= .08);
   }
 });

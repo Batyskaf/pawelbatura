@@ -25,9 +25,9 @@ export class Museum {
     this.renderer = new T.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
     this.renderer.outputColorSpace = T.SRGBColorSpace; this.renderer.toneMapping = T.NoToneMapping;
     this.renderer.shadowMap.enabled = true; this.renderer.shadowMap.type = T.PCFSoftShadowMap;
-    this.scene.background = new T.Color('#111e1d'); this.scene.fog = new T.Fog('#182b29', 16, 62);
-    this.scene.add(new T.HemisphereLight('#ebdfc3', '#374540', 2));
-    const sun = new T.DirectionalLight('#ffe2b2', 2); sun.position.set(2, 8, 4); sun.castShadow = true;
+    this.scene.background = new T.Color('#020505'); this.scene.fog = new T.Fog('#020505', 16, 62);
+    this.scene.add(new T.HemisphereLight('#ebdfc3', '#374540', .45));
+    const sun = new T.DirectionalLight('#ffe2b2', .65); sun.position.set(2, 8, 4); sun.castShadow = true;
     sun.shadow.mapSize.set(1024, 1024); sun.shadow.camera.left = -12; sun.shadow.camera.right = 12; sun.shadow.camera.top = 12; sun.shadow.camera.bottom = -12; sun.shadow.camera.far = 30; sun.shadow.bias = -.0006;
     this.scene.add(sun);
     const demo = new URLSearchParams(location.search).has('demo');

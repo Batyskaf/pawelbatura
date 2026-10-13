@@ -11,6 +11,7 @@ export class FieldEmergence {
   private bounds = new T.Box3(new T.Vector3(-9, 0, -34), new T.Vector3(9, 6.7, -18));
   private nearest = new T.Vector3(); private lastCritical = false;
   constructor(scene: T.Scene, public targets: EffectTarget[], public exhibits: Exhibit[]) {
+    targets.forEach(target => { target.object.visible = false; });
     for (const target of targets) target.object.traverse(object => {
       if (!(object instanceof T.Mesh)) return;
       this.bindForm(object, this.walls);
@@ -94,6 +95,7 @@ export class FieldEmergence {
     const staticMode = !settings.effects || settings.reducedMotion;
     this.phase = staticMode ? 1 : progressStep(this.phase, Number(this.active), dt, 7.5);
     this.time.value = time; this.fieldPhase.value = this.phase; this.walls.value = T.MathUtils.smoothstep(this.phase, .08, .73);
+    this.targets.forEach(target => { target.object.visible = this.walls.value > .001; });
     this.frames.value = T.MathUtils.smoothstep(this.phase, .42, .81);
     if (!this.critical && this.phase >= this.criticalThreshold) this.critical = true;
     if (this.critical && this.phase <= .66) this.critical = false;

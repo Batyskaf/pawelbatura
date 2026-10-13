@@ -1,6 +1,6 @@
 import type { Room, Settings } from './types';
 export const movement = { eyeHeight: 1.7, fov: 72, speed: 2.4, fastSpeed: 3.8, radius: .28, lookSensitivity: .002, acceleration: 12 };
-export const architectureLevels = { dadoCenter: 1.23, trimThickness: .08, artworkClearance: .08, frameMargin: .05 };
+export const architectureLevels = { dadoCenter: .98, trimThickness: .08, artworkClearance: .08, frameMargin: .04 };
 export const rooms: Room[] = [
   { id: 'cabinet', name: { pl: 'Gabinet osobliwości', en: 'Cabinet of curiosities' }, center: 0, width: 16, length: 16, height: 8.4, material: 'stone', palette: ['#273c39', '#87755b', '#bfa572'] },
   { id: 'observatory', name: { pl: 'Obserwatorium form', en: 'Observatory of forms' }, center: -26, width: 18, length: 16, height: 6.7, material: 'metal', palette: ['#303736', '#75664f', '#bca376'] },

@@ -13,17 +13,27 @@ export class Exhibits {
       const w = work.displayWidth, h = work.displayHeight;
       const gold = new T.MeshStandardMaterial({ color: work.frame === 'minimal' ? '#769a95' : '#b7995f', metalness: .7, roughness: .38 });
       const dark = new T.MeshStandardMaterial({ color: '#302920', roughness: .7 });
-      const back = new T.Mesh(new T.BoxGeometry(w + .1, h + .1, .06), dark); group.add(back);
+      const back = new T.Mesh(new T.BoxGeometry(w + .08, h + .08, .06), dark); group.add(back);
       for (const edge of [-1, 1]) {
-        for (const inset of [0, .022]) {
-          const vertical = new T.Mesh(new T.BoxGeometry(.018, h + .1 - inset * 2, .032), gold);
-          vertical.position.set(edge * (w / 2 + .04 - inset), 0, .052); group.add(vertical);
-          const horizontal = new T.Mesh(new T.BoxGeometry(w + .1 - inset * 2, .018, .032), gold);
-          horizontal.position.set(0, edge * (h / 2 + .04 - inset), .052); group.add(horizontal);
-        }
+        const vertical = new T.Mesh(new T.BoxGeometry(.04, h + .08, .032), gold);
+        vertical.position.set(edge * (w / 2 + .02), 0, .052); group.add(vertical);
+        const horizontal = new T.Mesh(new T.BoxGeometry(w, .04, .032), gold);
+        horizontal.position.set(0, edge * (h / 2 + .02), .052); group.add(horizontal);
       }
       // Unlit sRGB works: exhibition lights and bloom never alter pigment colors.
       const imageWidth = Math.min(w, h * work.aspect), imageHeight = imageWidth / work.aspect;
+      // A supplied photo can differ from the recorded canvas ratio. A fitted mount
+      // fills that space deliberately; never stretch or crop the original work.
+      const mount = new T.Mesh(new T.PlaneGeometry(w, h), new T.MeshBasicMaterial({ color: '#b6b09f', toneMapped: false }));
+      mount.position.z = .07; group.add(mount);
+      if (Math.abs(work.aspect - w / h) > .02) {
+        for (const edge of [-1, 1]) {
+          const v = new T.Mesh(new T.BoxGeometry(.008, imageHeight + .016, .008), gold);
+          v.position.set(edge * (imageWidth / 2 + .004), 0, .077); group.add(v);
+          const h = new T.Mesh(new T.BoxGeometry(imageWidth, .008, .008), gold);
+          h.position.set(0, edge * (imageHeight / 2 + .004), .077); group.add(h);
+        }
+      }
       const image = new T.Mesh(new T.PlaneGeometry(imageWidth, imageHeight), new T.MeshBasicMaterial({ color: '#6a6a5a', toneMapped: false })); image.position.z = .075; group.add(image);
       const label = new T.Mesh(new T.BoxGeometry(.24, .065, .025), new T.MeshStandardMaterial({ color: '#d2bc8a', metalness: .5 }));
       label.position.set(w / 2 + .21, -h / 2 + .035, .065); group.add(label);

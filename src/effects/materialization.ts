@@ -70,7 +70,7 @@ class Transformation {
         vec3 cell = floor(vAssemblyPosition * ${this.config.density.toFixed(1)});
         float noise = fract(sin(dot(cell, vec3(12.9898,78.233,37.719))) * 43758.5453);
         float threshold = ${threshold};
-        if (threshold > uAssembly) discard;`);
+        if (uAssembly <= .001 || threshold > uAssembly) discard;`);
     };
     material.customProgramCacheKey = () => `full-object-${this.target.id}-${material.type}`;
   }
@@ -79,8 +79,9 @@ class Transformation {
     const target = !settings.effects || settings.reducedMotion ? 1 : Number(this.active);
     this.progress = settings.reducedMotion || !settings.effects ? 1 : progressStep(this.progress, target, dt, this.config.duration);
     const p = this.progress, config = this.config; this.uniform.value = p;
+    this.surface.visible = p > .001;
     this.group.visible = distance < 24;
-    this.particles.visible = settings.effects && !settings.reducedMotion && p < .995;
+    this.particles.visible = settings.effects && !settings.reducedMotion && p > .001 && p < .995;
     const count = settings.quality === 'low' ? Math.floor(config.maxParticles / 2) : config.maxParticles; this.particles.count = count;
     if (this.group.visible && this.particles.visible) {
       for (let i = 0; i < count; i++) {

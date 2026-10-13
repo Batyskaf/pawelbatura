@@ -9,7 +9,7 @@ test('Demo hall enters, pauses and resumes with independent collision and footst
   await page.getByRole('button', { name: 'Wejdź do galerii', exact: true }).click();
   await expect.poll(() => page.evaluate(() => document.pointerLockElement?.id)).toBe('world');
   await expect.poll(() => page.evaluate(() => window.museum.sound.context?.state)).toBe('running');
-  await expect.poll(() => page.evaluate(() => window.museum.sound.loadedRecordings)).toBe(10);
+  await expect.poll(() => page.evaluate(() => window.museum.sound.loadedRecordings)).toBe(15);
   await page.keyboard.down('KeyW'); await page.waitForTimeout(1400); await page.keyboard.up('KeyW');
   expect(await page.evaluate(() => window.museum.camera.position.z)).toBeLessThan(4);
   expect(await page.evaluate(() => window.museum.sound.stepCount)).toBeGreaterThan(0);
@@ -115,13 +115,13 @@ test('All reconstruction effects respect particle budgets and keep collision geo
 test('Canvas size uses actual centimetres while photographs keep their own aspect ratio', async ({ page }) => {
   await page.goto('/'); await page.waitForFunction(() => !!window.museum);
   const works = await page.evaluate(() => window.museum.exhibits.exhibits.map(e => {
-    const plane = e.image.geometry as any; return { id: e.work.id, widthCm: e.work.widthCm, heightCm: e.work.heightCm, width: e.work.displayWidth, height: e.work.displayHeight, planeWidth: plane.parameters.width, planeHeight: plane.parameters.height, photoAspect: e.work.aspect, frameBottom: e.group.position.y - e.work.displayHeight / 2 - .05 };
+    const plane = e.image.geometry as any; return { id: e.work.id, widthCm: e.work.widthCm, heightCm: e.work.heightCm, width: e.work.displayWidth, height: e.work.displayHeight, planeWidth: plane.parameters.width, planeHeight: plane.parameters.height, photoAspect: e.work.aspect, center: e.group.position.y, frameBottom: e.group.position.y - e.work.displayHeight / 2 - .04 };
   }));
   for (const work of works) {
     expect(work.width).toBe(work.widthCm / 100); expect(work.height).toBe(work.heightCm / 100);
     expect(work.planeWidth).toBeLessThanOrEqual(work.width + .00001); expect(work.planeHeight).toBeLessThanOrEqual(work.height + .00001);
     expect(work.planeWidth / work.planeHeight).toBeCloseTo(work.photoAspect, 5);
-    expect(work.frameBottom).toBeCloseTo(1.35, 5);
+    expect(work.center).toBe(1.7); expect(work.frameBottom - 1.02).toBeGreaterThanOrEqual(.08);
   }
   expect(works.find(w => w.id === 'anisotropy2')!.width).toBe(.4);
   expect(works.find(w => w.id === 'bifurcation')!.width).toBe(1.4);
@@ -147,4 +147,19 @@ test('Overlapping fields stabilize walls and frames before the critical artwork 
   expect(await page.evaluate(() => JSON.stringify(window.museum.architecture.colliders))).toBe(state);
   expect(errors).toEqual([]);
   await page.screenshot({ path: 'test-results/field-stable.png' });
+});
+
+test('All wall surfaces vanish before crystallization, including end walls and corner panels', async ({ page }) => {
+  await page.goto('/'); await page.waitForFunction(() => !!window.museum);
+  const result = await page.evaluate(() => {
+    const m = window.museum;
+    const settings = { effects: true, reducedMotion: false, quality: 'high' } as any;
+    m.effects.transforms.forEach(fx => { fx.progress = 0; fx.active = false; fx.update(0, 0, 100, settings); });
+    m.fields.phase = 0; m.camera.position.set(0, 1.7, 5); m.fields.update(0, 0, m.camera, settings, () => {});
+    const targets = m.architecture.effectTargets.filter(t => t.id.includes('-wall'));
+    return { hidden: targets.every(t => !t.object.visible), ids: targets.map(t => t.id), particlesHidden: m.effects.transforms.every(fx => !fx.particles.visible) };
+  });
+  expect(result.hidden).toBe(true); expect(result.particlesHidden).toBe(true);
+  for (const room of ['cabinet', 'observatory', 'archive']) for (const end of [-1, 1]) expect(result.ids).toContain(`${room}-wall-end-${end}`);
+  expect(result.ids.filter(id => id.includes('wall-corner'))).toHaveLength(4);
 });

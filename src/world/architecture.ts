@@ -66,12 +66,14 @@ export class Architecture {
       coords.forEach((p, i) => { dummy.position.set(p[0], p[1], p[2]); dummy.updateMatrix(); tiles.setMatrixAt(i, dummy.matrix); });
       tiles.receiveShadow = true; g.add(tiles);
     }
+    const ceilingStart = g.children.length;
     this.block(g, [0, h + .12, 0], [room.width + .4, .3, room.length + .4], '#21302d');
+    this.captureTarget(g, ceilingStart, `${room.id}-ceiling`, 'dissolve');
     for (const side of [-1, 1]) {
       const wallStart = g.children.length;
       this.block(g, [side * w, h / 2, 0], [.35, h, room.length], wall);
       this.obstacle(side * w - .18, side * w + .18, room.center - l, room.center + l);
-      this.block(g, [side * (w - .21), .62, 0], [.18, 1.2, room.length], room.material === 'stone' ? '#342d23' : '#394642');
+      this.block(g, [side * (w - .21), .48, 0], [.18, .94, room.length], room.material === 'stone' ? '#342d23' : '#394642');
       for (const y of [.1, architectureLevels.dadoCenter, h - .55, h - .3]) this.block(g, [side * (w - .2), y, 0], [.22, architectureLevels.trimThickness, room.length], brass, .45);
       for (const z of [-7, -2.35, 2.35, 7]) {
         const x = side * (w - .65);
@@ -85,9 +87,10 @@ export class Architecture {
         const lamp = this.block(g, [side * (w - .9), 4.75, z], [.4, .08, .5], brass, .5);
         lamp.material = new T.MeshStandardMaterial({ color: '#ffdeb2', emissive: '#ffd397', emissiveIntensity: 1.5 });
       }
-      if (room.id === 'archive' || room.id === 'observatory') this.captureTarget(g, wallStart, `${room.id}-wall-${side}`, side < 0 ? 'voxel' : 'dissolve');
+      this.captureTarget(g, wallStart, `${room.id}-wall-${side}`, side < 0 ? 'voxel' : 'dissolve');
     }
     for (const end of [-1, 1]) {
+      const endStart = g.children.length;
       const door = (end === -1 && room.id !== 'archive') || (end === 1 && room.id !== 'cabinet');
       if (door) {
         for (const side of [-1, 1]) {
@@ -101,13 +104,16 @@ export class Architecture {
         this.obstacle(-w, w, room.center + end * l - .18, room.center + end * l + .18);
         this.arch(g, 0, 3.2, end * (l - .25), 2.6, 0, brass);
       }
+      this.captureTarget(g, endStart, `${room.id}-wall-end-${end}`, 'voxel');
     }
     // Coffered roof, cross-ribs, central suspended celestial mechanism.
+    const ribsStart = g.children.length;
     for (const z of [-5, 0, 5]) {
       this.block(g, [0, h - .45, z], [room.width, .25, .25], brass, .35);
       const rib = new T.Mesh(new T.TorusGeometry(w - .55, .09, 8, 48, Math.PI), this.material(brass, .4));
       rib.position.set(0, h - w * .5, z); rib.scale.y = .5; g.add(rib);
     }
+    this.captureTarget(g, ribsStart, `${room.id}-ceiling-ribs`, 'structure');
     if (room.id === 'cabinet') this.orrery(g, 0, -1, brass);
     else if (room.id === 'observatory') this.observatory(g, brass);
     else this.digitalArchive(g, brass);
@@ -149,7 +155,9 @@ export class Architecture {
     }
     // Octagonal corners and a domed scientific ceiling distinguish this chamber.
     for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
+      const cornerStart = g.children.length;
       const chamfer = this.block(g, [sx * 7.85, 3, sz * 6.85], [3.1, 6, .25], '#303736'); chamfer.rotation.y = sx * sz * Math.PI / 4;
+      this.captureTarget(g, cornerStart, `observatory-wall-corner-${sx}-${sz}`, 'voxel');
       this.obstacle(sx > 0 ? 6.5 : -9, sx > 0 ? 9 : -6.5, -26 + (sz > 0 ? 5.55 : -8), -26 + (sz > 0 ? 8 : -5.55));
     }
     for (let i = 0; i < 8; i++) {
@@ -191,10 +199,12 @@ export class Architecture {
       this.block(g, [side * 1.85, .06, 0], [.035, .03, length], '#89c8bc', .5);
     }
     for (let z = -length / 2 + .25; z < length / 2; z += .5) this.block(g, [0, .005, z], [3.8, .025, .018], '#2d2b24');
+    const ceilingStart = g.children.length;
     this.block(g, [0, 5.5, 0], [4.3, .25, length], '#1d2d2b');
+    this.captureTarget(g, ceilingStart, `corridor-${center}-ceiling`, 'dissolve');
     for (let z = -length / 2 + 1; z < length / 2; z += 3) {
       const start = g.children.length; this.arch(g, 0, 3.1, z, 1.8);
-      if (z >= length / 2 - 3) this.captureTarget(g, start, `corridor-${center}-portal`, 'structure');
+      this.captureTarget(g, start, z >= length / 2 - 3 ? `corridor-${center}-portal` : `corridor-${center}-arch-${z}`, 'structure');
     }
     const lamp = new T.PointLight('#a0cdc6', 26, 14); lamp.position.set(0, 3, 0); g.add(lamp);
     this.batch(g);

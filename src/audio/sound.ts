@@ -4,9 +4,9 @@ import { StepCadence } from './cadence';
 export class SoundSystem {
   context: AudioContext | null = null; master!: GainNode; steps!: GainNode; ambient!: GainNode; fx!: GainNode;
   private cadence = new StepCadence(); private nodes = new Set<AudioScheduledSourceNode>(); private hum: OscillatorNode | null = null;
-  private randomBuffers = new Map<Surface, AudioBuffer[]>(); private reverb!: ConvolverNode; private lastSurface: Surface = 'stone';
+  private reverb!: ConvolverNode; private lastSurface: Surface = 'stone';
   stepCount = 0; loadedRecordings = 0; recordingDurations: number[] = [];
-  private recordings = new Map<Surface, AudioBuffer[]>(); private loading: Promise<void> | null = null;
+  private recordings = new Map<string, AudioBuffer[]>(); private loading: Promise<void> | null = null;
   private previousVariant = new Map<Surface, number>();
   constructor(private settings: Settings) {}
   async unlock() {
@@ -19,22 +19,6 @@ export class SoundSystem {
       for (let c = 0; c < 2; c++) { const d = impulse.getChannelData(c); for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3) * .22; }
       this.reverb = ctx.createConvolver(); this.reverb.buffer = impulse; this.reverb.connect(this.master);
       const wet = ctx.createGain(); wet.gain.value = .18; this.steps.connect(wet); wet.connect(this.reverb);
-      for (const surface of ['stone', 'wood', 'metal', 'digital'] as Surface[]) {
-        const variants: AudioBuffer[] = [];
-        for (let variant = 0; variant < 4; variant++) {
-          const duration = surface === 'metal' ? .24 : .13, buffer = ctx.createBuffer(1, ctx.sampleRate * duration, ctx.sampleRate);
-          const d = buffer.getChannelData(0);
-          for (let i = 0; i < d.length; i++) {
-            const t = i / ctx.sampleRate, decay = Math.exp(-t * (surface === 'metal' ? 22 : 36));
-            const noise = (Math.random() * 2 - 1) * Math.exp(-t * 90);
-            d[i] = surface === 'digital' ? Math.sin(2 * Math.PI * (600 - t * 1800 + variant * 18) * t) * decay * .22 :
-              surface === 'metal' ? (Math.sin(t * 2 * Math.PI * (240 + variant * 15)) + Math.sin(t * 2 * Math.PI * 693) * .4) * decay * .15 + noise * .2 :
-              surface === 'wood' ? Math.sin(t * 2 * Math.PI * (105 + variant * 8)) * decay * .3 + noise * .15 : noise * .5 + Math.sin(t * 2 * Math.PI * 180) * decay * .14;
-          }
-          variants.push(buffer);
-        }
-        this.randomBuffers.set(surface, variants);
-      }
       this.hum = ctx.createOscillator(); this.hum.frequency.value = 58;
       const gain = ctx.createGain(); gain.gain.value = .032;
       const pan = ctx.createPanner(); pan.panningModel = 'HRTF'; pan.distanceModel = 'inverse'; pan.refDistance = 4;
@@ -45,9 +29,9 @@ export class SoundSystem {
     await this.context.resume(); this.apply(); await this.loading;
   }
   private async loadRecordings() {
-    await Promise.all((['stone', 'wood'] as const).map(async surface => {
+    await Promise.all((['stone', 'wood', 'dirt'] as const).map(async surface => {
       const buffers = await Promise.all(Array.from({ length: 5 }, async (_, i) => {
-        const name = `Player_${surface === 'stone' ? 'Stone' : 'Wood'}_Footstep_${String(i + 1).padStart(2, '0')}.mp3`;
+        const name = `Player_${surface[0].toUpperCase() + surface.slice(1)}_Footstep_${String(i + 1).padStart(2, '0')}.mp3`;
         try {
           const response = await fetch(`audio/footsteps/${name}`); if (!response.ok) throw new Error(`${response.status}`);
           const buffer = await this.context!.decodeAudioData(await response.arrayBuffer());
@@ -78,10 +62,12 @@ export class SoundSystem {
     listener.upX.value = 0; listener.upY.value = 1; listener.upZ.value = 0;
     if (surface !== this.lastSurface) { this.cadence.reset(); this.lastSurface = surface; }
     if (this.cadence.update(distance, dt, active)) {
+      // Metal has no supplied dedicated set: use Stone; digital ground uses Dirt.
+      // Missing MP3s stay silent rather than generating replacement footsteps.
+      const variants = this.recordings.get(surface === 'metal' ? 'stone' : surface === 'digital' ? 'dirt' : surface);
+      if (!variants?.length) return;
       this.stepCount++;
       const src = this.context.createBufferSource(); const gain = this.context.createGain();
-      const recordings = this.recordings.get(surface);
-      const variants = recordings?.length ? recordings : this.randomBuffers.get(surface)!;
       const previous = this.previousVariant.get(surface) ?? -1;
       const choices = variants.map((_, i) => i).filter(i => i !== previous || variants.length === 1);
       const index = choices[Math.floor(Math.random() * choices.length)]; this.previousVariant.set(surface, index);

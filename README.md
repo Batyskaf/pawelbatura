@@ -27,9 +27,9 @@ Na telefonie polecany jest katalog HTML. `gallery.html` działa także bez JavaS
 | `src/effects/materialization.ts` | rekonstrukcja całych ścian, portali i podestu, cząsteczki próbkowane z rzeczywistej geometrii |
 | `src/effects/fieldEmergence.ts` | nakładające się pola w drugiej sali, stabilizacja ścian i ram, wyłonienie obrazów po progu krytycznym |
 | `src/art/exhibits.ts` | proporcje obrazów, ramy, leniwe ładowanie tekstur, maksymalnie trzy równoczesne żądania |
-| `src/art/layout.ts` | automatyczna wysokość obrazów: dolna krawędź ramy 8 cm ponad listwą |
+| `src/art/layout.ts` | środek obrazów na wysokości wzroku i co najmniej 8 cm odstępu od listwy |
 | `src/art/interaction.ts` | raycasting, pojedyncza etykieta, linia od krawędzi obrazu |
-| `src/audio/sound.ts` | nagrania kroków kamienia i drewna, synteza metalu i podłoża cyfrowego, pogłos |
+| `src/audio/sound.ts` | wyłącznie dostarczone MP3 kroków Stone, Wood i Dirt, pogłos |
 | `src/audio/cadence.ts` | spokojny rytm z dystansu i czasu, maksymalnie około 2,2 kroku/s |
 | `src/ui/ui.ts` | modalne panele, fokus, katalog, mapa, PL/EN, ustawienia |
 | `src/data/artworks.json` | rzeczywiste dzieła, metadane, położenia i oryginalne adresy |
@@ -39,7 +39,7 @@ Na telefonie polecany jest katalog HTML. `gallery.html` działa także bez JavaS
 
 Dodaj plik oryginalny do `img/full`, miniaturę do `img/thumbs`, a rekord do `src/data/artworks.json`. Wprowadź niezmieniony tytuł i rzeczywisty URL, rozmiar pikseli, `widthCm`, `heightCm`, położenie, obrót i `room`. Skala jest autentyczna: `displayWidth = widthCm / 100`, `displayHeight = heightCm / 100`; 1 jednostka sceny = 1 metr. Rama jest poza płótnem. Fotografia mieści się w obszarze płótna bez zmiany proporcji. `description: null` oznacza brak opisu w źródle. Nie dopisuj fikcyjnych informacji. Suma kontrolna `sha256` identyfikuje zachowany oryginał; dla nowych prac uzupełnij ją z pliku. Uruchom `npm run textures`, aby utworzyć WebP bez przycinania.
 
-Wysokość zawieszenia jest wyliczana z rozmiaru płótna: dolna krawędź ramy zawsze znajduje się 8 cm ponad górą listwy, większe płótna sięgają wyżej. Parametry są w `architectureLevels` w `src/config.ts`; etykieta mosiężna znajduje się z boku, powyżej listwy.
+Środki obecnych obrazów są na wysokości wzroku 1,70 m. Listwa kończy się na 1,02 m; każda rama pozostaje co najmniej 8 cm ponad nią. Dla przyszłych większych płócien wysokość automatycznie zapewni ten odstęp. Ciągła rama otacza płótno, a fotografie o innych proporcjach mają dopasowany montaż z passe-partout, bez przycinania i rozciągania. Ściany boczne, czołowe i narożne oraz sufity są niewidoczne przed krystalizacją; podłogi i oznaczenia podestów pozostają czytelne. Oświetlenie globalne jest zmniejszone: półsfera 0,45, światło kierunkowe 0,65.
 
 Dodaj definicję sali do `rooms` w `src/config.ts`, jej przestrzeń i połączenie w `Architecture`, granice kolizji i materiał podłogi w `floorAt`. Przypisz prace do nowego `room`. Modele GLB/glTF można później dołączyć w module architektury; w tej wersji geometria jest proceduralna, bez zbędnych modeli do pobierania. KTX2 nie jest potrzebne dla 18 umiarkowanych tekstur WebP.
 
@@ -55,4 +55,4 @@ Oryginalna witryna: commit `a0356b4f723a00f423f349090f7da2521dc3aa39`. Lokalny t
 
 Wszystkie 18 oryginalnych JPG, 10 MP3, tytuły, metadane oraz adresy dzieł zachowano. Źródło zawiera błąd: Emergence ma URL Fractures. Pozostaje dokładnie taki sam i jest oznaczony w panelu oraz inwentaryzacji; nie znaleziono wiarygodnego zastępczego adresu. Przed korektą wymaga potwierdzenia artysty.
 
-Dźwięki kamienia i drewna są dziesięcioma nagraniami użytkownika z `Player_Footsteps`, skopiowanymi do `audio/footsteps`. Metal i podłoże cyfrowe korzystają z własnej syntezy, ponieważ dostarczony folder nie zawiera ich nagrań. Rytm: około 1,7 kroku/s przy zwykłym marszu i najwyżej około 2,2 kroku/s przy szybszym. Kolejne warianty nie powtarzają się bezpośrednio. Oryginalne MP3 mapy dźwiękowej pozostają zachowane. Formularz jest zachowany, ale testy nie wysyłają rzeczywistych wiadomości. Testy audio weryfikują dekodowanie 10 nagrań, kontekst i rytm, nie subiektywne brzmienie. Pola drugiej komnaty są autorskim efektem inspirowanym superpozycją, a nie symulacją fizyki kwantowej. Szacunek pamięci tekstur nie jest rzeczywistym pomiarem VRAM; czas CPU nie oznacza czasu GPU. 60 FPS pozostaje celem zależnym od urządzenia. Safari i rzeczywiste telefony wymagają dodatkowego sprawdzenia.
+Wszystkie kroki korzystają wyłącznie z 15 MP3 użytkownika: Stone dla kamienia i metalu, Wood dla drewna, Dirt dla podłoża cyfrowego. Brak nagrania powoduje ciszę, bez syntetycznego zamiennika. Rytm: około 1,7 kroku/s przy zwykłym marszu i najwyżej około 2,2 kroku/s przy szybszym. Kolejne warianty nie powtarzają się bezpośrednio. Oryginalne MP3 mapy dźwiękowej pozostają zachowane. Formularz jest zachowany, ale testy nie wysyłają rzeczywistych wiadomości. Testy audio weryfikują dekodowanie 15 nagrań, kontekst i rytm, nie subiektywne brzmienie. Pola drugiej komnaty są autorskim efektem inspirowanym superpozycją, a nie symulacją fizyki kwantowej. Szacunek pamięci tekstur nie jest rzeczywistym pomiarem VRAM; czas CPU nie oznacza czasu GPU. 60 FPS pozostaje celem zależnym od urządzenia. Safari i rzeczywiste telefony wymagają dodatkowego sprawdzenia.
