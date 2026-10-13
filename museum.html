@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Paweł Batura — interaktywne muzeum malarstwa. Gabinet osobliwości, retrofuturystyczna architektura i osiemnaście oryginalnych obrazów olejnych.">
+  <meta name="author" content="Paweł Batura">
+  <meta property="og:title" content="Paweł Batura — Wunderkammer">
+  <meta property="og:description" content="Sztuka na granicy rzeczywistości. Zwiedź interaktywne muzeum malarstwa Pawła Batury.">
+  <meta property="og:image" content="https://pawelbatura.art/img/full/anisotropy1.jpg">
+  <meta property="og:url" content="https://pawelbatura.art/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://pawelbatura.art/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="src/museum.css">
+  <title>Paweł Batura — Wunderkammer | Interaktywne muzeum sztuki</title>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Paweł Batura","url":"https://pawelbatura.art/","sameAs":["https://www.saatchiart.com/pawelbatura"],"jobTitle":"Artysta malarz","nationality":"Polish"}</script>
+</head>
+<body data-mode="welcome">
+  <canvas id="world" aria-label="Trójwymiarowe muzeum sztuki Pawła Batury"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+  <header class="masthead">
+    <a href="index.html" class="wordmark" aria-label="Paweł Batura — strona główna"><span class="monogram">PB<span>✦</span></span><span>PAWEŁ BATURA<small data-pl="MUZEUM WYOBRAŹNI" data-en="MUSEUM OF IMAGINATION">MUZEUM WYOBRAŹNI</small></span></a>
+    <nav aria-label="Nawigacja">
+      <a href="artist.html" data-pl="O artyście" data-en="The artist">O artyście</a>
+      <a href="gallery.html" data-pl="Katalog prac" data-en="Art catalogue">Katalog prac</a>
+      <a href="contact.html" data-pl="Kontakt" data-en="Contact">Kontakt</a>
+      <button id="language" aria-label="Change language">EN</button>
+      <button data-panel="settings" aria-label="Ustawienia / Settings" class="icon-button">⚙</button>
+    </nav>
+  </header>
+  <main id="welcome" class="welcome">
+    <div class="welcome-copy">
+      <p class="eyebrow"><span class="small-star">✦</span> <span data-pl="KOLEKCJA PAWŁA BATURY / 2021—2026" data-en="THE PAWEŁ BATURA COLLECTION / 2021—2026">KOLEKCJA PAWŁA BATURY / 2021—2026</span></p>
+      <h1>Wunder<span>kammer.</span></h1>
+      <p class="welcome-subtitle" data-pl="Sztuka na granicy rzeczywistości." data-en="Art at the edge of reality.">Sztuka na granicy rzeczywistości.</p>
+      <p class="welcome-description" data-pl="Gabinet osobliwości, w którym materia spotyka wyobraźnię. Wejdź do świata malarstwa, mosiężnych mechanizmów i architektury, która rodzi się na Twoich oczach." data-en="A cabinet of curiosities where matter meets imagination. Enter a world of paintings, brass mechanisms and architecture that assembles before your eyes.">Gabinet osobliwości, w którym materia spotyka wyobraźnię. Wejdź do świata malarstwa, mosiężnych mechanizmów i architektury, która rodzi się na Twoich oczach.</p>
+      <div class="entry-actions">
+        <button class="primary-button" data-enter><span data-pl="Wejdź do galerii" data-en="Enter the gallery">Wejdź do galerii</span><span aria-hidden="true">↗</span></button>
+        <button class="text-button" data-panel="collection" data-pl="Oglądaj bez 3D →" data-en="Explore without 3D →">Oglądaj bez 3D →</button>
+      </div>
+      <p id="load-status" class="load-status" role="status">Przygotowujemy przestrzeń…</p>
+      <div class="entry-controls"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> <span data-pl="poruszanie" data-en="walk">poruszanie</span></span><span>⌖ <span data-pl="mysz · rozglądanie" data-en="mouse · look">mysz · rozglądanie</span></span><button data-panel="help" data-pl="Jak zwiedzać?" data-en="How to visit?">Jak zwiedzać?</button></div>
+    </div>
+    <div class="welcome-annotation" aria-hidden="true"><span class="annotation-line"></span><small>Ⅰ / WUNDERKAMMER</small><span data-pl="Materia. Pamięć. Możliwość." data-en="Matter. Memory. Possibility.">Materia. Pamięć. Możliwość.</span></div>
+    <a class="featured" href="gallery.html"><img src="img/hero/anisotropy1.jpg" alt="Anisotropy I: Suppose Time Existed"><span><small data-pl="Z KOLEKCJI" data-en="FROM THE COLLECTION">Z KOLEKCJI</small>Anisotropy I<em>2026 · <span data-pl="olej na płótnie" data-en="oil on canvas">olej na płótnie</span></em></span><span class="featured-arrow">↗</span></a>
+  </main>
+  <div id="pause" class="pause-card">
+    <p class="eyebrow" data-pl="CHWILA ZATRZYMANIA" data-en="A MOMENT OF STILLNESS">CHWILA ZATRZYMANIA</p>
+    <h2 data-pl="Przestrzeń czeka." data-en="The space awaits.">Przestrzeń czeka.</h2>
+    <button class="primary-button" data-enter data-pl="Wróć do zwiedzania →" data-en="Resume visit →">Wróć do zwiedzania →</button>
+    <div class="pause-actions"><button data-panel="collection" data-pl="Katalog" data-en="Catalogue">Katalog</button><button data-panel="map" data-pl="Plan muzeum" data-en="Museum plan">Plan muzeum</button><button data-panel="settings" data-pl="Ustawienia" data-en="Settings">Ustawienia</button></div>
+  </div>
+  <div id="crosshair" aria-hidden="true"></div>
+  <svg id="label-lines" aria-hidden="true"><line id="leader"/></svg>
+  <button id="art-label" aria-label="Szczegóły obrazu"></button>
+  <div class="visit-hud"><span><small data-pl="JESTEŚ W" data-en="YOU ARE IN">JESTEŚ W</small><span id="room-name">Gabinet osobliwości</span></span><div><button data-panel="map" data-pl="Plan" data-en="Map">Plan</button><button data-panel="help">?</button><button id="mute" aria-label="Wycisz / Mute" aria-pressed="false">♫</button><button data-panel="settings" aria-label="Ustawienia / Settings">⚙</button><span><kbd>ESC</kbd> <span data-pl="pauza" data-en="pause">pauza</span></span></div></div>
+  <p id="notice" role="status"></p><output id="metrics" hidden></output>
+  <footer class="entry-footer"><span>© Paweł Batura <span class="footer-separator">/</span> <span data-pl="AUTORSKA PRZESTRZEŃ SZTUKI" data-en="AN ORIGINAL ART SPACE">AUTORSKA PRZESTRZEŃ SZTUKI</span></span><span class="coordinates">52°13′ N &nbsp; 21°00′ E</span><a href="https://www.saatchiart.com/pawelbatura" target="_blank" rel="noopener noreferrer">SAATCHI ART ↗</a></footer>
+  <dialog id="panel"><button id="close-panel" aria-label="Zamknij / Close">×</button><div id="panel-content"></div></dialog>
+  <noscript><div class="no-script">Muzeum 3D wymaga JavaScript. <a href="gallery.html">Zobacz wszystkie 18 prac w katalogu</a> · <a href="artist.html">O artyście</a> · <a href="contact.html">Kontakt</a></div></noscript>
+  <script type="module" src="src/main.ts"></script>
+</body>
+</html>

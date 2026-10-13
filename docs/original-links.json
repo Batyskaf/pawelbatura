@@ -1,0 +1,56 @@
+{
+  "index.html": [
+    "https://pawelbatura.art/",
+    "img/hero/anisotropy1.jpg",
+    "favicon.svg",
+    "style.css",
+    "index.html",
+    "gallery.html",
+    "contact.html",
+    "https://www.saatchiart.com/pawelbatura",
+    "sound-map.html"
+  ],
+  "gallery.html": [
+    "https://pawelbatura.art/gallery.html",
+    "favicon.svg",
+    "style.css",
+    "index.html",
+    "gallery.html",
+    "contact.html",
+    "https://www.saatchiart.com/en-pl/art/Painting-Fractures/860524/13098237",
+    "https://www.saatchiart.com/en-pl/art/Painting-Gradients-map-of-turbulence-in-a-disordered-field/860524/13731343",
+    "https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-IV-Between-Diffusion-and-Sedimentation/860524/13739301",
+    "https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-III-Boundary-Structures/860524/13610387",
+    "https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-II-The-Relativity-of-Boundary-Conditions/860524/13501935",
+    "https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-I-Suppose-Time-Existed/860524/13192205",
+    "https://www.saatchiart.com/en-pl/art/Painting-Apophenia-of-Qualia-I/860524/12588047",
+    "https://www.saatchiart.com/en-pl/art/Painting-Epistemic-Bifurcation/860524/13018221",
+    "https://www.saatchiart.com/en-pl/art/Painting-Dissociation-of-uniformity/860524/12050857",
+    "https://www.saatchiart.com/en-pl/art/Painting-Dissonance-Perspective/860524/12050815",
+    "https://www.saatchiart.com/en-pl/art/Painting-Entropy-of-Tissue/860524/12161431",
+    "https://www.saatchiart.com/en-pl/art/Painting-The-Observer-in-the-Temple-of-Their-Own-Schemas/860524/12050877",
+    "https://www.saatchiart.com/en-pl/art/Painting-Null-Viewpoint/860524/12985237",
+    "https://www.saatchiart.com/en-pl/art/Painting-Pygmalion-Sold/860524/8499574",
+    "https://www.saatchiart.com/en-pl/art/Painting-Structure-and-Transition/860524/12985313",
+    "https://www.saatchiart.com/en-pl/art/Painting-Phases-of-Transition/860524/13021709",
+    "https://www.saatchiart.com/en-pl/art/Painting-Interference/860524/12050919"
+  ],
+  "contact.html": [
+    "https://pawelbatura.art/contact.html",
+    "favicon.svg",
+    "style.css",
+    "index.html",
+    "gallery.html",
+    "contact.html",
+    "https://formspree.io/f/xpqbpjgl",
+    "https://www.saatchiart.com/pawelbatura"
+  ],
+  "sound-map.html": [
+    "https://pawelbatura.art/sound-map.html",
+    "favicon.svg",
+    "style.css",
+    "index.html",
+    "gallery.html",
+    "contact.html"
+  ]
+}

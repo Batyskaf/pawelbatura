@@ -1,193 +1,65 @@
-﻿<!DOCTYPE html>
-<html lang="pl" data-theme="dark">
-
+<!doctype html>
+<html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="Paweł Batura - contemporary oil painter creating organic abstract art, surreal oil paintings and original abstract paintings available internationally.">
-  <meta name="robots" content="index, follow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Paweł Batura — interaktywne muzeum malarstwa. Gabinet osobliwości, retrofuturystyczna architektura i osiemnaście oryginalnych obrazów olejnych.">
   <meta name="author" content="Paweł Batura">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Paweł Batura">
-  <meta property="og:title" content="Paweł Batura — Contemporary Oil Painter | Organic Abstract Art">
-  <meta property="og:description"
-    content="Organic abstract oil paintings, surreal forms and contemporary art by Paweł Batura.">
-  <meta property="og:url" content="https://pawelbatura.art/">
+  <meta property="og:title" content="Paweł Batura — Wunderkammer">
+  <meta property="og:description" content="Sztuka na granicy rzeczywistości. Zwiedź interaktywne muzeum malarstwa Pawła Batury.">
   <meta property="og:image" content="https://pawelbatura.art/img/full/anisotropy1.jpg">
+  <meta property="og:url" content="https://pawelbatura.art/">
+  <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <title>Paweł Batura — Contemporary Oil Painter | Organic Abstract Art</title>
-
   <link rel="canonical" href="https://pawelbatura.art/">
-  <link rel="preload" as="image" href="img/hero/anisotropy1.jpg">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css">
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Paweł Batura",
-      "url": "https://pawelbatura.art/",
-      "image": "https://pawelbatura.art/img/full/anisotropy1.jpg",
-      "sameAs": [
-        "https://www.saatchiart.com/pawelbatura"
-      ],
-      "jobTitle": "Artysta malarz",
-      "nationality": "Polish",
-      "knowsAbout": [
-        "malarstwo olejne",
-        "oil painting",
-        "abstrakcja organiczna",
-        "organic abstract painting",
-        "contemporary art",
-        "surrealizm",
-        "surrealism",
-        "Dada",
-        "figuracja"
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Warszawa",
-        "addressCountry": "PL"
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="src/museum.css">
+  <title>Paweł Batura — Wunderkammer | Interaktywne muzeum sztuki</title>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Paweł Batura","url":"https://pawelbatura.art/","sameAs":["https://www.saatchiart.com/pawelbatura"],"jobTitle":"Artysta malarz","nationality":"Polish"}</script>
 </head>
-
-<body>
-
-  <nav class="nav" aria-label="Główna nawigacja">
-    <a href="index.html" class="brand" data-link>Paweł Batura</a>
-    <button class="menu-toggle" type="button" aria-label="Otwórz menu">☰</button>
-
-    <div class="nav-links">
-      <a href="index.html" data-link data-pl="O artyście" data-en="About">O artyście</a>
-      <a href="gallery.html" data-link data-pl="Galeria" data-en="Gallery">Galeria</a>
-      <a href="contact.html" data-link data-pl="Kontakt" data-en="Contact">Kontakt</a>
+<body data-mode="welcome">
+  <canvas id="world" aria-label="Trójwymiarowe muzeum sztuki Pawła Batury"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+  <header class="masthead">
+    <a href="index.html" class="wordmark" aria-label="Paweł Batura — strona główna"><span class="monogram">PB<span>✦</span></span><span>PAWEŁ BATURA<small data-pl="MUZEUM WYOBRAŹNI" data-en="MUSEUM OF IMAGINATION">MUZEUM WYOBRAŹNI</small></span></a>
+    <nav aria-label="Nawigacja">
+      <a href="artist.html" data-pl="O artyście" data-en="The artist">O artyście</a>
+      <a href="gallery.html" data-pl="Katalog prac" data-en="Art catalogue">Katalog prac</a>
+      <a href="contact.html" data-pl="Kontakt" data-en="Contact">Kontakt</a>
+      <button id="language" aria-label="Change language">EN</button>
+      <button data-panel="settings" aria-label="Ustawienia / Settings" class="icon-button">⚙</button>
+    </nav>
+  </header>
+  <main id="welcome" class="welcome">
+    <div class="welcome-copy">
+      <p class="eyebrow"><span class="small-star">✦</span> <span data-pl="KOLEKCJA PAWŁA BATURY / 2021—2026" data-en="THE PAWEŁ BATURA COLLECTION / 2021—2026">KOLEKCJA PAWŁA BATURY / 2021—2026</span></p>
+      <h1>Wunder<span>kammer.</span></h1>
+      <p class="welcome-subtitle" data-pl="Sztuka na granicy rzeczywistości." data-en="Art at the edge of reality.">Sztuka na granicy rzeczywistości.</p>
+      <p class="welcome-description" data-pl="Gabinet osobliwości, w którym materia spotyka wyobraźnię. Wejdź do świata malarstwa, mosiężnych mechanizmów i architektury, która rodzi się na Twoich oczach." data-en="A cabinet of curiosities where matter meets imagination. Enter a world of paintings, brass mechanisms and architecture that assembles before your eyes.">Gabinet osobliwości, w którym materia spotyka wyobraźnię. Wejdź do świata malarstwa, mosiężnych mechanizmów i architektury, która rodzi się na Twoich oczach.</p>
+      <div class="entry-actions">
+        <button class="primary-button" data-enter><span data-pl="Wejdź do galerii" data-en="Enter the gallery">Wejdź do galerii</span><span aria-hidden="true">↗</span></button>
+        <button class="text-button" data-panel="collection" data-pl="Oglądaj bez 3D →" data-en="Explore without 3D →">Oglądaj bez 3D →</button>
+      </div>
+      <p id="load-status" class="load-status" role="status">Przygotowujemy przestrzeń…</p>
+      <div class="entry-controls"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> <span data-pl="poruszanie" data-en="walk">poruszanie</span></span><span>⌖ <span data-pl="mysz · rozglądanie" data-en="mouse · look">mysz · rozglądanie</span></span><button data-panel="help" data-pl="Jak zwiedzać?" data-en="How to visit?">Jak zwiedzać?</button></div>
     </div>
-
-    <div class="controls" aria-label="Ustawienia strony">
-      <button class="theme-toggle" type="button" aria-label="Zmień motyw">◐</button>
-      <button class="lang-toggle" type="button" aria-label="Change language">EN</button>
-    </div>
-  </nav>
-
-  <main>
-    <section class="artist-hero">
-      <div class="hero-copy">
-        <p class="eyebrow" data-pl="malarstwo olejne • abstrakcja organiczna • surrealizm"
-          data-en="oil painting • organic abstraction • surrealism">malarstwo olejne • abstrakcja organiczna • surrealizm</p>
-        <h1>Paweł Batura</h1>
-        <p class="lead"
-          data-pl="Malarstwo między figuracją, abstrakcją organiczną, surrealizmem i swobodą kompozycji."
-          data-en="Painting between figuration, organic abstraction, surrealism, and free composition.">
-          Malarstwo między figuracją, abstrakcją organiczną, surrealizmem i swobodą kompozycji.
-        </p>
-        <div class="hero-actions">
-          <a class="button primary" href="gallery.html" data-link data-pl="Zobacz wybrane prace" data-en="View selected works">Zobacz wybrane prace</a>
-          <a class="button" href="https://www.saatchiart.com/pawelbatura" target="_blank" rel="noopener"
-            data-pl="Profil Saatchi Art" data-en="Saatchi Art profile">Profil Saatchi Art</a>
-        </div>
-      </div>
-
-      <div class="hero-visual" aria-label="Pokaz wybranych obrazów">
-        <div class="mini-slider">
-          <img src="img/hero/anisotropy1.jpg" width="900" height="1286" data-full="img/full/anisotropy1.jpg"
-            alt="Paweł Batura oil painting Anisotropy I, organic abstract art" class="active" fetchpriority="high"
-            decoding="async">
-          <img data-src="img/hero/anisotropy2.jpg" width="900" height="1351" data-full="img/full/anisotropy2.jpg"
-            alt="Paweł Batura oil painting Anisotropy II, organic abstraction" decoding="async">
-          <img data-src="img/hero/anisotropy3.jpg" width="900" height="630" data-full="img/full/anisotropy3.jpg"
-            alt="Paweł Batura oil painting Anisotropy III, abstract organic forms" decoding="async">
-          <img data-src="img/hero/anisotropy4.jpg" width="900" height="1286" data-full="img/full/anisotropy4.jpg"
-            alt="Paweł Batura oil painting Anisotropy IV, contemporary abstract art" decoding="async">
-          <img data-src="img/hero/apophenia.jpg" width="900" height="630" data-full="img/full/apophenia.jpg"
-            alt="Paweł Batura oil painting Apophenia Of Qualia I, surreal organic abstraction" decoding="async">
-          <img data-src="img/hero/bifurcation.jpg" width="900" height="644" data-full="img/full/bifurcation.jpg"
-            alt="Paweł Batura oil painting Epistemic Bifurcation, surreal abstract painting" decoding="async">
-          <img data-src="img/hero/dissociation.jpg" width="900" height="675" data-full="img/full/dissociation.jpg"
-            alt="Paweł Batura oil painting Dissociation Of Uniformity, organic abstract painting" decoding="async">
-          <img data-src="img/hero/emergence.jpg" width="900" height="675" data-full="img/full/emergence.jpg"
-            alt="Paweł Batura oil painting Emergence of Structures at Phase Boundaries" decoding="async">
-        </div>
-      </div>
-    </section>
-
-    <section class="about">
-      <div class="about-top">
-        <div class="section-heading">
-          <p class="eyebrow" data-pl="Statement" data-en="Statement">Statement</p>
-          <h2 data-pl="Obraz jako otwarte pole" data-en="Painting as an open field">Obraz jako otwarte pole</h2>
-        </div>
-
-        <div class="about-text">
-          <p data-pl="Pracuję w technice olejnej, poruszając się pomiędzy figuracją a abstrakcją, ze szczególnym zainteresowaniem formami organicznymi. Interesują mnie płynne, niejednoznaczne struktury, które pozostają na granicy rozpoznawalności."
-            data-en="I work in oil painting, moving between figuration and abstraction, with a particular affinity for organic forms. I am interested in fluid, ambiguous structures that remain at the edge of recognizability.">
-            Pracuję w technice olejnej, poruszając się pomiędzy figuracją a abstrakcją, ze szczególnym zainteresowaniem formami organicznymi. Interesują mnie płynne, niejednoznaczne struktury, które pozostają na granicy rozpoznawalności.
-          </p>
-          <p data-pl="Nie trzymam się jednego stylu. Traktuję płótno jako przestrzeń pracy, w której kompozycja, rytm gestu i materialność farby są równie ważne jak temat. Obrazy najczęściej rozwijają się w trakcie procesu, bez wcześniej zamkniętego planu."
-            data-en="I do not adhere to a single fixed style. I treat the canvas as a working space where composition, the rhythm of gesture, and the materiality of paint matter as much as the subject. The paintings usually develop during the process, without a closed plan in advance.">
-            Nie trzymam się jednego stylu. Traktuję płótno jako przestrzeń pracy, w której kompozycja, rytm gestu i materialność farby są równie ważne jak temat. Obrazy najczęściej rozwijają się w trakcie procesu, bez wcześniej zamkniętego planu.
-          </p>
-          <a class="inline-link" href="sound-map.html" data-link
-            data-pl="Eksperyment: mapa dźwiękowa obrazu"
-            data-en="Experiment: sound map of a painting">Eksperyment: mapa dźwiękowa obrazu</a>
-        </div>
-      </div>
-
-      <section class="seo-profile" aria-label="International artist profile">
-        <p class="eyebrow">International profile</p>
-        <h2>Polish contemporary oil painter working with organic abstraction</h2>
-        <p>
-          Paweł Batura is a Polish contemporary artist and oil painter whose work moves between organic abstract painting,
-          surrealism, figuration and Dada-inspired freedom of composition. His paintings explore fluid structures,
-          ambiguous forms, biomorphic associations and the moment when an image remains between recognition and abstraction.
-        </p>
-      </section>
-
-      <div class="credentials">
-        <section>
-          <h2 data-pl="Edukacja" data-en="Education">Edukacja</h2>
-          <p data-pl="Wydział Sztuki Uniwersytetu Warmińsko-Mazurskiego. Dyplom magisterski z malarstwa w pracowni prof. Stanisława Andrzejewskiego."
-            data-en="Faculty of Arts at the University of Warmia and Mazury. Master's thesis and diploma in painting in the studio of professor Stanisław Andrzejewski.">
-            Wydział Sztuki Uniwersytetu Warmińsko-Mazurskiego. Dyplom magisterski z malarstwa w pracowni prof. Stanisława Andrzejewskiego.
-          </p>
-        </section>
-
-        <section>
-          <h2 data-pl="Wystawy indywidualne" data-en="Solo exhibitions">Wystawy indywidualne</h2>
-          <ul>
-            <li data-pl="2020 — Galeria Metamorfozy, Warszawa — „Entropy”"
-              data-en="2020 — Metamorfozy Gallery, Warsaw — “Entropy”">2020 — Galeria Metamorfozy, Warszawa — „Entropy”</li>
-            <li data-pl="2019 — MAL Żoliborz, Warszawa — „Enceladus”"
-              data-en="2019 — MAL Żoliborz, Warsaw — “Enceladus”">2019 — MAL Żoliborz, Warszawa — „Enceladus”</li>
-            <li data-pl="2018 — Galeria Chłodna 20, Suwałki — „Albedo”"
-              data-en="2018 — Chłodna 20 Gallery, Suwałki — “Albedo”">2018 — Galeria Chłodna 20, Suwałki — „Albedo”</li>
-            <li data-pl="2016 — Teatr Rampa, Warszawa — „Albedo Enceladus”"
-              data-en="2016 — Rampa Theatre, Warsaw — “Albedo Enceladus”">2016 — Teatr Rampa, Warszawa — „Albedo Enceladus”</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2 data-pl="Wystawy zbiorowe" data-en="Group exhibitions">Wystawy zbiorowe</h2>
-          <ul>
-            <li data-pl="2017 — Centrum Sztuki Współczesnej, Toruń — ExDigitalis Salon"
-              data-en="2017 — Centre of Contemporary Art, Toruń — ExDigitalis Salon">2017 — Centrum Sztuki Współczesnej, Toruń — ExDigitalis Salon</li>
-            <li data-pl="2017 — 3. Suwalski Salon Sztuki, Suwałki"
-              data-en="2017 — 3rd Suwałki Art Salon, Suwałki">2017 — 3. Suwalski Salon Sztuki, Suwałki</li>
-            <li data-pl="2017 — Alytus, Litwa" data-en="2017 — Alytus, Lithuania">2017 — Alytus, Litwa</li>
-          </ul>
-        </section>
-      </div>
-    </section>
+    <div class="welcome-annotation" aria-hidden="true"><span class="annotation-line"></span><small>Ⅰ / WUNDERKAMMER</small><span data-pl="Materia. Pamięć. Możliwość." data-en="Matter. Memory. Possibility.">Materia. Pamięć. Możliwość.</span></div>
+    <a class="featured" href="gallery.html"><img src="img/hero/anisotropy1.jpg" alt="Anisotropy I: Suppose Time Existed"><span><small data-pl="Z KOLEKCJI" data-en="FROM THE COLLECTION">Z KOLEKCJI</small>Anisotropy I<em>2026 · <span data-pl="olej na płótnie" data-en="oil on canvas">olej na płótnie</span></em></span><span class="featured-arrow">↗</span></a>
   </main>
-
-  <footer>
-    <p>© 2026 Paweł Batura</p>
-  </footer>
-
-  <script src="app.js"></script>
-
+  <div id="pause" class="pause-card">
+    <p class="eyebrow" data-pl="CHWILA ZATRZYMANIA" data-en="A MOMENT OF STILLNESS">CHWILA ZATRZYMANIA</p>
+    <h2 data-pl="Przestrzeń czeka." data-en="The space awaits.">Przestrzeń czeka.</h2>
+    <button class="primary-button" data-enter data-pl="Wróć do zwiedzania →" data-en="Resume visit →">Wróć do zwiedzania →</button>
+    <div class="pause-actions"><button data-panel="collection" data-pl="Katalog" data-en="Catalogue">Katalog</button><button data-panel="map" data-pl="Plan muzeum" data-en="Museum plan">Plan muzeum</button><button data-panel="settings" data-pl="Ustawienia" data-en="Settings">Ustawienia</button></div>
+  </div>
+  <div id="crosshair" aria-hidden="true"></div>
+  <svg id="label-lines" aria-hidden="true"><line id="leader"/></svg>
+  <button id="art-label" aria-label="Szczegóły obrazu"></button>
+  <div class="visit-hud"><span><small data-pl="JESTEŚ W" data-en="YOU ARE IN">JESTEŚ W</small><span id="room-name">Gabinet osobliwości</span></span><div><button data-panel="map" data-pl="Plan" data-en="Map">Plan</button><button data-panel="help">?</button><button id="mute" aria-label="Wycisz / Mute" aria-pressed="false">♫</button><button data-panel="settings" aria-label="Ustawienia / Settings">⚙</button><span><kbd>ESC</kbd> <span data-pl="pauza" data-en="pause">pauza</span></span></div></div>
+  <p id="notice" role="status"></p><output id="metrics" hidden></output>
+  <footer class="entry-footer"><span>© Paweł Batura <span class="footer-separator">/</span> <span data-pl="AUTORSKA PRZESTRZEŃ SZTUKI" data-en="AN ORIGINAL ART SPACE">AUTORSKA PRZESTRZEŃ SZTUKI</span></span><span class="coordinates">52°13′ N &nbsp; 21°00′ E</span><a href="https://www.saatchiart.com/pawelbatura" target="_blank" rel="noopener noreferrer">SAATCHI ART ↗</a></footer>
+  <dialog id="panel"><button id="close-panel" aria-label="Zamknij / Close">×</button><div id="panel-content"></div></dialog>
+  <noscript><div class="no-script">Muzeum 3D wymaga JavaScript. <a href="gallery.html">Zobacz wszystkie 18 prac w katalogu</a> · <a href="artist.html">O artyście</a> · <a href="contact.html">Kontakt</a></div></noscript>
+  <script type="module" src="src/main.ts"></script>
 </body>
-
 </html>
