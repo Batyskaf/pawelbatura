@@ -8,13 +8,14 @@ import { Controller } from './world/controller';
 import { Exhibits } from './art/exhibits';
 import { Interaction } from './art/interaction';
 import { Materialization } from './effects/materialization';
+import { FieldEmergence } from './effects/fieldEmergence';
 import { SoundSystem } from './audio/sound';
 import type { UI } from './ui/ui';
 import type { Settings } from './types';
 export class Museum {
   scene = new T.Scene(); camera = new T.PerspectiveCamera(movement.fov, innerWidth / innerHeight, .08, 75);
   renderer: T.WebGLRenderer; architecture: Architecture; controller: Controller; exhibits: Exhibits; interaction: Interaction;
-  effects: Materialization; sound: SoundSystem; state: 'welcome' | 'exploring' | 'paused' = 'welcome';
+  effects: Materialization; fields: FieldEmergence; sound: SoundSystem; state: 'welcome' | 'exploring' | 'paused' = 'welcome';
   metrics = { fps: 60, calls: 0, triangles: 0, geometries: 0, textures: 0, estimatedTextureMB: 0, effects: 0, particles: 0, resolutionScale: 1, renderMs: 0 };
   private abort = new AbortController(); private lastTime = 0; private elapsed = 0; private slowTime = 0; private measureTime = 0;
   private composer: EffectComposer; private blendScene = new T.Scene(); private blendCamera = new T.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -31,7 +32,8 @@ export class Museum {
     this.scene.add(sun);
     const demo = new URLSearchParams(location.search).has('demo');
     this.architecture = new Architecture(this.scene, demo); this.exhibits = new Exhibits(this.scene, demo);
-    this.effects = new Materialization(this.scene, demo);
+    this.effects = new Materialization(this.scene, this.architecture.effectTargets.filter(target => !target.id.startsWith('observatory-wall')));
+    this.fields = new FieldEmergence(this.scene, this.architecture.effectTargets.filter(target => target.id.startsWith('observatory-wall')), this.exhibits.exhibits.filter(exhibit => exhibit.work.room === 'observatory'));
     this.controller = new Controller(this.camera, canvas, this.architecture.colliders, settings);
     this.interaction = new Interaction(this.exhibits.exhibits, document.querySelector('#art-label')!, document.querySelector('#leader')!);
     this.sound = new SoundSystem(settings);
@@ -101,11 +103,12 @@ export class Museum {
     const start = performance.now();
     const result = this.controller.update(dt);
     this.camera.getWorldDirection(this.direction);
-    this.sound.update(result.distance, result.surface, this.state === 'exploring', this.camera.position, this.direction);
+    this.sound.update(result.distance, result.surface, this.state === 'exploring', this.camera.position, this.direction, dt);
     this.architecture.update(this.camera, this.elapsed, this.settings.reducedMotion);
     this.exhibits.update(this.camera);
     const effectiveSettings = this.autoScale < .8 ? { ...this.settings, quality: 'low' as const } : this.settings;
     this.effects.update(dt, this.elapsed, this.camera, effectiveSettings, position => { if (this.state === 'exploring') this.sound.materialize(position); });
+    this.fields.update(dt, this.elapsed, this.camera, this.settings, position => { if (this.state === 'exploring') this.sound.materialize(position); });
     this.scene.updateMatrixWorld(true);
     this.interaction.update(this.camera, dt, this.state === 'exploring');
     this.renderer.info.autoReset = false; this.renderer.info.reset();
@@ -123,7 +126,7 @@ export class Museum {
     this.metrics.fps += (1 / dt - this.metrics.fps) * .03;
     this.metrics.calls = this.renderer.info.render.calls; this.metrics.triangles = this.renderer.info.render.triangles;
     this.metrics.geometries = this.renderer.info.memory.geometries; this.metrics.textures = this.renderer.info.memory.textures;
-    this.metrics.effects = this.effects.activeCount; this.metrics.particles = this.effects.particles;
+    this.metrics.effects = this.effects.activeCount + Number(this.fields.phase > .01 && this.fields.phase < .99); this.metrics.particles = this.effects.particles;
     this.metrics.estimatedTextureMB = this.exhibits.exhibits.filter(e => e.loaded).reduce((sum, e) => sum + (e.work.aspect > 1 ? 1536 * 1536 / e.work.aspect : 1536 * 1536 * e.work.aspect) * 4 * 1.33 / 1048576, 0);
     this.slowTime = this.metrics.fps < 42 ? this.slowTime + dt : Math.max(0, this.slowTime - dt);
     if (this.slowTime > 5 && this.autoScale > .55) { this.autoScale = Math.max(.55, this.autoScale - .15); this.slowTime = 0; this.resize(); if (this.autoScale < .75) { this.renderer.shadowMap.enabled = false; } }
@@ -132,6 +135,8 @@ export class Museum {
       this.measureTime = 0;
       const room = rooms.reduce((best, r) => Math.abs(this.camera.position.z - r.center) < Math.abs(this.camera.position.z - best.center) ? r : best);
       document.querySelector('#room-name')!.textContent = room.name[this.ui.lang];
+      const status = document.querySelector('#field-status');
+      if (status) status.textContent = room.id !== 'observatory' ? '' : this.fields.critical ? this.ui.text('Próg przejścia · kolekcja wyłoniona', 'Transition threshold · collection emerged') : this.fields.phase > .42 ? this.ui.text('Formy zyskują trwałość', 'Forms gain stability') : this.ui.text('Pola w rezonansie', 'Fields in resonance');
       const metrics = document.querySelector<HTMLElement>('#metrics')!; metrics.hidden = !this.settings.diagnostics;
       metrics.textContent = `${this.metrics.fps.toFixed(0)} FPS · ${this.metrics.renderMs.toFixed(1)} ms CPU · ${this.metrics.calls} draw calls · ${this.metrics.triangles.toLocaleString()} triangles · ${this.metrics.geometries} geometries · ~${this.metrics.estimatedTextureMB.toFixed(0)} MB textures · ${this.metrics.effects} effects / ${this.metrics.particles} particles · DPR ${this.metrics.resolutionScale.toFixed(2)}`;
     }
@@ -139,7 +144,7 @@ export class Museum {
   dispose() {
     if (this.disposed) return; this.disposed = true; this.abort.abort(); this.renderer.setAnimationLoop(null);
     this.controller.dispose(); this.sound.dispose(); this.exhibits.dispose(); this.architecture.dispose();
-    this.scene.traverse(object => { if (object instanceof T.Mesh) { object.geometry.dispose(); const materials = Array.isArray(object.material) ? object.material : [object.material]; materials.forEach(m => m.dispose()); } });
+    this.scene.traverse(object => { if (object instanceof T.Mesh) { object.geometry.dispose(); object.customDepthMaterial?.dispose(); const materials = Array.isArray(object.material) ? object.material : [object.material]; materials.forEach(m => m.dispose()); } });
     this.composer.passes.forEach(p => p.dispose()); this.composer.dispose(); this.renderer.dispose();
   }
 }

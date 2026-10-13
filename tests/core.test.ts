@@ -6,6 +6,8 @@ import { moveWithCollisions, floorAt, intersects } from '../src/world/collision'
 import { activationState, progressStep } from '../src/effects/materialization';
 import artworks from '../src/data/artworks.json';
 import { placeLabel } from '../src/art/labels';
+import { StepCadence } from '../src/audio/cadence';
+import { paintingCenterHeight } from '../src/art/layout';
 test('All original artworks, metadata and exact external links survive', async () => {
   const source = await readFile('gallery.html', 'utf8');
   const blocks = [...source.matchAll(/<div class="art">([\s\S]*?)(?=<div class="art">|<\/section>)/g)];
@@ -18,7 +20,9 @@ test('All original artworks, metadata and exact external links survive', async (
     assert.equal(match[1].match(/<p[^>]*data-en="([^"]+)"/)![1], work.metadata.en);
     assert.equal(match[1].match(/href="(https:[^"]+)"/)![1], work.externalUrl);
     assert.equal(createHash('sha256').update(await readFile(work.image)).digest('hex'), work.sha256);
-    assert.ok(Math.abs(work.displayWidth / work.displayHeight - work.pixelWidth / work.pixelHeight) < .0001);
+    const [, width, height] = work.metadata.pl.match(/(\d+)\s*×\s*(\d+)\s*cm/)!;
+    assert.equal(work.widthCm, Number(width)); assert.equal(work.heightCm, Number(height));
+    assert.equal(work.displayWidth, Number(width) / 100); assert.equal(work.displayHeight, Number(height) / 100);
     for (const path of [work.image, work.texture, work.thumbnail]) await access(path);
   }
 });
@@ -67,4 +71,19 @@ test('Labels sit outside artwork bounds whenever screen space allows', () => {
   const left = placeLabel(farRight, 1440, 900); assert.ok(left.x + left.width < farRight.left); assert.equal(left.edge, 'left');
   const wide = { left: 20, right: 1420, top: 180, bottom: 450 };
   const below = placeLabel(wide, 1440, 900); assert.ok(below.y > wide.bottom); assert.equal(below.edge, 'bottom');
+});
+test('Footsteps use a restrained cadence at walking and faster speeds', () => {
+  const count = (speed: number, fps: number) => { const cadence = new StepCadence(); let steps = 0; for (let i = 0; i < 6 * fps; i++) if (cadence.update(speed / fps, 1 / fps, true)) steps++; return steps; };
+  assert.ok(count(2.4, 60) >= 9 && count(2.4, 60) <= 11);
+  assert.ok(count(3.8, 60) > count(2.4, 60)); assert.ok(count(3.8, 60) <= 13);
+  assert.ok(Math.abs(count(2.4, 30) - count(2.4, 144)) <= 1);
+  const stopped = new StepCadence(); for (let i = 0; i < 600; i++) assert.equal(stopped.update(0, 1 / 60, true), false);
+  for (let i = 0; i < 600; i++) assert.equal(stopped.update(.1, 1 / 60, false), false);
+});
+test('Every frame clears the wall rail by eight centimetres without changing canvas size', () => {
+  for (const work of artworks) {
+    const frameBottom = paintingCenterHeight(work.displayHeight) - work.displayHeight / 2 - .05;
+    assert.ok(Math.abs(frameBottom - 1.35) < .000001);
+    assert.ok(Math.abs(frameBottom - 1.27 - .08) < .000001);
+  }
 });

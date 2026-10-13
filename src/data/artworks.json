@@ -14,11 +14,11 @@
     "pixelWidth": 2000,
     "pixelHeight": 1500,
     "aspect": 1.3333333333333333,
-    "displayHeight": 2.0250000000000004,
-    "displayWidth": 2.7000000000000006,
+    "displayHeight": 0.9,
+    "displayWidth": 1.2,
     "position": [
       -7.76,
-      2.6,
+      1.85,
       4.7
     ],
     "rotation": 1.5707963267948966,
@@ -28,7 +28,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Fractures/860524/13098237",
     "linkStatus": "source-mismatch",
-    "sha256": "2bb55b9f87fe33686dc6e58c6055fc757c5747be242086ddc08c329743eea26e"
+    "sha256": "2bb55b9f87fe33686dc6e58c6055fc757c5747be242086ddc08c329743eea26e",
+    "widthCm": 120,
+    "heightCm": 90
   },
   {
     "id": "gradients",
@@ -45,11 +47,11 @@
     "pixelWidth": 2000,
     "pixelHeight": 1399,
     "aspect": 1.4295925661186561,
-    "displayHeight": 1.8886500000000002,
-    "displayWidth": 2.7,
+    "displayHeight": 0.7,
+    "displayWidth": 1,
     "position": [
       -7.76,
-      2.6,
+      1.75,
       0
     ],
     "rotation": 1.5707963267948966,
@@ -59,7 +61,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Gradients-map-of-turbulence-in-a-disordered-field/860524/13731343",
     "linkStatus": "preserved",
-    "sha256": "760c510f21591f403bcfb0a289ee8fa94c5a91d4baa18a2b697e800cf3fc5588"
+    "sha256": "760c510f21591f403bcfb0a289ee8fa94c5a91d4baa18a2b697e800cf3fc5588",
+    "widthCm": 100,
+    "heightCm": 70
   },
   {
     "id": "anisotropy4",
@@ -76,11 +80,11 @@
     "pixelWidth": 1399,
     "pixelHeight": 2000,
     "aspect": 0.6995,
-    "displayHeight": 2.1,
-    "displayWidth": 1.46895,
+    "displayHeight": 1,
+    "displayWidth": 0.7,
     "position": [
       -7.76,
-      2.6,
+      1.9,
       -4.7
     ],
     "rotation": 1.5707963267948966,
@@ -90,7 +94,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-IV-Between-Diffusion-and-Sedimentation/860524/13739301",
     "linkStatus": "preserved",
-    "sha256": "75f9182b61648b6e46c04cc9c361b0a9f9753a025fac43027a6df978a31d901b"
+    "sha256": "75f9182b61648b6e46c04cc9c361b0a9f9753a025fac43027a6df978a31d901b",
+    "widthCm": 70,
+    "heightCm": 100
   },
   {
     "id": "anisotropy3",
@@ -107,11 +113,11 @@
     "pixelWidth": 2000,
     "pixelHeight": 1399,
     "aspect": 1.4295925661186561,
-    "displayHeight": 1.8886500000000002,
-    "displayWidth": 2.7,
+    "displayHeight": 0.7,
+    "displayWidth": 1,
     "position": [
       7.76,
-      2.6,
+      1.75,
       4.7
     ],
     "rotation": -1.5707963267948966,
@@ -121,7 +127,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-III-Boundary-Structures/860524/13610387",
     "linkStatus": "preserved",
-    "sha256": "f2f82df4356c983c8346a8b093fa52cc8918b4dfa214902ab5ca2011d4cb69e4"
+    "sha256": "f2f82df4356c983c8346a8b093fa52cc8918b4dfa214902ab5ca2011d4cb69e4",
+    "widthCm": 100,
+    "heightCm": 70
   },
   {
     "id": "anisotropy2",
@@ -138,11 +146,11 @@
     "pixelWidth": 1333,
     "pixelHeight": 2000,
     "aspect": 0.6665,
-    "displayHeight": 2.1,
-    "displayWidth": 1.39965,
+    "displayHeight": 0.6,
+    "displayWidth": 0.4,
     "position": [
       7.76,
-      2.6,
+      1.7,
       0
     ],
     "rotation": -1.5707963267948966,
@@ -152,7 +160,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-II-The-Relativity-of-Boundary-Conditions/860524/13501935",
     "linkStatus": "preserved",
-    "sha256": "b0ad5a259fc0c0e58bbfea4f70f86e331f5a251ad7d3e27e9582163c33648584"
+    "sha256": "b0ad5a259fc0c0e58bbfea4f70f86e331f5a251ad7d3e27e9582163c33648584",
+    "widthCm": 40,
+    "heightCm": 60
   },
   {
     "id": "anisotropy1",
@@ -169,11 +179,11 @@
     "pixelWidth": 1401,
     "pixelHeight": 2000,
     "aspect": 0.7005,
-    "displayHeight": 2.1,
-    "displayWidth": 1.47105,
+    "displayHeight": 1,
+    "displayWidth": 0.7,
     "position": [
       7.76,
-      2.6,
+      1.9,
       -4.7
     ],
     "rotation": -1.5707963267948966,
@@ -183,7 +193,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Anisotropy-I-Suppose-Time-Existed/860524/13192205",
     "linkStatus": "preserved",
-    "sha256": "d0aa6103c776f92bb750212ab2a5268b114563e584e5f247906078be85943f6d"
+    "sha256": "d0aa6103c776f92bb750212ab2a5268b114563e584e5f247906078be85943f6d",
+    "widthCm": 70,
+    "heightCm": 100
   },
   {
     "id": "fractures",
@@ -200,11 +212,11 @@
     "pixelWidth": 2000,
     "pixelHeight": 1399,
     "aspect": 1.4295925661186561,
-    "displayHeight": 1.8886500000000002,
-    "displayWidth": 2.7,
+    "displayHeight": 0.7,
+    "displayWidth": 1,
     "position": [
       -8.76,
-      2.6,
+      1.75,
       -21.3
     ],
     "rotation": 1.5707963267948966,
@@ -214,7 +226,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Fractures/860524/13098237",
     "linkStatus": "preserved",
-    "sha256": "0cd09d9626b44fcdda484aa91c1b38b6d19079f725789a85a3c0459095c7cc79"
+    "sha256": "0cd09d9626b44fcdda484aa91c1b38b6d19079f725789a85a3c0459095c7cc79",
+    "widthCm": 100,
+    "heightCm": 70
   },
   {
     "id": "apophenia",
@@ -231,11 +245,11 @@
     "pixelWidth": 2000,
     "pixelHeight": 1400,
     "aspect": 1.4285714285714286,
-    "displayHeight": 1.8900000000000001,
-    "displayWidth": 2.7,
+    "displayHeight": 0.7,
+    "displayWidth": 1,
     "position": [
       -8.76,
-      2.6,
+      1.75,
       -26
     ],
     "rotation": 1.5707963267948966,
@@ -245,7 +259,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Apophenia-of-Qualia-I/860524/12588047",
     "linkStatus": "preserved",
-    "sha256": "c4aaf0adcf97d48c2c110238f38327ec7ae728d6357f2b4d12dce8bc4ba75952"
+    "sha256": "c4aaf0adcf97d48c2c110238f38327ec7ae728d6357f2b4d12dce8bc4ba75952",
+    "widthCm": 100,
+    "heightCm": 70
   },
   {
     "id": "bifurcation",
@@ -262,11 +278,11 @@
     "pixelWidth": 2000,
     "pixelHeight": 1429,
     "aspect": 1.3995801259622114,
-    "displayHeight": 1.9291500000000001,
-    "displayWidth": 2.7,
+    "displayHeight": 1,
+    "displayWidth": 1.4,
     "position": [
       -8.76,
-      2.6,
+      1.9,
       -30.700000000000003
     ],
     "rotation": 1.5707963267948966,
@@ -276,7 +292,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Epistemic-Bifurcation/860524/13018221",
     "linkStatus": "preserved",
-    "sha256": "698a57cebf9ea332704b2b1eb7fcf4a4a064dcba10d96904588b173facbb350d"
+    "sha256": "698a57cebf9ea332704b2b1eb7fcf4a4a064dcba10d96904588b173facbb350d",
+    "widthCm": 140,
+    "heightCm": 100
   },
   {
     "id": "dissociation",
@@ -293,11 +311,11 @@
     "pixelWidth": 2000,
     "pixelHeight": 1500,
     "aspect": 1.3333333333333333,
-    "displayHeight": 2.0250000000000004,
-    "displayWidth": 2.7000000000000006,
+    "displayHeight": 0.6,
+    "displayWidth": 0.8,
     "position": [
       8.76,
-      2.6,
+      1.7,
       -21.3
     ],
     "rotation": -1.5707963267948966,
@@ -307,7 +325,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Dissociation-of-uniformity/860524/12050857",
     "linkStatus": "preserved",
-    "sha256": "654de1ce0ae8bf8712883b93c35a082030b34f9ead9ad304372a2f2495562a07"
+    "sha256": "654de1ce0ae8bf8712883b93c35a082030b34f9ead9ad304372a2f2495562a07",
+    "widthCm": 80,
+    "heightCm": 60
   },
   {
     "id": "dissonance",
@@ -324,11 +344,11 @@
     "pixelWidth": 2000,
     "pixelHeight": 1429,
     "aspect": 1.3995801259622114,
-    "displayHeight": 1.9291500000000001,
-    "displayWidth": 2.7,
+    "displayHeight": 0.5,
+    "displayWidth": 0.7,
     "position": [
       8.76,
-      2.6,
+      1.65,
       -26
     ],
     "rotation": -1.5707963267948966,
@@ -338,7 +358,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Dissonance-Perspective/860524/12050815",
     "linkStatus": "preserved",
-    "sha256": "71486834da66780d7347df3f343b9cad5d162b375ebf97a9ed44c0e9fc83282f"
+    "sha256": "71486834da66780d7347df3f343b9cad5d162b375ebf97a9ed44c0e9fc83282f",
+    "widthCm": 70,
+    "heightCm": 50
   },
   {
     "id": "entropy",
@@ -355,11 +377,11 @@
     "pixelWidth": 1714,
     "pixelHeight": 2000,
     "aspect": 0.857,
-    "displayHeight": 2.1,
-    "displayWidth": 1.7997,
+    "displayHeight": 0.7,
+    "displayWidth": 0.6,
     "position": [
       8.76,
-      2.6,
+      1.75,
       -30.700000000000003
     ],
     "rotation": -1.5707963267948966,
@@ -369,7 +391,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Entropy-of-Tissue/860524/12161431",
     "linkStatus": "preserved",
-    "sha256": "00d7cd3062e2d0540fe84a567fe40371c6386484b6c7f754e82a35d158fd5502"
+    "sha256": "00d7cd3062e2d0540fe84a567fe40371c6386484b6c7f754e82a35d158fd5502",
+    "widthCm": 60,
+    "heightCm": 70
   },
   {
     "id": "exaltation",
@@ -386,11 +410,11 @@
     "pixelWidth": 2000,
     "pixelHeight": 1500,
     "aspect": 1.3333333333333333,
-    "displayHeight": 2.0250000000000004,
-    "displayWidth": 2.7000000000000006,
+    "displayHeight": 0.7,
+    "displayWidth": 0.6,
     "position": [
       -9.76,
-      2.6,
+      1.75,
       -46.3
     ],
     "rotation": 1.5707963267948966,
@@ -400,7 +424,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-The-Observer-in-the-Temple-of-Their-Own-Schemas/860524/12050877",
     "linkStatus": "preserved",
-    "sha256": "fd98ed97e70dd403291816237ef1120efb6b2e00810f3e0e359c0b5ef731b865"
+    "sha256": "fd98ed97e70dd403291816237ef1120efb6b2e00810f3e0e359c0b5ef731b865",
+    "widthCm": 60,
+    "heightCm": 70
   },
   {
     "id": "null",
@@ -417,11 +443,11 @@
     "pixelWidth": 1399,
     "pixelHeight": 2000,
     "aspect": 0.6995,
-    "displayHeight": 2.1,
-    "displayWidth": 1.46895,
+    "displayHeight": 1,
+    "displayWidth": 0.7,
     "position": [
       -9.76,
-      2.6,
+      1.9,
       -51
     ],
     "rotation": 1.5707963267948966,
@@ -431,7 +457,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Null-Viewpoint/860524/12985237",
     "linkStatus": "preserved",
-    "sha256": "db9482cd334362d80a4ebc6e2e6fd5fdbf3860cf11ab07e93439f462cd2532f7"
+    "sha256": "db9482cd334362d80a4ebc6e2e6fd5fdbf3860cf11ab07e93439f462cd2532f7",
+    "widthCm": 70,
+    "heightCm": 100
   },
   {
     "id": "pygmalion",
@@ -448,11 +476,11 @@
     "pixelWidth": 2000,
     "pixelHeight": 1534,
     "aspect": 1.303780964797914,
-    "displayHeight": 2.0709,
-    "displayWidth": 2.7,
+    "displayHeight": 1,
+    "displayWidth": 1.3,
     "position": [
       -9.76,
-      2.6,
+      1.9,
       -55.699999999999996
     ],
     "rotation": 1.5707963267948966,
@@ -462,7 +490,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Pygmalion-Sold/860524/8499574",
     "linkStatus": "preserved",
-    "sha256": "19c61ba4d11e141db6b1e9f97fed925f8f1fa41e2eb307bc63829a01ef7ffa13"
+    "sha256": "19c61ba4d11e141db6b1e9f97fed925f8f1fa41e2eb307bc63829a01ef7ffa13",
+    "widthCm": 130,
+    "heightCm": 100
   },
   {
     "id": "structure",
@@ -479,11 +509,11 @@
     "pixelWidth": 2000,
     "pixelHeight": 1500,
     "aspect": 1.3333333333333333,
-    "displayHeight": 2.0250000000000004,
-    "displayWidth": 2.7000000000000006,
+    "displayHeight": 0.6,
+    "displayWidth": 0.8,
     "position": [
       9.76,
-      2.6,
+      1.7,
       -46.3
     ],
     "rotation": -1.5707963267948966,
@@ -493,7 +523,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Structure-and-Transition/860524/12985313",
     "linkStatus": "preserved",
-    "sha256": "ae6d7cc0384aec58741985cc12dd72e4e161dfd903db1f80c602e97d8f36ee52"
+    "sha256": "ae6d7cc0384aec58741985cc12dd72e4e161dfd903db1f80c602e97d8f36ee52",
+    "widthCm": 80,
+    "heightCm": 60
   },
   {
     "id": "transition",
@@ -510,11 +542,11 @@
     "pixelWidth": 2000,
     "pixelHeight": 1013,
     "aspect": 1.9743336623889438,
-    "displayHeight": 1.3675500000000003,
-    "displayWidth": 2.7,
+    "displayHeight": 0.81,
+    "displayWidth": 1.6,
     "position": [
       9.76,
-      2.6,
+      1.805,
       -51
     ],
     "rotation": -1.5707963267948966,
@@ -524,7 +556,9 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Phases-of-Transition/860524/13021709",
     "linkStatus": "preserved",
-    "sha256": "775b8e7369d46b04a17b0628c801cc511febeb039245ba2a8a9511bf286b5c06"
+    "sha256": "775b8e7369d46b04a17b0628c801cc511febeb039245ba2a8a9511bf286b5c06",
+    "widthCm": 160,
+    "heightCm": 81
   },
   {
     "id": "waves",
@@ -541,11 +575,11 @@
     "pixelWidth": 2000,
     "pixelHeight": 1333,
     "aspect": 1.5003750937734435,
-    "displayHeight": 1.7995500000000002,
-    "displayWidth": 2.7,
+    "displayHeight": 0.6,
+    "displayWidth": 0.9,
     "position": [
       9.76,
-      2.6,
+      1.7,
       -55.699999999999996
     ],
     "rotation": -1.5707963267948966,
@@ -555,6 +589,8 @@
     "effects": [],
     "externalUrl": "https://www.saatchiart.com/en-pl/art/Painting-Interference/860524/12050919",
     "linkStatus": "preserved",
-    "sha256": "4d6dee7c151a2b23c0a1e7ef3dc1145eed2a98a9a06a094566f5da45ea0edf40"
+    "sha256": "4d6dee7c151a2b23c0a1e7ef3dc1145eed2a98a9a06a094566f5da45ea0edf40",
+    "widthCm": 90,
+    "heightCm": 60
   }
 ]

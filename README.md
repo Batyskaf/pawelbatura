@@ -24,17 +24,22 @@ Na telefonie polecany jest katalog HTML. `gallery.html` działa także bez JavaS
 | `src/world/architecture.ts` | architektura, gabloty, instrumenty, instalacje, scalanie statycznej geometrii |
 | `src/world/controller.ts` | FPP, Pointer Lock, przyspieszenie i ruch zależny od czasu |
 | `src/world/collision.ts` | przeszkody, ślizganie przy ścianie, podłoża i stopnie |
-| `src/effects/materialization.ts` | voxel assembly, shaderowy digital dissolve, structural reconstruction |
+| `src/effects/materialization.ts` | rekonstrukcja całych ścian, portali i podestu, cząsteczki próbkowane z rzeczywistej geometrii |
+| `src/effects/fieldEmergence.ts` | nakładające się pola w drugiej sali, stabilizacja ścian i ram, wyłonienie obrazów po progu krytycznym |
 | `src/art/exhibits.ts` | proporcje obrazów, ramy, leniwe ładowanie tekstur, maksymalnie trzy równoczesne żądania |
+| `src/art/layout.ts` | automatyczna wysokość obrazów: dolna krawędź ramy 8 cm ponad listwą |
 | `src/art/interaction.ts` | raycasting, pojedyncza etykieta, linia od krawędzi obrazu |
-| `src/audio/sound.ts` | Web Audio, cztery zestawy syntezy kroków, odległość, pogłos, dźwięki pozycyjne |
+| `src/audio/sound.ts` | nagrania kroków kamienia i drewna, synteza metalu i podłoża cyfrowego, pogłos |
+| `src/audio/cadence.ts` | spokojny rytm z dystansu i czasu, maksymalnie około 2,2 kroku/s |
 | `src/ui/ui.ts` | modalne panele, fokus, katalog, mapa, PL/EN, ustawienia |
 | `src/data/artworks.json` | rzeczywiste dzieła, metadane, położenia i oryginalne adresy |
 | `src/config.ts` | sale, kamera, prędkości, profile i parametry efektów |
 
 ## Dodawanie prac i sal
 
-Dodaj plik oryginalny do `img/full`, miniaturę do `img/thumbs`, a rekord do `src/data/artworks.json`. Wprowadź niezmieniony tytuł i rzeczywisty URL, rozmiar pikseli, proporcje, wymiary wystawowe, położenie, obrót i `room`. `description: null` oznacza brak opisu w źródle. Nie dopisuj fikcyjnych informacji. Suma kontrolna `sha256` identyfikuje zachowany oryginał; dla nowych prac uzupełnij ją z pliku. Uruchom `npm run textures`, aby utworzyć WebP bez przycinania.
+Dodaj plik oryginalny do `img/full`, miniaturę do `img/thumbs`, a rekord do `src/data/artworks.json`. Wprowadź niezmieniony tytuł i rzeczywisty URL, rozmiar pikseli, `widthCm`, `heightCm`, położenie, obrót i `room`. Skala jest autentyczna: `displayWidth = widthCm / 100`, `displayHeight = heightCm / 100`; 1 jednostka sceny = 1 metr. Rama jest poza płótnem. Fotografia mieści się w obszarze płótna bez zmiany proporcji. `description: null` oznacza brak opisu w źródle. Nie dopisuj fikcyjnych informacji. Suma kontrolna `sha256` identyfikuje zachowany oryginał; dla nowych prac uzupełnij ją z pliku. Uruchom `npm run textures`, aby utworzyć WebP bez przycinania.
+
+Wysokość zawieszenia jest wyliczana z rozmiaru płótna: dolna krawędź ramy zawsze znajduje się 8 cm ponad górą listwy, większe płótna sięgają wyżej. Parametry są w `architectureLevels` w `src/config.ts`; etykieta mosiężna znajduje się z boku, powyżej listwy.
 
 Dodaj definicję sali do `rooms` w `src/config.ts`, jej przestrzeń i połączenie w `Architecture`, granice kolizji i materiał podłogi w `floorAt`. Przypisz prace do nowego `room`. Modele GLB/glTF można później dołączyć w module architektury; w tej wersji geometria jest proceduralna, bez zbędnych modeli do pobierania. KTX2 nie jest potrzebne dla 18 umiarkowanych tekstur WebP.
 
@@ -50,4 +55,4 @@ Oryginalna witryna: commit `a0356b4f723a00f423f349090f7da2521dc3aa39`. Lokalny t
 
 Wszystkie 18 oryginalnych JPG, 10 MP3, tytuły, metadane oraz adresy dzieł zachowano. Źródło zawiera błąd: Emergence ma URL Fractures. Pozostaje dokładnie taki sam i jest oznaczony w panelu oraz inwentaryzacji; nie znaleziono wiarygodnego zastępczego adresu. Przed korektą wymaga potwierdzenia artysty.
 
-Dźwięki muzeum są własną syntezą; oryginalne MP3 wykorzystuje wyłącznie zachowana mapa dźwiękowa. Działanie Formularza jest zachowane, ale testy nie wysyłają rzeczywistych wiadomości. Automatyczne testy audio weryfikują stan kontekstu i synchronizację, nie subiektywne brzmienie. Szacunek pamięci tekstur nie jest rzeczywistym pomiarem VRAM; czas CPU nie oznacza czasu GPU. 60 FPS pozostaje celem zależnym od urządzenia. Safari i rzeczywiste telefony wymagają dodatkowego sprawdzenia.
+Dźwięki kamienia i drewna są dziesięcioma nagraniami użytkownika z `Player_Footsteps`, skopiowanymi do `audio/footsteps`. Metal i podłoże cyfrowe korzystają z własnej syntezy, ponieważ dostarczony folder nie zawiera ich nagrań. Rytm: około 1,7 kroku/s przy zwykłym marszu i najwyżej około 2,2 kroku/s przy szybszym. Kolejne warianty nie powtarzają się bezpośrednio. Oryginalne MP3 mapy dźwiękowej pozostają zachowane. Formularz jest zachowany, ale testy nie wysyłają rzeczywistych wiadomości. Testy audio weryfikują dekodowanie 10 nagrań, kontekst i rytm, nie subiektywne brzmienie. Pola drugiej komnaty są autorskim efektem inspirowanym superpozycją, a nie symulacją fizyki kwantowej. Szacunek pamięci tekstur nie jest rzeczywistym pomiarem VRAM; czas CPU nie oznacza czasu GPU. 60 FPS pozostaje celem zależnym od urządzenia. Safari i rzeczywiste telefony wymagają dodatkowego sprawdzenia.

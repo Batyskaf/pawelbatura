@@ -15,14 +15,15 @@ for (const match of html.matchAll(/<div class="art">([\s\S]*?)(?=<div class="art
   const center = [0, -26, -51][Math.floor(i / 6)];
   const side = i % 6 < 3 ? -1 : 1;
   const half = [8, 9, 10][Math.floor(i / 6)];
-  const displayHeight = Math.min(2.1, 2.7 * height / width);
+  const [, rawWidth, rawHeight] = meta[1].match(/(\d+)\s*×\s*(\d+)\s*cm/);
+  const widthCm = Number(rawWidth), heightCm = Number(rawHeight);
   artworks.push({
     id, title: block.match(/<h3>([\s\S]*?)<\/h3>/)[1], author: 'Paweł Batura',
     description: null, metadata: { pl: meta[1], en: meta[2] },
     image, thumbnail: thumb, texture: `img/museum/${id}.webp`,
     pixelWidth: width, pixelHeight: height, aspect: width / height,
-    displayHeight, displayWidth: displayHeight * width / height,
-    position: [side * (half - .24), 2.6, center + 4.7 - (i % 3) * 4.7],
+    widthCm, heightCm, displayHeight: heightCm / 100, displayWidth: widthCm / 100,
+    position: [side * (half - .24), 1.4 + heightCm / 200, center + 4.7 - (i % 3) * 4.7],
     rotation: side === -1 ? Math.PI / 2 : -Math.PI / 2,
     room, frame: ['gilded', 'mechanical', 'minimal'][Math.floor(i / 6)],
     category: 'oil painting', effects: [],

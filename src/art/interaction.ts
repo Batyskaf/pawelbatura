@@ -6,7 +6,7 @@ export class Interaction {
   constructor(private exhibits: Exhibit[], private label: HTMLButtonElement, private line: SVGLineElement) {}
   update(camera: T.PerspectiveCamera, dt: number, enabled: boolean) {
     this.ray.setFromCamera(new T.Vector2(0, 0), camera);
-    const images = this.exhibits.filter(e => e.group.visible).map(e => e.image);
+    const images = this.exhibits.filter(e => e.group.visible && e.image.visible).map(e => e.image);
     const hit = enabled ? this.ray.intersectObjects(images, false)[0] : undefined;
     this.current = hit && hit.distance < 8.5 ? this.exhibits.find(e => e.image === hit.object)! : null;
     this.fade += ((this.current ? 1 : 0) - this.fade) * (1 - Math.exp(-10 * dt));

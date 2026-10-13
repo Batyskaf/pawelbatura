@@ -9,6 +9,7 @@ test('Demo hall enters, pauses and resumes with independent collision and footst
   await page.getByRole('button', { name: 'Wejdź do galerii', exact: true }).click();
   await expect.poll(() => page.evaluate(() => document.pointerLockElement?.id)).toBe('world');
   await expect.poll(() => page.evaluate(() => window.museum.sound.context?.state)).toBe('running');
+  await expect.poll(() => page.evaluate(() => window.museum.sound.loadedRecordings)).toBe(10);
   await page.keyboard.down('KeyW'); await page.waitForTimeout(1400); await page.keyboard.up('KeyW');
   expect(await page.evaluate(() => window.museum.camera.position.z)).toBeLessThan(4);
   expect(await page.evaluate(() => window.museum.sound.stepCount)).toBeGreaterThan(0);
@@ -42,7 +43,7 @@ test('All rooms, labels, artwork panel and safe source links work', async ({ pag
   await page.getByRole('button', { name: 'Wejdź do galerii', exact: true }).click();
   await expect.poll(() => page.evaluate(() => document.pointerLockElement?.id)).toBe('world');
   await page.evaluate(() => {
-    const m = window.museum; m.camera.position.set(4, 1.7, 0); m.controller.yaw = -Math.PI / 2; m.controller.pitch = .2; m.controller.applyLook();
+    const m = window.museum; m.camera.position.set(4, 1.7, 0); m.controller.yaw = -Math.PI / 2; m.controller.pitch = 0; m.controller.applyLook();
   });
   await expect(page.locator('#art-label')).toHaveText(/Anisotropy II/);
   await expect.poll(() => page.locator('#art-label').evaluate(e => Number(getComputedStyle(e).opacity))).toBeGreaterThan(.8);
@@ -100,12 +101,50 @@ test('All reconstruction effects respect particle budgets and keep collision geo
   const report = await page.evaluate(() => {
     const m = window.museum; const collision = JSON.stringify(m.architecture.colliders);
     for (const fx of m.effects.transforms) { fx.config.activation = 1000; fx.progress = .5; }
-    return { before: collision, max: m.effects.transforms.reduce((sum, fx) => sum + fx.config.maxParticles, 0) };
+    return { before: collision, max: m.effects.transforms.reduce((sum, fx) => sum + fx.config.maxParticles, 0), targets: m.effects.transforms.map(fx => ({ id: fx.target.id, sameObject: fx.surface === fx.target.object, size: fx.size.toArray(), pieces: fx.pieces.length })) };
   });
+  expect(report.targets.some(t => t.id === 'corridor--13-wall-1' && t.size[2] >= 10 && t.size[1] >= 5.4 && t.sameObject)).toBe(true);
+  expect(report.targets.some(t => t.id === 'observatory-stairs-platform' && t.pieces > 4)).toBe(true);
   await page.waitForTimeout(350);
   const after = await page.evaluate(() => ({ collision: JSON.stringify(window.museum.architecture.colliders), particles: window.museum.effects.particles, calls: window.museum.metrics.calls, triangles: window.museum.metrics.triangles, renderMs: window.museum.metrics.renderMs, fps: window.museum.metrics.fps }));
   expect(after.collision).toBe(report.before); expect(after.particles).toBeLessThanOrEqual(report.max);
   expect(after.calls).toBeLessThan(350); expect(after.triangles).toBeLessThan(300000);
   console.log('Scene budget:', JSON.stringify({ particles: after.particles, calls: after.calls, triangles: after.triangles, renderMs: after.renderMs, fps: after.fps }));
   await page.screenshot({ path: 'test-results/welcome.png' });
+});
+test('Canvas size uses actual centimetres while photographs keep their own aspect ratio', async ({ page }) => {
+  await page.goto('/'); await page.waitForFunction(() => !!window.museum);
+  const works = await page.evaluate(() => window.museum.exhibits.exhibits.map(e => {
+    const plane = e.image.geometry as any; return { id: e.work.id, widthCm: e.work.widthCm, heightCm: e.work.heightCm, width: e.work.displayWidth, height: e.work.displayHeight, planeWidth: plane.parameters.width, planeHeight: plane.parameters.height, photoAspect: e.work.aspect, frameBottom: e.group.position.y - e.work.displayHeight / 2 - .05 };
+  }));
+  for (const work of works) {
+    expect(work.width).toBe(work.widthCm / 100); expect(work.height).toBe(work.heightCm / 100);
+    expect(work.planeWidth).toBeLessThanOrEqual(work.width + .00001); expect(work.planeHeight).toBeLessThanOrEqual(work.height + .00001);
+    expect(work.planeWidth / work.planeHeight).toBeCloseTo(work.photoAspect, 5);
+    expect(work.frameBottom).toBeCloseTo(1.35, 5);
+  }
+  expect(works.find(w => w.id === 'anisotropy2')!.width).toBe(.4);
+  expect(works.find(w => w.id === 'bifurcation')!.width).toBe(1.4);
+});
+test('Overlapping fields stabilize walls and frames before the critical artwork transition', async ({ page }) => {
+  const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
+  page.on('console', msg => { if (msg.type() === 'error') errors.push(msg.text()); });
+  await page.goto('/'); await page.waitForFunction(() => !!window.museum);
+  expect(await page.evaluate(() => window.museum.fields.exhibits.every(e => !e.image.visible))).toBe(true);
+  await page.getByRole('button', { name: 'Wejdź do galerii', exact: true }).click();
+  await expect.poll(() => page.evaluate(() => document.pointerLockElement?.id)).toBe('world');
+  const state = await page.evaluate(() => {
+    const m = window.museum; m.camera.position.set(0, 1.7, -20); m.controller.yaw = 0; m.controller.pitch = 0; m.controller.applyLook(); m.fields.phase = .54;
+    return JSON.stringify(m.architecture.colliders);
+  });
+  await expect.poll(() => page.evaluate(() => window.museum.fields.phase)).toBeGreaterThan(.6);
+  expect(await page.evaluate(() => window.museum.fields.critical)).toBe(false);
+  expect(await page.evaluate(() => window.museum.fields.exhibits.every(e => !e.image.visible))).toBe(true);
+  await page.screenshot({ path: 'test-results/field-emergence.png' });
+  await expect.poll(() => page.evaluate(() => window.museum.fields.critical), { timeout: 10000 }).toBe(true);
+  await expect.poll(() => page.evaluate(() => window.museum.fields.reveal), { timeout: 5000 }).toBe(1);
+  expect(await page.evaluate(() => window.museum.fields.exhibits.every(e => e.image.visible))).toBe(true);
+  expect(await page.evaluate(() => JSON.stringify(window.museum.architecture.colliders))).toBe(state);
+  expect(errors).toEqual([]);
+  await page.screenshot({ path: 'test-results/field-stable.png' });
 });

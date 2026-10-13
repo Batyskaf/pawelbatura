@@ -1,9 +1,10 @@
 import * as T from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { rooms } from '../config';
-import type { Collider, Room } from '../types';
+import { rooms, architectureLevels } from '../config';
+import type { Collider, Room, EffectTarget, EffectKind } from '../types';
 export class Architecture {
   groups = new Map<string, T.Group>(); colliders: Collider[] = []; mechanisms: T.Group[] = [];
+  effectTargets: EffectTarget[] = [];
   private box = new T.BoxGeometry(1, 1, 1);
   private cylinder = new T.CylinderGeometry(1, 1, 1, 20);
   private sphere = new T.SphereGeometry(1, 24, 16);
@@ -38,6 +39,13 @@ export class Architecture {
   }
   block(g: T.Group, pos: number[], scale: number[], color: string, metalness = 0) { return this.mesh(g, this.box, this.material(color, metalness), pos, scale); }
   obstacle(minX: number, maxX: number, minZ: number, maxZ: number) { this.colliders.push({ minX, maxX, minZ, maxZ }); }
+  captureTarget(parent: T.Group, start: number, id: string, kind: EffectKind) {
+    const object = new T.Group(); object.name = id;
+    parent.children.slice(start).forEach(child => object.add(child)); parent.add(object);
+    if (kind !== 'structure') this.batch(object);
+    this.effectTargets.push({ id, kind, object });
+    return object;
+  }
   arch(g: T.Group, x: number, y: number, z: number, radius: number, rotation = 0, color = '#bca376') {
     const group = new T.Group(); group.position.set(x, y, z); group.rotation.y = rotation;
     const geo = new T.TorusGeometry(radius, .12, 8, 36, Math.PI);
@@ -60,10 +68,11 @@ export class Architecture {
     }
     this.block(g, [0, h + .12, 0], [room.width + .4, .3, room.length + .4], '#21302d');
     for (const side of [-1, 1]) {
+      const wallStart = g.children.length;
       this.block(g, [side * w, h / 2, 0], [.35, h, room.length], wall);
       this.obstacle(side * w - .18, side * w + .18, room.center - l, room.center + l);
       this.block(g, [side * (w - .21), .62, 0], [.18, 1.2, room.length], room.material === 'stone' ? '#342d23' : '#394642');
-      for (const y of [.1, 1.23, h - .55, h - .3]) this.block(g, [side * (w - .2), y, 0], [.22, .08, room.length], brass, .45);
+      for (const y of [.1, architectureLevels.dadoCenter, h - .55, h - .3]) this.block(g, [side * (w - .2), y, 0], [.22, architectureLevels.trimThickness, room.length], brass, .45);
       for (const z of [-7, -2.35, 2.35, 7]) {
         const x = side * (w - .65);
         this.mesh(g, this.cylinder, this.material(stone), [x, h / 2 - .2, z], [.23, h - .4, .23]);
@@ -76,6 +85,7 @@ export class Architecture {
         const lamp = this.block(g, [side * (w - .9), 4.75, z], [.4, .08, .5], brass, .5);
         lamp.material = new T.MeshStandardMaterial({ color: '#ffdeb2', emissive: '#ffd397', emissiveIntensity: 1.5 });
       }
+      if (room.id === 'archive' || room.id === 'observatory') this.captureTarget(g, wallStart, `${room.id}-wall-${side}`, side < 0 ? 'voxel' : 'dissolve');
     }
     for (const end of [-1, 1]) {
       const door = (end === -1 && room.id !== 'archive') || (end === 1 && room.id !== 'cabinet');
@@ -174,13 +184,18 @@ export class Architecture {
     const g = new T.Group(); g.position.z = center; this.scene.add(g); this.groups.set(`corridor${center}`, g);
     this.block(g, [0, -.15, 0], [4, .3, length], surface === 'wood' ? '#5b4632' : '#284d4b');
     for (const side of [-1, 1]) {
+      const wallStart = g.children.length;
       this.block(g, [side * 2, 2.7, 0], [.25, 5.4, length], '#2a3c38');
       this.obstacle(side * 2 - .13, side * 2 + .13, center - length / 2, center + length / 2);
+      this.captureTarget(g, wallStart, `corridor-${center}-wall-${side}`, side < 0 ? 'dissolve' : 'voxel');
       this.block(g, [side * 1.85, .06, 0], [.035, .03, length], '#89c8bc', .5);
-      for (let z = -length / 2 + .25; z < length / 2; z += .5) this.block(g, [0, .005, z], [3.8, .025, .018], '#2d2b24');
     }
+    for (let z = -length / 2 + .25; z < length / 2; z += .5) this.block(g, [0, .005, z], [3.8, .025, .018], '#2d2b24');
     this.block(g, [0, 5.5, 0], [4.3, .25, length], '#1d2d2b');
-    for (let z = -length / 2 + 1; z < length / 2; z += 3) this.arch(g, 0, 3.1, z, 1.8);
+    for (let z = -length / 2 + 1; z < length / 2; z += 3) {
+      const start = g.children.length; this.arch(g, 0, 3.1, z, 1.8);
+      if (z >= length / 2 - 3) this.captureTarget(g, start, `corridor-${center}-portal`, 'structure');
+    }
     const lamp = new T.PointLight('#a0cdc6', 26, 14); lamp.position.set(0, 3, 0); g.add(lamp);
     this.batch(g);
   }
@@ -201,6 +216,7 @@ export class Architecture {
     }
   }
   platform(g: T.Group, center: number) {
+    const platformStart = g.children.length;
     for (let i = 0; i < 4; i++) this.block(g, [4.325 + i * .65, .075 * (i + 1), 0], [.65, .15 * (i + 1), 8], '#62594a', .6);
     this.block(g, [7.5, .3, 0], [1.8, .6, 8], '#62594a', .6);
     for (const z of [-4, 4]) {
@@ -208,6 +224,13 @@ export class Architecture {
       for (const x of [4, 5.5, 7, 8.4]) this.mesh(g, this.cylinder, this.material('#bca376', .6), [x, .8, z], [.035, 1.4, .035]);
       this.obstacle(4, 8.6, center + z - .05, center + z + .05);
     }
+    const platform = this.captureTarget(g, platformStart, 'observatory-stairs-platform', 'structure');
+    // Keep a permanent luminous outline of all walkable steps when their surfaces dissolve.
+    platform.traverse(object => {
+      if (!(object instanceof T.Mesh)) return;
+      const outline = new T.LineSegments(new T.EdgesGeometry(object.geometry), new T.LineBasicMaterial({ color: '#79b9a5', transparent: true, opacity: .3 }));
+      outline.position.copy(object.position); outline.rotation.copy(object.rotation); outline.scale.copy(object.scale); g.add(outline);
+    });
   }
   update(camera: T.Camera, time: number, reducedMotion: boolean) {
     for (const [id, group] of this.groups) {

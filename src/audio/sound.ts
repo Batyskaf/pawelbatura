@@ -1,10 +1,13 @@
 import { Vector3 } from 'three';
 import type { Settings, Surface } from '../types';
+import { StepCadence } from './cadence';
 export class SoundSystem {
   context: AudioContext | null = null; master!: GainNode; steps!: GainNode; ambient!: GainNode; fx!: GainNode;
-  private distance = 0; private nodes = new Set<AudioScheduledSourceNode>(); private hum: OscillatorNode | null = null;
+  private cadence = new StepCadence(); private nodes = new Set<AudioScheduledSourceNode>(); private hum: OscillatorNode | null = null;
   private randomBuffers = new Map<Surface, AudioBuffer[]>(); private reverb!: ConvolverNode; private lastSurface: Surface = 'stone';
-  stepCount = 0;
+  stepCount = 0; loadedRecordings = 0; recordingDurations: number[] = [];
+  private recordings = new Map<Surface, AudioBuffer[]>(); private loading: Promise<void> | null = null;
+  private previousVariant = new Map<Surface, number>();
   constructor(private settings: Settings) {}
   async unlock() {
     if (!this.context) {
@@ -38,7 +41,26 @@ export class SoundSystem {
       pan.positionX.value = 0; pan.positionY.value = 3; pan.positionZ.value = -26;
       this.hum.connect(gain); gain.connect(pan); pan.connect(this.ambient); this.hum.start();
     }
-    await this.context.resume(); this.apply();
+    this.loading ??= this.loadRecordings();
+    await this.context.resume(); this.apply(); await this.loading;
+  }
+  private async loadRecordings() {
+    await Promise.all((['stone', 'wood'] as const).map(async surface => {
+      const buffers = await Promise.all(Array.from({ length: 5 }, async (_, i) => {
+        const name = `Player_${surface === 'stone' ? 'Stone' : 'Wood'}_Footstep_${String(i + 1).padStart(2, '0')}.mp3`;
+        try {
+          const response = await fetch(`audio/footsteps/${name}`); if (!response.ok) throw new Error(`${response.status}`);
+          const buffer = await this.context!.decodeAudioData(await response.arrayBuffer());
+          // Normalize the supplied single-step recordings to a consistent, restrained level.
+          let peak = 0;
+          for (let channel = 0; channel < buffer.numberOfChannels; channel++) for (const value of buffer.getChannelData(channel)) peak = Math.max(peak, Math.abs(value));
+          const scale = peak > .001 ? .42 / peak : 1;
+          for (let channel = 0; channel < buffer.numberOfChannels; channel++) { const samples = buffer.getChannelData(channel); for (let n = 0; n < samples.length; n++) samples[n] *= scale; }
+          this.loadedRecordings++; this.recordingDurations.push(buffer.duration); return buffer;
+        } catch { return null; }
+      }));
+      this.recordings.set(surface, buffers.filter((buffer): buffer is AudioBuffer => buffer !== null));
+    }));
   }
   apply() {
     if (!this.context) return;
@@ -48,18 +70,22 @@ export class SoundSystem {
     this.ambient.gain.setTargetAtTime(this.settings.ambient, now, .03);
     this.fx.gain.setTargetAtTime(this.settings.fx, now, .03);
   }
-  update(distance: number, surface: Surface, active: boolean, position: Vector3, direction: Vector3) {
-    if (!this.context || !active) { this.distance = 0; return; }
+  update(distance: number, surface: Surface, active: boolean, position: Vector3, direction: Vector3, dt: number) {
+    if (!this.context || !active) { this.cadence.reset(); return; }
     const listener = this.context.listener;
     listener.positionX.value = position.x; listener.positionY.value = position.y; listener.positionZ.value = position.z;
     listener.forwardX.value = direction.x; listener.forwardY.value = direction.y; listener.forwardZ.value = direction.z;
     listener.upX.value = 0; listener.upY.value = 1; listener.upZ.value = 0;
-    if (surface !== this.lastSurface) { this.distance = 0; this.lastSurface = surface; }
-    this.distance += distance;
-    if (distance > .0001 && this.distance >= .72) {
-      this.distance %= .72; this.stepCount++;
+    if (surface !== this.lastSurface) { this.cadence.reset(); this.lastSurface = surface; }
+    if (this.cadence.update(distance, dt, active)) {
+      this.stepCount++;
       const src = this.context.createBufferSource(); const gain = this.context.createGain();
-      src.buffer = this.randomBuffers.get(surface)![Math.floor(Math.random() * 4)]; src.playbackRate.value = .94 + Math.random() * .12;
+      const recordings = this.recordings.get(surface);
+      const variants = recordings?.length ? recordings : this.randomBuffers.get(surface)!;
+      const previous = this.previousVariant.get(surface) ?? -1;
+      const choices = variants.map((_, i) => i).filter(i => i !== previous || variants.length === 1);
+      const index = choices[Math.floor(Math.random() * choices.length)]; this.previousVariant.set(surface, index);
+      src.buffer = variants[index]; src.playbackRate.value = .97 + Math.random() * .06;
       gain.gain.value = .65 + Math.random() * .15; src.connect(gain); gain.connect(this.steps); this.play(src, undefined, [gain]);
     }
   }
@@ -75,6 +101,6 @@ export class SoundSystem {
     this.nodes.add(src); src.addEventListener('ended', () => { this.nodes.delete(src); src.disconnect(); connected.forEach(node => node.disconnect()); }, { once: true });
     src.start(); if (duration) src.stop(this.context!.currentTime + duration);
   }
-  pause() { this.distance = 0; for (const node of this.nodes) { try { node.stop(); } catch { /* already ended */ } } this.nodes.clear(); void this.context?.suspend(); }
+  pause() { this.cadence.reset(); for (const node of this.nodes) { try { node.stop(); } catch { /* already ended */ } } this.nodes.clear(); void this.context?.suspend(); }
   dispose() { this.pause(); this.hum?.stop(); void this.context?.close(); }
 }
